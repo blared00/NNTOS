@@ -1,0 +1,182 @@
+
+/* board for parents  START*/
+
+.board_parents{
+
+
+width: 1440px;
+height: 1120px;
+background: url(../img/board.jpg)
+
+}
+
+.board_wrapper{
+max-width: 1140px;
+margin: 0 auto;
+}
+.title_bord{
+padding-bottom: 120px;
+}
+.left_bord{
+margin-top: 55px;
+float: left;
+}
+.board_txt{
+width: 340px;
+height: 37px;
+font-weight: bold;
+font-size: 36px;
+line-height: 126%;
+color: #000;
+}
+
+.right_bord{
+margin-top: 55px;
+float: right;
+
+}
+
+
+.sorting{
+cursor: pointer;
+display: block;
+font-weight: normal;
+font-size: 18px;
+color: #000;
+line-height: 23px;
+width: 323px;
+height: 50px;
+padding-left: 15px;
+padding-right: 5px;
+box-sizing: border-box;
+margin: 0;
+border: 2px solid #000;
+border-radius: 25px;
+outline:none;
+background: url(../img/sort.jpg) no-repeat right;
+
+
+ -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+}
+option:not(:checked) {
+    background-color: white;
+    color:#000;
+}
+
+
+
+.block{
+padding-top: 20px;
+padding-left: 37px;
+margin-top: 30px;
+width: 1140px;
+height: 130px;
+background: #FFFFFF;
+border-radius: 20px;
+}
+
+.title_block{
+
+height: 44.68px;
+font-weight: bold;
+font-size: 36px;
+line-height: 126%;
+color: #000000;
+}
+.data{
+width: 91px;
+height: 23px;
+font-size: 18px;
+line-height: 126%;
+color: #000000;
+}
+
+.txt_block{
+float: left;
+}
+.btn{
+float:right;
+margin-right: 35px;
+}
+
+.look{
+margin-top: 10px;
+width: 205px;
+height: 46px;
+background: #07254F;
+border-radius: 25px;
+outline:none;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 16px;
+border: none;
+ cursor: pointer;
+color: #FFFFFF;
+}
+
+.look:hover,  .look:active {
+background: #8392A7;
+}
+
+li {
+  list-style-type: none;
+}
+.pagination {
+margin-top: 52px;
+display: flex;
+}
+.pagination a{
+padding: 11px 16px 11px 16px;
+
+                display: flex;
+text-decoration: none;
+border: none;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+background: rgba(255, 255, 255, 0.44);
+color: #D6D6D6;
+width: 48px;
+height: 49px;
+border-radius: 50%;
+}
+.pagination-item {
+	margin-right: 18px;
+	border-radius: 50%;
+  	border: none;
+}
+
+.pagination a:hover{
+background-color:  #FFFFFF;
+color: #000000;
+border: none;
+}
+/* ТУТ АКТИВНАЯ ПАГИНАЦИЯ*/
+.paginpg-active{
+width: 48px;
+height: 49px;
+background-color:  #FFFFFF;
+border: none;
+border-radius: 50%;
+margin-right: 18px;
+}
+.paginp {
+margin-left: 18px;
+margin-top: 13px;
+color: #000000;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+}
+
+.pagination a:focus{
+background-color:  #FFFFFF;
+color: #000001;
+border: none;
+}
+
+/* board for parents  END*/

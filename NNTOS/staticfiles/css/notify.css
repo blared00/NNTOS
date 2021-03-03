@@ -1,0 +1,76 @@
+
+/* notify form  START*/
+.notification_parents{
+width: 1440px;
+height: 1120px;
+background: url(../img/notify.jpg)
+
+}
+
+.sorting_notify{
+ cursor: pointer;
+display: block;
+font-weight: normal;
+font-size: 18px;
+color: #000;
+line-height: 23px;
+width: 323px;
+height: 50px;
+padding-left: 15px;
+padding-right: 5px;
+box-sizing: border-box;
+margin: 0;
+
+border: 2px solid #000;
+border-radius: 25px;
+background: url(../img/sort1.jpg) no-repeat right;
+
+outline:none;
+
+ -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+
+option:not(:checked) {
+    background-color: white;
+    color:#000;
+}
+
+
+ .look_noty{
+margin-right: 35px;
+float: right;
+width: 205px;
+height: 46px;
+background: #CA0000;
+border-radius: 25px;
+outline:none;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 16px;
+border: none;
+ cursor: pointer;
+color: #FFFFFF;
+}
+
+.look_noty:hover,  .look_noty:active {
+background: #E48080;
+}
+
+.title_block_noty{
+float: left;
+padding-right: 20px;
+font-weight: bold;
+font-size: 24px;
+line-height: 126%;
+}
+.title_block_notify{
+float: center;
+font-weight: normal;
+font-size: 24px;
+line-height: 126%;
+}
+
+
+/* notify form  END*/
