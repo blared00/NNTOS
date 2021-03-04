@@ -9,6 +9,7 @@ from .models import *
 
 class ParentsView(View):
     def get(self, request, student_name):
+        ''' Получение предметов студента и отображение расписания'''
         student = get_object_or_404(Student, slug=student_name)
         schedule = {}
         weekdays = Weekday.objects.all()
@@ -24,12 +25,12 @@ class ParentsView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
+        ''' Отображение новстей и пагинация'''
         order_news = request.GET.get('sorting')
-        print(order_news)
-        if order_news == 'last':
-            news = News.objects.filter(published_for_parents=True).order_by('published_at')
-        else:
-            news = News.objects.filter(published_for_parents=True)
+        #if order_news == 'last':
+        #    news = News.objects.filter(published_for_parents=True).order_by('published_at')
+        #else:
+        news = News.objects.filter(published_for_parents=True)
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
@@ -38,7 +39,6 @@ class ParentsView(View):
                                                               'title': f'Дневник|{student}',
                                                               'chet': [2, 4, 6],
                                                               'news': page_obj,
-
                                                               })
 
 

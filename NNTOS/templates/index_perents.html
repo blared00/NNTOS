@@ -125,7 +125,7 @@
 
     </div>
 
-
+<!--таблица новостей-->
     <div class="b_parent">
         <section class="board_parents">
 
@@ -136,7 +136,7 @@
             </div>
 
             <div class="right_bord">
-                <form method="get">
+                <form method="post">
                 <select name="sorting" id="sorting" class="sorting">
                     <option value="first">Сначала первые</option>
                     <option value="last">Сначала последние</option>
@@ -161,16 +161,17 @@
          {%endfor%}
 
 
-
+<!--пагинация новостей-->
  <div class="board_wrapper">
-            <nav> <!--таблица новостей-->
+            <nav>
                 {% if news.has_other_pages%}
                 <ul class="pagination">
                     {% if news.has_previous%}
-                        {%if news.number|add:-1 > news.paginator.page_range|first%}
-                            <li class="pagination-item">
+                        <li class="pagination-item">
                                 <a href="?page={{news.previous_page_number}}#dosca">&lt;</a>
-                            </li>
+                        </li>
+                        {%if news.number|add:-1 > news.paginator.page_range|first%}
+
                             <li class="pagination-item">
                                 <a href="?page={{news.paginator.page_range|first}}#dosca">{{news.paginator.page_range|first}}</a>
                             </li>
