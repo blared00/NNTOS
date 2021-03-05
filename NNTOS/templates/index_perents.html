@@ -264,7 +264,7 @@
                     <table class="dnevnik">
 
                     {%for lesson in schedule_d%}
-                    <tr> <th> {{forloop.counter}} {{lesson.discipline}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
+                    <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
 
                     {%endfor%}
                 </table>
@@ -275,7 +275,7 @@
                     <table class="dnevnik">
 
                         {%for lesson in schedule_d%}
-                        <tr> <th> {{forloop.counter}} {{lesson.discipline}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
+                        <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
 
                         {%endfor%}
                     </table>

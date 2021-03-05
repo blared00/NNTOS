@@ -46,14 +46,13 @@ class Discipline(models.Model):
         verbose_name_plural = 'Дисциплины'
 
 
-
-
 class Teacher(models.Model):
     lastname = models.CharField(max_length=20, verbose_name='Фамилия')
     firstname = models.CharField(max_length=20, verbose_name='Имя')
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
     slug = models.SlugField(max_length=50, unique=True, verbose_name='URL преподавателя')
-    discipline = models.ManyToManyField(Discipline, verbose_name='Дисциплина')
+    discipline = models.ManyToManyField(Discipline, verbose_name='Дисциплина',
+                                        through='TeacherDiscipline',)
 
     def __str__(self):
         name = f'{self.lastname} {self.firstname} {self.patronymic}'
@@ -67,23 +66,28 @@ class Teacher(models.Model):
         verbose_name_plural = 'Учителя'
 
 
+class TeacherDiscipline(models.Model):
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
+    discipline = models.ForeignKey('Discipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
+
+    def __str__(self):
+        name = f'{self.discipline}/{self.teacher}'
+        return name
+
 
 class ScheduleGroup(models.Model):
-    discipline = models.ForeignKey('Discipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
+    discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     lesson = models.ForeignKey('NumberLesson', on_delete=models.CASCADE, verbose_name='Пара')
     class_room = models.IntegerField(verbose_name='Номер аудитории')
     weekday = models.ForeignKey('Weekday', on_delete=models.CASCADE, verbose_name='День недели')
     n_group = models.ForeignKey('StudentGroup', on_delete=models.CASCADE, verbose_name='Номер группы')
 
     def __str__(self):
-        name = f' {self.discipline} {self.teacher}'
-        return name
+        return f' {self.discipline}'
 
     class Meta:
         verbose_name = 'Пара'
         verbose_name_plural = 'Пары'
-
 
 
 class NumberLesson(models.Model):
@@ -130,3 +134,16 @@ class News(models.Model):
         ordering = ('-published_at', )
 
 
+class Mark(models.Model):
+    value = models.FloatField(verbose_name='Оценка')
+    discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
+    date = models.DateField()
+    comment = models.CharField(max_length=50, verbose_name='Коментарий', blank=True)
+
+    def __str__(self):
+        return f'{self.date} {self.discipline} {self.student}'
+
+    class Meta:
+        verbose_name = 'Оценка '
+        verbose_name_plural = 'Оценки'
