@@ -42,7 +42,7 @@ class Discipline(models.Model):
         return self.name
 
     class Meta:
-        verbose_name = 'Дисциплина'
+        verbose_name = 'дисциплину'
         verbose_name_plural = 'Дисциплины'
 
 
@@ -73,6 +73,10 @@ class TeacherDiscipline(models.Model):
     def __str__(self):
         name = f'{self.discipline}/{self.teacher}'
         return name
+
+    class Meta:
+        verbose_name = 'предмет'
+        verbose_name_plural = 'Дисциплины учителя'
 
 
 class ScheduleGroup(models.Model):

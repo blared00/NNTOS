@@ -48,7 +48,7 @@ admin.site.register(StudentGroup, StudentGroupAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 #admin.site.register(NumberLesson)
 #admin.site.register(Weekday)
-#admin.site.register(Discipline, DisciplineAdmin)
+admin.site.register(Discipline, DisciplineAdmin)
 admin.site.register(News, NewsAdmin)
 admin.site.register(Mark)
 
