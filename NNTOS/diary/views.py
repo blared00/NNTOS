@@ -43,8 +43,15 @@ class ParentsView(View):
 
 
 class TeacherView(View):
-    def get(self, request):
-        return render(request, 'index_teach.html')
+    def get(self, request, teacher_name):
+        teacher = get_object_or_404(Teacher, slug=teacher_name)
+        news = News.objects.filter(published_for_teacher=True)
+        paginator_news = Paginator(news, 5)
+        page_number = request.GET.get('page')
+        page_obj = paginator_news.get_page(page_number)
+        return render(request, 'index_teach.html', context={'teacher': teacher,
+                                                            'title': f'Журнал|{teacher}',
+                                                            'news': page_obj})
 
 
 class LoginView(View):

@@ -418,19 +418,19 @@ max-width: 1140px;
 margin: 0 auto;
 }
 .title_bord{
-padding-bottom: 212px;
+padding-bottom: 120px;
 }
 .left_bord{
 margin-top: 55px;
 float: left;
 }
 .board_txt{
-width: 340px;
+width: 600px;
 height: 37px;
 font-weight: bold;
 font-size: 36px;
 line-height: 126%;
-color: #FFFFFF;
+color: #000;
 }
 
 .right_bord{
@@ -441,11 +441,11 @@ float: right;
 
 
 .sorting{
- cursor: pointer;
+cursor: pointer;
 display: block;
 font-weight: normal;
 font-size: 18px;
-color: #FFFFFF;
+color: #000;
 line-height: 23px;
 width: 323px;
 height: 50px;
@@ -453,22 +453,30 @@ padding-left: 15px;
 padding-right: 5px;
 box-sizing: border-box;
 margin: 0;
-border: 2px solid #FFFFFF;
-border-radius: 10px;
-background-color: #07254F;
+border: 2px solid #000;
+border-radius: 25px;
 outline:none;
+background: url(../img/sort.jpg) no-repeat right;
+
 
  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
 }
+option:not(:checked) {
+    background-color: white;
+    color:#000;
+}
+
+
+
 .block{
 padding-top: 20px;
 padding-left: 37px;
 margin-top: 30px;
 width: 1140px;
-height: 150px;
+height: 130px;
 background: #FFFFFF;
 border-radius: 20px;
 }
@@ -482,7 +490,6 @@ line-height: 126%;
 color: #000000;
 }
 .data{
-margin-top: 52px;
 width: 91px;
 height: 23px;
 font-size: 18px;
@@ -499,7 +506,7 @@ margin-right: 35px;
 }
 
 .look{
-margin-top: 30px;
+margin-top: 10px;
 width: 205px;
 height: 46px;
 background: #07254F;
@@ -534,8 +541,9 @@ border: none;
 font-weight: bold;
 font-size: 20px;
 line-height: 23px;
-background: #566681;
-color: #FFFFFF;
+background: rgba(255, 255, 255, 0.44);
+color: #D6D6D6;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 width: 48px;
 height: 49px;
 border-radius: 50%;
@@ -549,6 +557,31 @@ border-radius: 50%;
 .pagination a:hover{
 background-color:  #FFFFFF;
 color: #000000;
+border: none;
+}
+/* ТУТ АКТИВНАЯ ПАГИНАЦИЯ*/
+
+.paginpg-active{
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+width: 48px;
+height: 49px;
+background-color:  #FFFFFF;
+border: none;
+border-radius: 50%;
+margin-right: 18px;
+}
+.paginp {
+margin-left: 18px;
+margin-top: 13px;
+color: #000000;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+}
+
+.pagination a:focus{
+background-color:  #FFFFFF;
+color: #000001;
 border: none;
 }
 
@@ -672,7 +705,7 @@ font-size: 20px;
 line-height: 23px;
 color: #000000;
 }
-.naming{
+.namingg{
 margin-top: 24px;
 
 float: center;
@@ -704,7 +737,123 @@ border: 2px solid #CA0000;
 /* submission form  END*/
 
 
+/* journal start*/
 
+.sorting_week{
+width: 200px;
+height: 47px;
+border: none;
+outline:none;
+color: #000;
+cursor: pointer;
+display: block;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 42px;
+
+background: url(../img/sort3.jpg) no-repeat right;
+ -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+.name_stud{
+float: right;
+margin-top: 38px;
+}
+
+.marks_teacher{
+width: 1440px;
+height: 1700px;
+background-color:  #FFF;
+}
+
+/* journal end*/
+
+/* TABLE JOURNAL START*/
+.table_marks{
+margin-top: 30px;
+border-spacing: 10px;
+ border-collapse: separate;
+}
+
+.table_marks tr{
+	width: 995px;
+	height: 40px;
+}
+
+.objects{
+width: 271px;
+cursor: pointer;
+display: block;
+font-weight: bold;
+font-size: 20px;
+color: #000;
+border: none;
+background: #E3E6F6;
+outline:none;
+text-align: center;
+
+
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(../img/sort3.jpg) no-repeat right;
+}
+.com{
+float: right;
+
+margin-right: 15px;
+}
+
+
+.table_marks td{
+padding-top: 7px;
+text-align: center;
+border-radius: 10px;
+width: 79px;
+}
+
+.data_m {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+background-color: #F6E3E3;
+}
+
+.marks_m {
+	text-align: center;
+	font-weight: normal;
+	font-size: 20px;
+background-color:  #E3E6F6;
+}
+
+.naming{
+
+font-weight: bold;
+font-size: 20px;
+background-color:  #E3E6F6;
+}
+
+.table_marks th{
+
+	text-align: left;
+	padding-left: 15px;
+	border-radius: 10px;
+	width: 300px;
+background-color:  #E3E6F6;}
+
+
+.in_m{
+	text-align: center;
+	border: none;
+	outline:none;
+	background-color: #E3E6F6;
+	font-size: 20px;
+
+}
+
+
+/* TABLE JOURNAL END*/
 
 /* footer form  START*/
 .footer{

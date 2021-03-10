@@ -1,62 +1,5 @@
-<!DOCTYPE html>
-<html lang="ru">
-{%load static%}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href= "{%static '/css/style_t.css' %}">
-    <title>платформа ННТОС</title>
-
-</head>
-<body>
-<div class="container">
-<header class="header_rect"></header>
-
-
-
-<header class="header">
-
-    <div class="wrapper">
-
-        <div class="header_wrapper">
-        <div class="header_logo">
-            <a href="/" class="header_logo-link">
-                <img src="{%static '/img/svg/logo.svg'%}" alt="ННТОС" class="header_logo-pic">
-            </a>
-        </div>
-
-
-
-        <nav class="header_nav">
-
-        <ul class="header-list">
-
-     <li class="header-item">
-           <img src="{%static '/img/svg/phone.svg'%}" alt="phone" class="phone" style="margin-right: 15px;" >
-
-        <a href="#!" class="header-link">8 (800) 123-45-67</a>
-    </li>
-        <li class="header-item">
-             <img src="{%static '/img/svg/profil.svg' %}" alt="profil" class="profil" style="margin-right: 15px;" >
-        <a href="#!" class="header-link">Выйти</a>
-
-        </li>
-
-
-            </ul>
-
-            </nav>
-
-<div class="line">
-    <hr width="1140px";/>
-
-</div>
-
-
-
-        </div>
-
-        <div class="header1_wrapper">
+{%extends 'base_index.html'%}
+   <!--     <div class="header1_wrapper">
             <nav class="header1_nav">
                 <ul class="header-list">
                     <li class="header1-item">
@@ -87,40 +30,6 @@
 
 
 
-<main class="main">
-
-    <section class="mainimg">
-        <div class="NNTOS">
-    <p>НИЖЕГОРОДСКИЙ ТЕХНИКУМ ТРАНСПОРТНОГО ОБЛСУЖИВАНИЯ И СЕРВИСА</p>
-</div>
-</section>
-
-
-
-<div class="about_us">
-<section class="about">
-    <div class="left_block">
-
-    <p class="title_about"> Почему выбирают нас?</p>
-        <img src="{%static '/img/students.jpg'%}" alt="st" class="students">
-
-</div>
-
-    <div class="right_block">
-        <p class="abz">
-
-        <p class="abz1"> ГБПОУ «Нижегородский техникум транспортного обслуживания и сервиса» —  был основан 23 июля 1941 года.</p>
-          <p> <br> </p>
-        <p class="abz2">С этого  периода по настоящее время техникум готовит специалистов железнодорожного транспорта.</p>
-          <p> <br> </p>
-        <p class="abz3">Обучение ведут высококвалифицированные преподаватели, педагоги, мастера производственного обучения. За время своего существования техникум выпустил более 20 000 специалистов, многие из которых занимают руководящие должности  в системе железнодорожного транспорта.</p>
-        </p>
-    </div>
-
-</section>
-
-</div>
-
 
 <div class="b_teach">
     <section class="board_teacher">
@@ -139,7 +48,7 @@
                 </select>
 
 
-        </select>
+
 
     </div>
         </div>
@@ -243,8 +152,8 @@
         </section>
     </div>
 
-
-
+-->
+{%block body%}
     <div class="schedule_teacher">
          <section class="schedule_teach">
 <div class="board_wrapper">
@@ -356,53 +265,126 @@
     </div>
 
 
+       <div class="journal">
+         <section class="marks_teacher">
+             <div class="board_wrapper">
+ <div class="title_bord">
+    <div class="left_bord">
+    <p class="board_txt">Электронный журнал</p>
+        </div>
 
-</main>
+    <div class="right_bord">
 
 
-<footer>
-<section class="footer">
+            <select name="sorting" id="sorting_week" class="sorting_week">
+                        <option value="1">ТЭПС-1</option>
+                        <option value="2">ТЭПС-2</option>
+                        <option value="3">ТЭПС-3</option>
+                        <option value="4">ТЭПС-4</option>
+                    </select>
 
-    <div class="nav_bar">
-        <ul id="navbar">
-      <li><a href="#">Главная</a></li>
-      <li><a href="#">Доска объявлений</a></li>
-      <li><a href="#">Расписание</a></li>
-      <li><a href="#">Электронный журнал</a></li>
-    </ul>
+
+
 
     </div>
+        </div>
+                <table class = "table_marks">
+<tr>  <th >  <select name="objects" id="sorting_notify" class="objects">
+                  <option value="OBJ1">Математика</option>
+                        <option value="OBJ2">Информатика</option>
+                        <option value="OBJ3">Программирование</option>
+                    </select> </th> <td class= "data_m"> 01.04 </td> <td class= "data_m"> 03.04 </td> <td class= "data_m"> 05.04 </td> <td class= "data_m"> 07.04 </td> <td class= "data_m"> 09.04 </td> <td class= "data_m"> 13.04 </td> <td class= "data_m"> 15.04 </td> <td class= "data_m"> 17.04 </td> <td class= "data_m"> оценка </td>  </tr>
 
-        <div class="contact">
-
-            <p class="contacts"> Контакты </p>
-            <p class="contacts_dom"> г. Нижний Новгород
-                Ул. Народная дом 78 +7 (495)-123-55-67</p>
-            <p class="contacts"> Мы в соцсетях </p>
-         <p style="margin-top:15px;" class="icon">
-
-             <a href="#!"><img src="{%static 'img/svg/VK.svg'%}"  alt="VK"></a>&nbsp;&nbsp;
-             <a href="#!"><img src="{%static 'img/svg/inst.svg'%}"  alt="inst"></a>&nbsp;&nbsp;
-             <a href="#!"><img src="{%static 'img/svg/twitter.svg'%}"  alt="twitter"></a>
-
-         </p>
-
-
-            </div>
-
-        <p class="prava">
-            ННТОС-2021 - Все права защищены
-        </p>
+<tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="./img/ms.png" > </a></th>
+													 <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="data_m">5.0 </td>
 
 
-</section>
+<tr>  <th class="naming" > Белов А.С. <a href= "submission_form.html#submission"> <img class="com" src="./img/ms.png" > </a></th>
+													 <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="data_m">3.0 </td>
+</tr>
+
+<tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="./img/ms.png" > </a></th>
+													 <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="data_m">3.0 </td>
+</tr>
+
+<tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission/"> <img class="com" src="./img/ms.png" > </a></th>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="data_m">3.0 </td>
+
+<tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="./img/ms.png" > </a></th>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                                    <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+													<td class="data_m">5.0 </td>
+</tr>
+</table>
+                 <div class="btn">
+
+                    <button class="look">Сохранить</button>
+                </div>
+
+                  <nav>
+	<ul class="pagination">
+		<li class="pagination-item">
+			<a href="#!">←</a>
+		</li>
+		<li class="pagination-item pg-active">
+			<a href="#!">1</a>
+		</li>
+		<li class="pagination-item">
+			<a href="#!">2</a>
+		</li>
+		<li class="pagination-item">
+			<a href="#!">3</a>
+		</li>
+		<li class="pagination-item">
+			<a href="#!">4</a>
+		</li>
+		<li class="pagination-item">
+			<a href="#!">→</a>
+		</li>
+	</ul>
+</nav>
 
 
+             </div>
+          </section>
+       </div>
 
-
-</footer>
-
-
-</div>
-</body>
-</html>
+{%endblock%}

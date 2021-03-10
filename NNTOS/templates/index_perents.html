@@ -1,444 +1,133 @@
-<!DOCTYPE html>
-<html lang="ru">
-{%load static%}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel = "stylesheet" href= "{%static '/css/style_p.css' %}">
-     <link rel = "stylesheet" href= "{%static '/css/footer.css' %}">
-    <link rel = "stylesheet" href= "{%static '/css/diary.css' %}">
-    <link rel = "stylesheet" href= "{%static '/css/news.css' %}">
-    <link rel = "stylesheet" href= "{%static '/css/notify.css' %}">
-    <title>{{title}}</title>
-
-</head>
-<body>
-<div id="glavnaya" class="container">
-<header class="header_rect"></header>
+{% extends 'base_index.html'%}
 
 
-
-<header class="header">
-
-    <div class="wrapper">
-
-        <div class="header_wrapper">
-        <div class="header_logo">
-            <a href="/" class="header_logo-link">
-                <img src="{%static '/img/svg/logo.svg' %}" alt="ННТОС" class="header_logo-pic">
-            </a>
-        </div>
-
-
-
-        <nav class="header_nav">
-
-        <ul class="header-list">
-
-             <li class="header-item">
-                   <img src="{%static '/img/svg/phone.svg'%}" alt="phone" class="phone" style="margin-right: 15px;" >
-
-                <a href="#!" class="header-link">8 (800) 123-45-67</a>
-            </li>
-                <li class="header-item">
-                     <img src="{%static '/img/svg/profil.svg'%}" alt="profil" class="profil" style="margin-right: 15px;" >
-                <a href="login_form.html#login" class="header-link">Выйти</a>
-
-                </li>
-
-
-                    </ul>
-
-                    </nav>
-
-        <div class="line">
-            <hr width="1140px";/>
-
-</div>
-
-
-
-        </div>
-
-        <div class="header1_wrapper">
-            <nav class="header1_nav">
-                <ul class="header-list">
-                    <li class="header1-item">
-                         <a href="#glavnaya" class="header-link">Главная</a>
-                    </li>
-
-                     <li class="header1-item">
-                         <a href="#dosca" class="header-link">Доска объявлений</a>
-                    </li>
-
-                     <li class="header1-item">
-                         <a href="#dnevnik" class="header-link">Электронный дневник</a>
-                    </li>
-
-                     <li class="header1-item">
-                         <a href="#uved" class="header-link">Уведомления</a>
-                    </li>
-                </ul>
-
-            </nav>
-        </div>
-
-
-
-
-    </div>
-    </header>
-
-
-
-    <main class="main">
-
-        <section class="mainimg">
-            <div class="NNTOS">
-        <p>НИЖЕГОРОДСКИЙ ТЕХНИКУМ ТРАНСПОРТНОГО ОБЛСУЖИВАНИЯ И СЕРВИСА</p>
-    </div>
-    </section>
-
-
-
-    <div class="about_us">
-    <section class="about">
-        <div class="left_block">
-
-        <p class="title_about"> Почему выбирают нас?</p>
-            <img src="{%static '/img/students.jpg'%}" alt="st" class="students">
-
-    </div>
-
-        <div  id="dosca"  class="right_block">
-            <p class="abz">
-
-            <p class="abz1"> ГБПОУ «Нижегородский техникум транспортного обслуживания и сервиса» —  был основан 23 июля 1941 года.</p>
-              <p> <br> </p>
-            <p class="abz2">С этого  периода по настоящее время техникум готовит специалистов железнодорожного транспорта.</p>
-              <p> <br> </p>
-            <p class="abz3">Обучение ведут высококвалифицированные преподаватели, педагоги, мастера производственного обучения. За время своего существования техникум выпустил более 20 000 специалистов, многие из которых занимают руководящие должности  в системе железнодорожного транспорта.</p>
-            </p>
-        </div>
-
-    </section>
-
-    </div>
-
-<!--таблица новостей-->
-    <div class="b_parent">
-        <section class="board_parents">
-
-        <div class="board_wrapper">
-            <div class="title_bord">
-            <div class="left_bord">
-            <p class="board_txt">Доска объявлений</p>
-            </div>
-
-            <div class="right_bord">
-                <form method="post">
-                <select name="sorting" id="sorting" class="sorting">
-                    <option value="first">Сначала первые</option>
-                    <option value="last">Сначала последние</option>
-                </select>
-                </form>
-            </div>
-            </div>
-        </div>
-
-        {%for n in news%}
-        <div class="board_wrapper">
-            <div  class="block">
-                <div class="txt_block">
-                    <p class="title_block">{{n.title}}</p>
-                    <p  style="margin-top: 10px;" class=""> Опубликовано {{n.published_at}}</p>
-                </div>
-                <div class="btn">
-                    <button onclick="window.location.href = '{{n.get_absolute_url}}';" class="look" > Посмотреть</button>
-                </div>
-            </div>
-        </div>
-         {%endfor%}
-
-
-<!--пагинация новостей-->
- <div class="board_wrapper">
-            <nav>
-                {% if news.has_other_pages%}
-                <ul class="pagination">
-                    {% if news.has_previous%}
-                        <li class="pagination-item">
-                                <a href="?page={{news.previous_page_number}}#dosca">&lt;</a>
-                        </li>
-                        {%if news.number|add:-1 > news.paginator.page_range|first%}
-
-                            <li class="pagination-item">
-                                <a href="?page={{news.paginator.page_range|first}}#dosca">{{news.paginator.page_range|first}}</a>
-                            </li>
-                            <li class="paginpg-active">
-                                        <p class="paginp">...</p>
-                            </li>
-                        {%endif%}
-                    {%else%}
-                    <li class="paginpg-active">
-                        <p class="paginp">&lt;</p>
-                    </li>
-                    {%endif%}
-                    {%for p in news.paginator.page_range%}
-                        {% if news.has_previous%}
-
-                            {%if news.number == p %}
-                            <li class="paginpg-active">
-                                <p class="paginp">{{p}}</p>
-                            </li>
-                            {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
-                            <li class="pagination-item">
-                                <a href="?page={{p}}#dosca">{{p}}</a>
-                            </li>
-
-                            {%endif%}
-                        {%else%}
-                            {%if news.number == p %}
-                            <li class="paginpg-active">
-                                <p class="paginp">{{p}}</p>
-                            </li>
-                            {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
-                            <li class="pagination-item">
-                                <a href="?page={{p}}#dosca">{{p}}</a>
-                            </li>
-                            {%endif%}
-                        {%endif%}
-                    {%endfor%}
-                {%endif%}
-              {% if news.has_next%}
-                    {%if news.number|add:1 < news.paginator.page_range|last%}
-                    <li class="paginpg-active">
-                                <p class="paginp">...</p>
-                    </li>
-                    <li class="pagination-item">
-                        <a href="?page={{news.paginator.page_range|last}}#dosca">{{news.paginator.page_range|last}}</a>
-                    </li>
-                    {%endif%}
-                    <li class="pagination-item">
-                        <a href="?page={{news.next_page_number}}#dosca">&gt;</a>
-                    </li>
-              {%else%}
-                    <li class="paginpg-active">
-                        <p class="paginp">&gt;</p>
-                    </li>
-              {%endif%}
-
-	            </ul>
-            </nav>
-        </div>
-        </section>
-    </div>
-
-
-
+{%block body%}
+<!--Дневник - расписание с оценками на неделю -->
     <div id="dnevnik" >
          <section class="diary_par">
               <div class="board_wrapper">
-                   <p class="title_about"> Электронный дневник</p>
-
+                  <p class="title_about"> Электронный дневник</p>
                   <div class="week_days">
-            <select name="sorting" id="sorting_week" class="sorting_week">
-                  <option value="1">08-13.02.2021</option>
-                        <option value="2">15-20.02.2021</option>
-                        <option value="3">22-27.02.2021</option>
-                    </select>
-        </div>
+                        <select name="sorting" id="sorting_week" class="sorting_week">
+                          <option value="1">08-13.02.2021</option>
+                                <option value="2">15-20.02.2021</option>
+                                <option value="3">22-27.02.2021</option>
+                        </select>
+                  </div>
                   <div class="name_stud">
                        <p class="title_about" > {{student}}</p>
                       <p class="title_about" > {{student.n_group}}</p>
-
                   </div>
+                <table class = "tablle">
+                <tr>
+                    {%for weekday,schedule_d in schedule%}
+                        {%if forloop.counter in chet%}
+                            <td> <p class="week"> {{weekday}} </p>
+                            <table class="dnevnik">
 
-<!--  тут таблица с дневником -->
+                            {%for lesson in schedule_d%}
+                            <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
 
-        <table class = "tablle">
-        <tr>
-            {%for weekday,schedule_d in schedule%}
-                {%if forloop.counter in chet%}
-                    <td> <p class="week"> {{weekday}} </p>
-                    <table class="dnevnik">
+                            {%endfor%}
+                        </table>
+                        </td></tr>
+                            <tr>
+                        {%else%}
+                            <td> <p class="week"> {{weekday}} </p>
+                            <table class="dnevnik">
 
-                    {%for lesson in schedule_d%}
-                    <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
+                                {%for lesson in schedule_d%}
+                                <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
 
+                                {%endfor%}
+                            </table>
+                            </td>
+                        {%endif%}
                     {%endfor%}
+                </tr>
                 </table>
-                </td></tr>
-                    <tr>
-                {%else%}
-                    <td> <p class="week"> {{weekday}} </p>
-                    <table class="dnevnik">
-
-                        {%for lesson in schedule_d%}
-                        <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
-
-                        {%endfor%}
-                    </table>
-                    </td>
-                {%endif%}
-            {%endfor%}
-        </tr>
-        </table>
-
               </div>
-
          </section>
-
     </div>
 
 
+<!--Уведомления для родителей от преподавателя-->
 
-
-<div id="uved" class="notify_parents">
+    <div id="uved" class="notify_parents">
          <section class="notification_parents">
-
-    <div class="board_wrapper">
-        <div class="title_bord">
-        <div class="left_bord">
-        <p class="board_txt">Уведомления</p>
+            <div class="board_wrapper">
+                <div class="title_bord">
+                    <div class="left_bord">
+                    <p class="board_txt">Уведомления</p>
+                    </div>
+                    <div class="right_bord">
+                        <select name="sorting" id="sorting_notify" class="sorting_notify">
+                              <option value="All">Все</option>
+                                    <option value="first">Сначала первые</option>
+                                    <option value="last">Сначала последние</option>
+                                </select>
+                    </div>
+                </div>
             </div>
-
-        <div class="right_bord">
-            <select name="sorting" id="sorting_notify" class="sorting_notify">
-                  <option value="All">Все</option>
-                        <option value="first">Сначала первые</option>
-                        <option value="last">Сначала последние</option>
-                    </select>
-        </div>
-        </div>
-        </div>
-
-              <div class="board_wrapper">
-                <div  class="block">
-    <p class="title_block_noty">Преподаватель:</p>
-
-         <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-
-         <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-
-         <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-
-                  <div  class="block">
-    <p class="title_block_noty">Преподаватель:</p>
-
-         <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-
-         <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-
-         <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-
-                  <div  class="block">
-    <p class="title_block_noty">Преподаватель:</p>
-
-         <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-
-         <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-
-         <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-
-                  <div  class="block">
-    <p class="title_block_noty">Преподаватель:</p>
-
-         <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-
-         <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-
-         <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-
-            </div>
-
              <div class="board_wrapper">
+                <div  class="block">
+                    <p class="title_block_noty">Преподаватель:</p>
+                    <p class="title_block_notify">Иванов М.И.</p>
+                    <button class="look_noty">Посмотреть</button>
+                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
+                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
+                </div>
+                <div  class="block">
+                    <p class="title_block_noty">Преподаватель:</p>
+                    <p class="title_block_notify">Иванов М.И.</p>
+                    <button class="look_noty">Посмотреть</button>
+                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
+                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
+                </div>
+                <div  class="block">
+                    <p class="title_block_noty">Преподаватель:</p>
+                    <p class="title_block_notify">Иванов М.И.</p>
+                    <button class="look_noty">Посмотреть</button>
+                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
+                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
+                </div>
+                <div  class="block">
+                    <p class="title_block_noty">Преподаватель:</p>
+                    <p class="title_block_notify">Иванов М.И.</p>
+                    <button class="look_noty">Посмотреть</button>
+                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
+                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
+                </div>
+            </div>
+            <div class="board_wrapper">
                <nav>
-        <ul class="pagination">
-            <li class="pagination-item">
-                <a href="#!">←</a>
-            </li>
-            <li class="pagination-item pg-active">
-                <a href="#!">1</a>
-            </li>
-            <li class="pagination-item">
-                <a href="#!">2</a>
-            </li>
-            <li class="pagination-item">
-                <a href="#!">3</a>
-            </li>
-            <li class="pagination-item">
-                <a href="#!">4</a>
-            </li>
-            <li class="pagination-item">
-                <a href="#!">→</a>
-            </li>
-        </ul>
-    </nav>
-         </div>
-            </section>
-        </div>
-
-    </section>
-
-
-
-</main>
-
-<footer>
-<section class="footer">
-
-    <div class="nav_bar">
-        <ul id="navbar">
-      <li><a href="#" >Главная</a></li>
-      <li><a href="#">Доска объявлений</a></li>
-      <li><a href="#">Расписание</a></li>
-      <li><a href="#">Электронный журнал</a></li>
-    </ul>
-
+                    <ul class="pagination">
+                        <li class="pagination-item">
+                            <a href="#!">←</a>
+                        </li>
+                        <li class="pagination-item pg-active">
+                            <a href="#!">1</a>
+                        </li>
+                        <li class="pagination-item">
+                            <a href="#!">2</a>
+                        </li>
+                        <li class="pagination-item">
+                            <a href="#!">3</a>
+                        </li>
+                        <li class="pagination-item">
+                            <a href="#!">4</a>
+                        </li>
+                        <li class="pagination-item">
+                            <a href="#!">→</a>
+                        </li>
+                    </ul>
+               </nav>
+            </div>
+         </section>
     </div>
 
-        <div class="contact">
-
-            <p class="contacts"> Контакты </p>
-            <p class="contacts_dom"> г. Нижний Новгород
-                Ул. Народная дом 78 +7 (495)-123-55-67</p>
-            <p class="contacts"> Мы в соцсетях </p>
-         <p style="margin-top:15px;" class="icon">
-
-             <a href="#!"><img src="{%static 'img/svg/VK.svg'%}"  alt="VK"></a>&nbsp;&nbsp;
-             <a href="#!"><img src="{%static 'img/svg/inst.svg'%}"  alt="inst"></a>&nbsp;&nbsp;
-             <a href="#!"><img src="{%static 'img/svg/twitter.svg' %}"  alt="twitter"></a>
-
-         </p>
-
-
-            </div>
-
-        <p class="prava">
-            ННТОС-2021 - Все права защищены
-        </p>
-
-
-</section>
-
-</footer>
-
-
-
-
-</div>
-</body>
-</html>
+{%endblock%}
