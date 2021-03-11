@@ -45,21 +45,11 @@
         <div class="header1_wrapper">
             <nav class="header1_nav">
                 <ul class="header-list">
+                    {%for link, title_m in menu%}
                     <li class="header1-item">
-                         <a href="#glavnaya" class="header-link">Главная</a>
+                         <a href={{link}} class="header-link">{{title_m}}</a>
                     </li>
-
-                     <li class="header1-item">
-                         <a href="#dosca" class="header-link">Доска объявлений</a>
-                    </li>
-
-                     <li class="header1-item">
-                         <a href="#dnevnik" class="header-link">Электронный дневник</a>
-                    </li>
-
-                     <li class="header1-item">
-                         <a href="#uved" class="header-link">Уведомления</a>
-                    </li>
+                    {%endfor%}
                 </ul>
 
             </nav>
@@ -208,11 +198,10 @@
 
     <div class="nav_bar">
         <ul id="navbar">
-      <li><a href="#" >Главная</a></li>
-      <li><a href="#">Доска объявлений</a></li>
-      <li><a href="#">Расписание</a></li>
-      <li><a href="#">Электронный журнал</a></li>
-    </ul>
+            {% for link, title_f in menu%}
+                <li><a href={{link}} >{{title_f}}</a></li>
+            {%endfor%}
+        </ul>
 
     </div>
 

@@ -30,14 +30,20 @@ class ParentsView(View):
         #if order_news == 'last':
         #    news = News.objects.filter(published_for_parents=True).order_by('published_at')
         #else:
+        menu = {'#glavnaya': 'Главная',
+                '#dosca': 'Доска объявлений',
+                '#dnevnik': 'Электронный дневник',
+                '#uved': 'Уведомления'
+                }
         news = News.objects.filter(published_for_parents=True)
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
         return render(request, 'index_perents.html', context={'student': student,
+                                                              'menu': menu.items(),
                                                               'schedule': schedule.items(),
                                                               'title': f'Дневник|{student}',
-                                                              'chet': [2, 4, 6],
+                                                              #'chet': [2, 4, 6],
                                                               'news': page_obj,
                                                               })
 
@@ -45,11 +51,17 @@ class ParentsView(View):
 class TeacherView(View):
     def get(self, request, teacher_name):
         teacher = get_object_or_404(Teacher, slug=teacher_name)
+        menu = {'#glavnaya': 'Главная',
+                '#dosca': 'Доска объявлений',
+                '#schedule_teacher': 'Расписание',
+                '#journal': 'Электронный журнал'
+                }
         news = News.objects.filter(published_for_teacher=True)
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
         return render(request, 'index_teach.html', context={'teacher': teacher,
+                                                            'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
                                                             'news': page_obj})
 
