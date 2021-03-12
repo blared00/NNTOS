@@ -11,6 +11,7 @@
     <link rel = "stylesheet" href= "{%static '/css/diary.css' %}">
     <link rel = "stylesheet" href= "{%static '/css/news.css' %}">
     <link rel = "stylesheet" href= "{%static '/css/notify.css' %}">
+    <link rel = "stylesheet" href= "{%static '/css/journal.css' %}">
     <title>{{title}}</title>
 </head>
 <body>
@@ -164,25 +165,25 @@
                             {%endif%}
                         {%endif%}
                     {%endfor%}
-                {%endif%}
-              {% if news.has_next%}
-                    {%if news.number|add:1 < news.paginator.page_range|last%}
-                    <li class="paginpg-active">
-                                <p class="paginp">...</p>
-                    </li>
-                    <li class="pagination-item">
-                        <a href="?page={{news.paginator.page_range|last}}#dosca">{{news.paginator.page_range|last}}</a>
-                    </li>
-                    {%endif%}
-                    <li class="pagination-item">
-                        <a href="?page={{news.next_page_number}}#dosca">&gt;</a>
-                    </li>
-              {%else%}
-                    <li class="paginpg-active">
-                        <p class="paginp">&gt;</p>
-                    </li>
-              {%endif%}
 
+                      {% if news.has_next%}
+                            {%if news.number|add:1 < news.paginator.page_range|last%}
+                            <li class="paginpg-active">
+                                        <p class="paginp">...</p>
+                            </li>
+                            <li class="pagination-item">
+                                <a href="?page={{news.paginator.page_range|last}}#dosca">{{news.paginator.page_range|last}}</a>
+                            </li>
+                            {%endif%}
+                            <li class="pagination-item">
+                                <a href="?page={{news.next_page_number}}#dosca">&gt;</a>
+                            </li>
+                      {%else%}
+                            <li class="paginpg-active">
+                                <p class="paginp">&gt;</p>
+                            </li>
+                      {%endif%}
+                {%endif%}
 	            </ul>
             </nav>
         </div>
