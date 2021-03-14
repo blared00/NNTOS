@@ -4,112 +4,56 @@
 {%block body%}
     <div id="schedule_teacher" class="schedule_teacher">
          <section class="schedule_teach">
-<div class="board_wrapper">
+            <div class="board_wrapper">
 
-    <p style="margin-top:55px;" class="title_about">Расписание</p>
+                <p style="margin-top:55px;" class="title_about">Расписание</p>
 
-<div class="wrapper_schedule">
- <div class="days">
-     <nav>
+            <div class="wrapper_schedule">
+             <div class="days">
+                 <nav>
 
-         <ul class="days_of_week">
-		<li class="days-item">
-			<a href="#!">ПН</a>
-		</li>
+                     <ul class="days_of_week">
+                         {% for scr_w, day in weekdays%}
+                            <li class="days-item">
+                                {% if day == weekday_get%}
+                                <p>{{scr_w}}</p>
+                                {%else%}
+                                <a href="?wd={{day}}#schedule_teacher">{{scr_w}}</a>
+                                {%endif%}
+                            </li>
+                        {%endfor%}
+                     </ul>
 
-		<li class="days-item">
-			<a href="#!">ВТ</a>
-		</li>
-		<li class="days-item">
-			<a href="#!">СР</a>
-		</li>
-		<li class="days-item">
-			<a href="#!">ЧТ</a>
-		</li>
-		<li class="days-item">
-			<a href="#!">ПТ</a>
-		</li>
-             <li class="days-item">
-			<a href="#!">СБ</a>
-		</li>
-	</ul>
+                 </nav>
 
-     </nav>
+             </div>
 
- </div>
-
-    <div class="name_teacher">
-         <p  class="title_about">Иванова С.И.</p>
-    </div>
-    </div>
+                <div class="name_teacher">
+                     <p  class="title_about">{{teacher.lastname}} {{teacher.firstname|first}}. {{teacher.patronymic|first}}.</p>
+                </div>
+                </div>
 
 
-        <div class="wrapper_schedule">
+                    <div class="wrapper_schedule">
 
-    <div style="margin-top:247px;" class="block_sched">
-    <div class="num">
-    <p class="number">1</p>
-    </div>
-
-    </div>
-
-
-            <div class="block_sched">
-    <div class="num">
-    <p class="number">2</p>
-    </div>
-    <div class="subject">
-    <p class="sub"> Иностранный язык </p>
-        <p class="name_gr">Гр. 20-ТЭПС каб. 107</p>
-    </div>
-    </div>
-
-
-            <div class="block_sched">
-    <div class="num">
-    <p class="number">3</p>
-    </div>
-    <div class="subject">
-    <p class="sub"> Иностранный язык </p>
-        <p class="name_gr">Гр. 20-ТЭПС каб. 107</p>
-    </div>
-    </div>
-
-                   <div class="block_sched">
-    <div class="num">
-    <p class="number">4</p>
-    </div>
-    <div class="subject">
-    <p class="sub"> Иностранный язык </p>
-        <p class="name_gr">Гр. 20-ТЭПС каб. 107</p>
-    </div>
-    </div>
-
-                   <div class="block_sched">
-    <div class="num">
-    <p class="number">5</p>
-    </div>
-    <div class="subject">
-    <p class="sub"> Иностранный язык </p>
-        <p class="name_gr">Гр. 20-ТЭПС каб. 107</p>
-    </div>
-    </div>
-
-            <div class="block_sched">
-    <div class="num">
-    <p class="number">6</p>
-    </div>
-    <div class="subject">
-    <p class="sub"> Иностранный язык </p>
-        <p class="name_gr">Гр. 20-ТЭПС каб. 107</p>
-    </div>
-    </div>
-
-
-</div>
- </div>
+                        <div style="margin-top:247px;" class="block_sched">
+                        {%for lesson in schedule%}
+                        <div class="block_sched">
+                            <div class="num">
+                                <p class="number">{{forloop.counter}}</p>
+                            </div>
+                            <div class="subject">
+                                {%if lesson%}
+                                    <p class="sub"> {{lesson.discipline.discipline|capfirst}}</p>
+                                    <p class="name_gr">Гр. {{lesson.n_group}} каб. {{lesson.class_room}}</p>
+                                {%endif%}
+                            </div>
+                        </div>
+                        {%endfor%}
+                        </div>
+                    </div>
+            </div>
          </section>
-
     </div>
 
 <!-- Журнал-->

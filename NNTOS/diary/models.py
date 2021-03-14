@@ -1,7 +1,7 @@
 from django.db import models
 from django.urls import reverse
 
-#weekdays = {'пн': 'Понедельник', 'вт': 'Вторник', 'ср': 'Среда', 'чт': 'Четверг', 'пт': 'Пятница', 'сб': 'Суббота', }
+weekdays_list = {'ПН': 'Понедельник', 'ВТ': 'Вторник', 'СР': 'Среда', 'ЧТ': 'Четверг', 'ПТ': 'Пятница', 'СБ': 'Суббота', }
 weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четверг', 'Пятница', 'Суббота', ]
 
 
@@ -143,7 +143,6 @@ class Mark(models.Model):
     discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
     date = models.DateField()
-    comment = models.CharField(max_length=50, verbose_name='Коментарий', blank=True)
 
     def __str__(self):
         return f'{self.date} {self.discipline} {self.student}'
@@ -151,3 +150,16 @@ class Mark(models.Model):
     class Meta:
         verbose_name = 'Оценка '
         verbose_name_plural = 'Оценки'
+
+
+class Comment(models.Model):
+    text = models.TextField(max_length=50, verbose_name='Комментарий')
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    date = models.DateField()
+
+    def __str__(self):
+        return f'{self.date} {self.student}'
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'

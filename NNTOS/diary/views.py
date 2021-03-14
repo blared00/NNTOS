@@ -25,6 +25,7 @@ class ParentsView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
+        print(schedule)
         ''' Отображение новстей и пагинация'''
         order_news = request.GET.get('sorting')
         #if order_news == 'last':
@@ -43,7 +44,7 @@ class ParentsView(View):
                                                               'menu': menu.items(),
                                                               'schedule': schedule.items(),
                                                               'title': f'Дневник|{student}',
-                                                              #'chet': [2, 4, 6],
+                                                              'chet': [2, 4, 6],
                                                               'news': page_obj,
                                                               })
 
@@ -51,19 +52,40 @@ class ParentsView(View):
 class TeacherView(View):
     def get(self, request, teacher_name):
         teacher = get_object_or_404(Teacher, slug=teacher_name)
+        schedule = {}
+        weekdays_t = Weekday.objects.all()
+
+        for weekday in weekdays_t:
+            a = ['', '', '', '', '', '']
+
+            lessons = weekday.schedulegroup_set.filter(discipline__teacher=teacher)
+            for n in range(0, 6):
+                for l in lessons:
+                    if l.lesson.pk == n+1:
+                        a[n]=l
+            schedule[weekday] = a
+        if request.GET.get('wd'):
+            weekday_get = request.GET.get('wd')
+            schedule_w = get_object_or_404(Weekday, name=weekday_get)
+        else:
+            weekday_get = 'Понедельник'
+            schedule_w = Weekday.objects.get(name=weekday_get)
         menu = {'#glavnaya': 'Главная',
                 '#dosca': 'Доска объявлений',
                 '#schedule_teacher': 'Расписание',
                 '#journal': 'Электронный журнал'
                 }
         news = News.objects.filter(published_for_teacher=True)
-        paginator_news = Paginator(news, 5)
+        paginator_news = Paginator(news, 1)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
         return render(request, 'index_teach.html', context={'teacher': teacher,
                                                             'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
-                                                            'news': page_obj})
+                                                            'news': page_obj,
+                                                            'schedule': schedule[schedule_w],
+                                                            'weekdays': weekdays_list.items(),
+                                                            'weekday_get': weekday_get})
 
 
 class LoginView(View):
