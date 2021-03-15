@@ -9,7 +9,8 @@
                 <p style="margin-top:55px;" class="title_about">Расписание</p>
 
             <div class="wrapper_schedule">
-             <div class="days">
+                <!-- Разделение по дням недели-->
+            <!-- <div class="days">
                  <nav>
 
                      <ul class="days_of_week">
@@ -26,15 +27,15 @@
 
                  </nav>
 
-             </div>
+             </div>-->
 
                 <div class="name_teacher">
                      <p  class="title_about">{{teacher.lastname}} {{teacher.firstname|first}}. {{teacher.patronymic|first}}.</p>
                 </div>
                 </div>
 
-
-                    <div class="wrapper_schedule">
+<!-- Отображение крупных объектов расписания и разделение по дням недели-->
+                    <!--<div class="wrapper_schedule">
 
                         <div style="margin-top:247px;" class="block_sched">
                         {%for lesson in schedule%}
@@ -51,7 +52,7 @@
                         </div>
                         {%endfor%}
                         </div>
-                    </div>
+                    </div>-->
             </div>
          </section>
     </div>

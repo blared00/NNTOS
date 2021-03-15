@@ -54,7 +54,10 @@ class TeacherView(View):
         teacher = get_object_or_404(Teacher, slug=teacher_name)
         schedule = {}
         weekdays_t = Weekday.objects.all()
+        weekdays_n = [0, 3, 1, 4, 2, 5]
 
+        for n in range(0, 6):
+            weekdays_n[n] = weekdays_t[weekdays_n[n]]
         for weekday in weekdays_t:
             a = ['', '', '', '', '', '']
 
@@ -64,12 +67,14 @@ class TeacherView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
+
+        '''Представление расписания в постраничную форму
         if request.GET.get('wd'):
             weekday_get = request.GET.get('wd')
             schedule_w = get_object_or_404(Weekday, name=weekday_get)
         else:
             weekday_get = 'Понедельник'
-            schedule_w = Weekday.objects.get(name=weekday_get)
+            schedule_w = Weekday.objects.get(name=weekday_get)'''
         menu = {'#glavnaya': 'Главная',
                 '#dosca': 'Доска объявлений',
                 '#schedule_teacher': 'Расписание',
