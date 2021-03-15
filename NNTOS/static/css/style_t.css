@@ -16,7 +16,7 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
+
 }
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -589,92 +589,6 @@ border: none;
 
 
 
-/* schedule for teacher  START*/
-
-.schedule_teach{
-width: 1440px;
-height:990px;
-background: url(../img/schedule.jpg)
-
-}
-
-.wrapper_schedule{
-max-width: 740px;
-margin: 0 auto;
-}
-
-.days{
-float: left;
-
-}
-
-
-.days_of_week {
-margin-top: 148px;
-display: flex;
-}
-
-.days_of_week a{
-padding: 11px 15px 11px 15px;
-display: flex;
-text-decoration: none;
-border: none;
-
-font-weight: bold;
-font-size: 28px;
-line-height: 126%;
-display: flex;
-align-items: center;
-color: #959595;
-}
-
-.days_of_week a:hover{
-text-decoration-line: underline;
-color: #07254F;
-}
-
-.name_teacher{
-margin-top: 148px;
-float: right;
-}
-
-.block_sched{
-width: 740px;
-height: 79px;
-background: #E3E6F7;
-border-radius: 10px;
-margin-top: 20px;
-}
-
-.num{
-float: left;
-margin-left: 24px;
-margin-top: 20px;
-}
-.number{
-font-weight: bold;
-font-size: 36px;
-line-height: 42px;
-color: #000000;
-}
-.subject{
-padding-top: 15px;
-margin-left: 115px;
-}
-.sub{
-
-font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-color: #000000;}
-
-.name_gr{
-margin-top: 8px;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
 
 
 /* submission form  START*/

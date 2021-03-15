@@ -3,7 +3,7 @@
 {%load static%}
 {%block body%}
     <div id="schedule_teacher" class="schedule_teacher">
-         <section class="schedule_teach">
+         <section class="schedule_teach1">
             <div class="board_wrapper">
 
                 <p style="margin-top:55px;" class="title_about">Расписание</p>
@@ -29,11 +29,55 @@
 
              </div>-->
 
-                <div class="name_teacher">
+                <div class="name_teacher1">
                      <p  class="title_about">{{teacher.lastname}} {{teacher.firstname|first}}. {{teacher.patronymic|first}}.</p>
                 </div>
                 </div>
-
+                <div>
+                    <table class = "tablle1">
+                        <tr>
+                        {%for weekday,schedule_d in schedule%}
+                            {%if forloop.counter in chet%}
+                                <td> <p class="week1"> {{weekday}} </p>
+                                    <table class="dnevnik1">
+                                        {%for lesson in schedule_d%}
+                                            {%if lesson%}
+                                                <tr> <td  class="sub1"> <p class="subb1">{{forloop.counter}} {{lesson.discipline.discipline|capfirst|truncatechars:30}}</p> <p class="group1"> Гр.
+                                                    {{lesson.n_group}} каб. {{lesson.class_room}} </p></td>  <td class="time1">
+                                                    {{lesson.lesson.time_start}} </td>
+                                            {%else%}
+                                                <tr> <td  class="sub1"> <p class="subb1">{{forloop.counter}} {{lesson.discipline.discipline|capfirst|truncatechars:30}}</p> <p class="group1">
+                                                     </p></td>  <td class="time1">
+                                                    {{lesson.lesson.time_start}} </td>
+                                            {%endif%}
+                                        {%endfor%}
+                                        </tr>
+                                    </table>
+                                </td>
+                        </tr>
+                        <tr>
+                            {%else%}
+                                <td> <p class="week1"> {{weekday}} </p>
+                                    <table class="dnevnik1">
+                                        {%for lesson in schedule_d%}
+                                            {%if lesson%}
+                                            <tr> <td class="sub1"> <p class="subb1">{{forloop.counter}} {{lesson.discipline.discipline|capfirst|truncatechars:30}}</p> <p class="group1"> Гр.
+                                                {{lesson.n_group}} каб. {{lesson.class_room}} </p></td>  <td class="time1">
+                                                {{lesson.lesson.time_start}} </td>
+                                            {%else%}
+                                                <tr> <td  class="sub1"> <p class="subb1">{{forloop.counter}} {{lesson.discipline.discipline|capfirst|truncatechars:30}}</p> <p class="group1">
+                                                </p></td>  <td class="time1">
+                                                {{lesson.lesson.time_start}} </td>
+                                            {%endif%}
+                                        {%endfor%}
+                                        </tr>
+                                    </table>
+                                </td>
+                            {%endif%}
+                        {%endfor%}
+                        </tr>
+                    </table>
+                </div>
 <!-- Отображение крупных объектов расписания и разделение по дням недели-->
                     <!--<div class="wrapper_schedule">
 

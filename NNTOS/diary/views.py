@@ -25,8 +25,8 @@ class ParentsView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
-        print(schedule)
-        ''' Отображение новстей и пагинация'''
+
+        ''' Отображение новостей и пагинация'''
         order_news = request.GET.get('sorting')
         #if order_news == 'last':
         #    news = News.objects.filter(published_for_parents=True).order_by('published_at')
@@ -58,7 +58,7 @@ class TeacherView(View):
 
         for n in range(0, 6):
             weekdays_n[n] = weekdays_t[weekdays_n[n]]
-        for weekday in weekdays_t:
+        for weekday in weekdays_n:
             a = ['', '', '', '', '', '']
 
             lessons = weekday.schedulegroup_set.filter(discipline__teacher=teacher)
@@ -81,16 +81,18 @@ class TeacherView(View):
                 '#journal': 'Электронный журнал'
                 }
         news = News.objects.filter(published_for_teacher=True)
-        paginator_news = Paginator(news, 1)
+        paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
         return render(request, 'index_teach.html', context={'teacher': teacher,
                                                             'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
                                                             'news': page_obj,
-                                                            'schedule': schedule[schedule_w],
+                                                            'schedule': schedule.items(),
                                                             'weekdays': weekdays_list.items(),
-                                                            'weekday_get': weekday_get})
+                                                            'chet': [2, 4, 6], # для отображения расписания в таблицу
+                                                            #'weekday_get': weekday_get, Применяется в случае использования постраничного отображения расписанию
+                                                            })
 
 
 class LoginView(View):
