@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ru">
+{%load static%}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel = "stylesheet" href= "{%static '/css/style_t.css' %}">
+    <title>Form</title>
+</head>
+<body>
+
+<div id ="login" class="containerr">
+    <div class="rectangle">
+        <div>
+        <p class="login"> ВХОД </p>
+        <p class="nntos">Нижегородский техникум транспортного обслуживания и сервиса</p>
+        </div>
+
+        <form method="post" action={{uservalue}} >
+            {%csrf_token%}
+            <div class="form-error">{{form.non_fields_error}}</div>
+        <div class="log_pas">
+            <p class="log">
+            {%for f in form%}
+            <div class="logi"><label for="{{f.id_for_label}}">{{f.label}}</label></div>
+            {{f}}
+            <div class="form-error">{{f.errors}}</div>
+            {%endfor%}
+        <!--<p class="pas">Пароль</p>
+        <input type="password" class="input" placeholder="&nbsp;Введите пароль">
+        </div>--></p>
+        </div>
+<div style="margin-top: 80px;" class="bnt">
+        <button class="button"> Войти</button>
+</div>
+</form>
+        <div class="teh">
+
+
+        <p > <a href="#!" class="tehh"> Тех.поддержка</a> </p>
+            </div>
+
+
+
+    </div>
+    <div class="rightimg">
+
+              <img src="{%static '/img/train.jpg'%}" alt="train" class="train_jpg">
+        </div>
+
+</div>
+</body>
+</html>
