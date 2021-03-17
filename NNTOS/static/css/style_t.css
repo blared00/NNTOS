@@ -323,8 +323,12 @@ line-height: 16px;
 color: #000000;
 }
 .log{
-margin-left: 68px;
+
 margin-top: 145px;
+}
+.logi{
+margin-left: 68px;
+margin-top: 80px;
 }
 .input{
 margin-left: 68px;

@@ -13,18 +13,19 @@
 
 <div class="containerr">
     <div class="rectangle">
-
+        <form action={{username}} method="post">
         <p class="login"> ВХОД </p>
         <p class="nntos">Нижегородский техникум транспортного обслуживания и сервиса</p>
         <p class="log_pas">
-            <p class="log">Логин</p>
-        <input type="text" class="input" placeholder="&nbsp;Введите логин">
-        <p class="pas">Пароль</p>
-        <input type="password" class="input" placeholder="&nbsp;Введите пароль">
+            <label for="username" class="log">Логин</label>
+        <input id="username" type="text" class="input" placeholder="&nbsp;Введите логин">
+        <label for="password" class="pas">Пароль</label>
+        <input id="password" type="password" class="input" placeholder="&nbsp;Введите пароль">
         </p>
 <div class="bnt">
-        <button class="button"> Войти</button>
+        <input class="button" type="submit" value="Войти">
 </div>
+        </form>
         <div class="teh">
 
 

@@ -1,8 +1,11 @@
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.core.paginator import Paginator
 from django.http import HttpResponse
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.views import View
+
+from .form import LoginForm
 from .models import *
 # Create your views here.
 
@@ -95,12 +98,47 @@ class TeacherView(View):
                                                             })
 
 
-class LoginView(View):
-    def get(self, request):
-        return render(request, 'login_form.html')
+'''
+            return render(request, 'login_form.html')'''
 
 
 class NewsView(View):
     def get(self, request, news_slug):
         news_information = get_object_or_404(News, slug=news_slug)
         return HttpResponse(f'Здесь объявление {news_information}')
+
+class LoginView(View):
+    def get(self, request):
+
+        form = LoginForm(request.POST or None)
+        if form.is_valid():
+            uservalue = form.cleaned_data.get("username")
+            passwordvalue = form.cleaned_data.get("password")
+
+            user = authenticate(username=uservalue, password=passwordvalue)
+            if user is not None:
+                login(request, user)
+                context = {'form': form,
+                           'error': 'The login has been successful'}
+
+                return render(request, 'registration/login.html', context)
+            else:
+                context = {'form': form,
+                           'error': 'The username and password combination is incorrect'}
+
+                return render(request, 'registration/login.html', context)
+
+        else:
+            context = {'form': form, }
+            #return redirect(f'/teach/{request.user.username}')
+            return render(request, 'registration/login.html', context)
+
+
+def logout_view(request):
+    logout(request)
+
+
+
+class HomeView(View):
+    def get(self, request):\
+        return redirect('/login/')

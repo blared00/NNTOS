@@ -14,14 +14,19 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
+from django.shortcuts import redirect
 from django.urls import path, include
-from diary.views import ParentsView, TeacherView, LoginView, NewsView
+from diary.views import ParentsView, TeacherView, NewsView, LoginView, HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('<slug:student_name>', ParentsView.as_view(), name='student'),
+    path('student/<slug:student_name>', ParentsView.as_view(), name='student'),
     path('teach/<slug:teacher_name>', TeacherView.as_view(), name='teacher'),
     path('news/<slug:news_slug>', NewsView.as_view(), name='news'),
-    path('login/', LoginView.as_view()),
+    path('login/', LoginView.as_view(), name='login'),
+
+
+
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
+    path('', HomeView.as_view(), name='home')
 ]
