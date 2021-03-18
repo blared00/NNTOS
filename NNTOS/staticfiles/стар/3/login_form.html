@@ -11,29 +11,19 @@
 
 <div id ="login" class="containerr">
     <div class="rectangle">
-        <div>
+
         <p class="login"> ВХОД </p>
         <p class="nntos">Нижегородский техникум транспортного обслуживания и сервиса</p>
-        </div>
-
-        <form method="post" action={{uservalue}} >
-            {%csrf_token%}
-            <div class="form-error">{{form.non_fields_error}}</div>
-        <div class="log_pas">
-            <p class="log">
-            {%for f in form%}
-            <div class="logi"><label for="{{f.id_for_label}}">{{f.label}}</label></div>
-            {{f}}
-            <div class="form-error">{{f.errors}}</div>
-            {%endfor%}
-        <!--<p class="pas">Пароль</p>
+        <p class="log_pas">
+            <p class="log">Логин</p>
+        <input type="text" class="input" placeholder="&nbsp;Введите логин">
+        <p class="pas">Пароль</p>
         <input type="password" class="input" placeholder="&nbsp;Введите пароль">
-        </div>--></p>
-        </div>
+        </p>
 <div style="margin-top: 80px;" class="bnt">
         <button class="button"> Войти</button>
 </div>
-</form>
+
         <div class="teh">
 
 

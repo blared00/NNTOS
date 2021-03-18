@@ -16,16 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
-from diary.views import ParentsView, TeacherView, NewsView, LoginView, HomeView
+from diary.views import ParentsView, TeacherView, NewsView, LoginUser, HomeView, logout_view, redirect_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('student/<slug:student_name>', ParentsView.as_view(), name='student'),
     path('teach/<slug:teacher_name>', TeacherView.as_view(), name='teacher'),
     path('news/<slug:news_slug>', NewsView.as_view(), name='news'),
-    path('login/', LoginView.as_view(), name='login'),
-
-
+    path('login/', LoginUser.as_view(), name='login'),
+    path('logout/', logout_view, name='logout'),
+    path('redirectpage/', redirect_page, name='redirect_page'),
 
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('', HomeView.as_view(), name='home')

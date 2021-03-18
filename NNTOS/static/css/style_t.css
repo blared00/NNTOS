@@ -292,7 +292,6 @@ position: absolute;
 width: 65px;
 height: 28px;
 margin-left: 146px;
-
 font-weight: 900;
 font-size: 24px;
 line-height: 28px;
@@ -313,8 +312,8 @@ text-align: center;
 text-transform: uppercase;
 color: #000000;
 }
-.logpas{
 
+.logpas{
 width: 50px;
 height: 16px;
 font-weight: 500;
@@ -323,17 +322,24 @@ line-height: 16px;
 color: #000000;
 }
 .log{
-
-margin-top: 145px;
+margin-top: 130px;
 }
-.logi{
+.form-error-field{
 margin-left: 68px;
-margin-top: 80px;
+margin-right: 50px;
+margin-top: 10px;
+font-size: 14px;
+color: #CA0000;
+}
+.form-auth{
+margin-top: 10px;
+}
+.form-login{
+margin-left: 68px;
 }
 .input{
 margin-left: 68px;
 margin-top: 10px;
-position: absolute;
 width: 228px;
 height: 46px;
 border: 1px solid #D5D1D1;
@@ -348,18 +354,13 @@ outline:none;
 
 .input:focus{
 border:1px solid #07254F;
-
 }
 
-.pas{
-margin-left: 68px;
-margin-top: 77px;
-}
 
 .bnt{
-position: absolute;
-margin-left: 69px;
 
+margin-left: 69px;
+margin-top: 30px;
 
 }
 .button{
@@ -380,8 +381,12 @@ border: none;
 background: #E48080;
 }
 
+
+.teh{
+margin-top: 10px;
+}
+
 .tehh{
-position: absolute;
 margin-left: 130px;
 margin-top: 150px;
 width: 105px;

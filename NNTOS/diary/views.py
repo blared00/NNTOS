@@ -1,8 +1,10 @@
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+
+from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
 from django.views import View
 
 from .form import LoginForm
@@ -87,6 +89,7 @@ class TeacherView(View):
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
+
         return render(request, 'index_teach.html', context={'teacher': teacher,
                                                             'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
@@ -98,8 +101,7 @@ class TeacherView(View):
                                                             })
 
 
-'''
-            return render(request, 'login_form.html')'''
+
 
 
 class NewsView(View):
@@ -107,35 +109,29 @@ class NewsView(View):
         news_information = get_object_or_404(News, slug=news_slug)
         return HttpResponse(f'Здесь объявление {news_information}')
 
-class LoginView(View):
-    def get(self, request):
 
-        form = LoginForm(request.POST or None)
-        if form.is_valid():
-            uservalue = form.cleaned_data.get("username")
-            passwordvalue = form.cleaned_data.get("password")
+class LoginUser(LoginView):
+    form_class = LoginForm
+    template_name = 'login.html'
 
-            user = authenticate(username=uservalue, password=passwordvalue)
-            if user is not None:
-                login(request, user)
-                context = {'form': form,
-                           'error': 'The login has been successful'}
-
-                return render(request, 'registration/login.html', context)
-            else:
-                context = {'form': form,
-                           'error': 'The username and password combination is incorrect'}
-
-                return render(request, 'registration/login.html', context)
-
-        else:
-            context = {'form': form, }
-            #return redirect(f'/teach/{request.user.username}')
-            return render(request, 'registration/login.html', context)
+    def get_success_url(self):
+        return reverse_lazy('redirect_page')
 
 
 def logout_view(request):
     logout(request)
+    return redirect('/login/')
+
+
+def redirect_page(request):
+    if request.user.groups.filter(name="Учителя"):
+        return redirect(f'/teach/{request.user.username}')
+    elif request.user.groups.filter(name="Студенты"):
+        return redirect(f'/student/{request.user.username}')
+    else:
+        return redirect(f'/login/')
+
+
 
 
 
