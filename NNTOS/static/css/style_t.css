@@ -593,73 +593,7 @@ background-color:  #FFFFFF;
 color: #000001;
 border: none;
 }
-
 /* board for teacher  END*/
-
-
-
-
-
-/* submission form  START*/
-.sub_form{
-padding-top: 36px;
-padding-left: 30px;
-width: 400px;
-height: 720px;
-margin: 0 auto;
-background: #FFFFFF;
-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
-}
-.title_sub{
-width: 314px;
-height: 99px;
-font-weight: bold;
-font-size: 28px;
-line-height: 33px;
-color: #000000;}
-
-.heading{
-padding-right: 30px;
-margin-top: 24px;
-float: left;
-font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
-.namingg{
-margin-top: 24px;
-
-float: center;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
-.input_sub{
-margin-top: 24px;
-margin-bottom: 36px;
-padding: 15px;
-width: 338px;
-height: 210px;
-border: 2px solid #000000;
-box-sizing: border-box;
-border-radius: 10px;
-font-family: Roboto;
-font-weight: normal;
-font-size: 20px;
-line-height: 120%;
-color: #000000;
-outline:none;
-}
-
-.input_sub:focus{
-border: 2px solid #CA0000;
-}
-/* submission form  END*/
-
-
 
 
 /* footer form  START*/
@@ -712,7 +646,6 @@ color: #FFFFFF;
 font-weight: normal;
 line-height: 145%;
 }
-
 
 .icon :hover  {
 color: #CA0000;

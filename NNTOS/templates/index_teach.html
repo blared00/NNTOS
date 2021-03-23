@@ -103,29 +103,56 @@
 
 <!-- Журнал-->
        <div id="journal" class="journal">
+
+            <div id="submission"  class="sub_form">
+  <p><a href="#journal"><img src='{% static "/img/close.png"%}' class="x" ></a></p>
+    <p class="title_sub">Оставьте комментарий об успеваемости студента для родителя</p>
+    <p class="heading"> Студент</p>
+    <p class="namingg"> Смирнов Д.С. </p>
+
+      <p class="heading"> Преподаватель </p>
+    <p class="namingg"> Иванова Н.С. </p>
+
+     <p class="heading"> Предмет </p>
+    <p class="namingg"> Иностранный язык </p>
+
+      <p class="heading"> Комментарий </p>
+
+    <textarea class="input_sub" >  </textarea>
+
+    <div class="bnt">
+        <button  style="margin-left: 35px; " class="button"> Отправить</button>
+</div>
+</div>
+
          <section class="marks_teacher">
              <div class="board_wrapper">
                  <div class="title_bord">
                     <div class="left_bord">
                         <p class="board_txt">Электронный журнал</p>
                     </div>
+
                     <div class="right_bord">
                         <select name="sorting" id="sorting_week" class="sorting_week">
-                            <option value="1">ТЭПС-1</option>
-                            <option value="2">ТЭПС-2</option>
-                            <option value="3">ТЭПС-3</option>
-                            <option value="4">ТЭПС-4</option>
+                            {%for group in groups%}
+                            <option value={{group.pk}}>{{group.number}}</option>
+                            {%endfor%}
                         </select>
                     </div>
                  </div>
                 <table class = "table_marks">
                     <tr>
                         <th>
-                            <select name="objects" id="sorting_notify" class="objects">
-                              <option value="OBJ1">Математика</option>
-                                    <option value="OBJ2">Информатика</option>
-                                    <option value="OBJ3">Программирование</option>
+                            <form method="post" action="/teach/{{teacher.slug}}#journal">
+                                {% csrf_token %}
+                            <select name="objects" id="sorting_notify" class="objects" onchange="submit()" >
+                                {% for discipline in disciplines%}
+
+                                  <option value={{discipline.pk}}>{{discipline.name|truncatechars:19}}</option>
+                                {%endfor%}
                             </select>
+
+                            </form>
                         </th>
                             <td class= "data_m"> 01.04 </td>
                             <td class= "data_m"> 03.04 </td>
@@ -137,7 +164,7 @@
                             <td class= "data_m"> 17.04 </td>
                             <td class= "data_m"> оценка </td>
                     </tr>
-                    <tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}" > </a></th>
+                    <tr>  <th class="naming" > Александровская А.М. <a href= "#submission"> <img class="com" src="{%static '/img/ms.png'%}" > </a></th>
                              <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>

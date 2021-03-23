@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <link rel = "stylesheet" href= "{%static '/css/news_detail.css' %}">
+    <title>Новости|{{news.title|capfirst}}</title>
+</head>
+<body>
+
+    <div id ="open_news" class="open_news">
+
+        <div class="btn_back">
+            <button class="button_back"> Назад </button>
+        </div>
+
+        <div class="rectangle1">
+            <p class="header_n">{{news.title|capfirst}}</p>
+            <p class="text_n"> {{news.description|capfirst|linebreaksbr}}</p>
+            <div class="news_image">
+                {%if news.picture1%}
+                    <div class="left_image"><img src="{{news.picture1.url}}"></div>
+                {%else%}
+                    <div class="left_image"><img src="{{news.picture2.url}}"></div>
+                {%endif%}
+
+                <div class="right_image"><img src="{{news.picture2.url}}"></div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

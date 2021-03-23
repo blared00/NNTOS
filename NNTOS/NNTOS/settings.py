@@ -126,3 +126,5 @@ STATICFILES_DIRS = [
 STATIC_ROOT = f'{os.path.dirname(os.path.abspath("staticfiles"))}/staticfiles'
 LOGIN_URL = 'login/'
 #LOGIN_REDIRECT_URL = '/redirectpage'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

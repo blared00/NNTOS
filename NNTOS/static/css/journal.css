@@ -1,3 +1,4 @@
+
 /* journal start*/
 
 .sorting_week{
@@ -23,6 +24,7 @@ margin-top: 38px;
 }
 
 .marks_teacher{
+position: relative;
 width: 1440px;
 height: 1700px;
 background-color:  #FFF;

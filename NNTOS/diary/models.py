@@ -122,7 +122,8 @@ class News(models.Model):
     slug = models.SlugField(max_length=100, unique=True, verbose_name='URL объявления')
     description = models.TextField(verbose_name='Содержание')
     published_at = models.DateTimeField(auto_now_add=True, )
-    picture = models.ImageField(upload_to='picture_newstudent/%Y/%m/%d', verbose_name='Иллюстрация', blank=True)
+    picture1 = models.ImageField(upload_to='picture_news/%Y/%m/%d-1', verbose_name='Иллюстрация 1', blank=True)
+    picture2 = models.ImageField(upload_to='picture_news/%Y/%m/%d-2', verbose_name='Иллюстрация 2', blank=True)
     published_for_parents = models.BooleanField(verbose_name='Для родителей')
     published_for_teacher = models.BooleanField(verbose_name='Для учителей')
 
@@ -154,11 +155,12 @@ class Mark(models.Model):
 
 class Comment(models.Model):
     text = models.TextField(max_length=50, verbose_name='Комментарий')
-    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
+    discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     date = models.DateField()
 
     def __str__(self):
-        return f'{self.date} {self.student}'
+        return f'{self.date} {self.student} {self.discipline}'
 
     class Meta:
         verbose_name = 'комментарий'
