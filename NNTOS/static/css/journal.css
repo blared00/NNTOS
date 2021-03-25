@@ -26,7 +26,7 @@ margin-top: 38px;
 .marks_teacher{
 position: relative;
 width: 1440px;
-height: 1700px;
+padding-bottom: 40px;
 background-color:  #FFF;
 }
 
@@ -34,6 +34,7 @@ background-color:  #FFF;
 
 /* TABLE JOURNAL START*/
 .table_marks{
+margin-left: -10px;
 margin-top: 30px;
 border-spacing: 10px;
  border-collapse: separate;
@@ -64,7 +65,8 @@ text-align: center;
 }
 .com{
 float: right;
-
+outline: none;
+border: none;
 margin-right: 15px;
 }
 
