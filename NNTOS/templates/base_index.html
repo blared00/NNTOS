@@ -86,7 +86,8 @@
         <!--таблица новостей-->
     <div class="b_parent">
         <section class="board_parents">
-
+        <form method="post" action={{person.get_absolut_url}}#dosca>
+                    {%csrf_token%}
         <div class="board_wrapper">
             <div class="title_bord">
             <div class="left_bord">
@@ -94,12 +95,17 @@
             </div>
 
             <div class="right_bord">
-                <form method="post">
-                <select name="sorting" id="sorting" class="sorting">
-                    <option value="first">Сначала первые</option>
-                    <option value="last">Сначала последние</option>
+
+                <select name="sorting_news" id="sorting" class="sorting" onchange="submit()">
+                    {%if order_news == 'last'%}
+                        <option value="first">Сначала новые</option>
+                        <option value="last" selected>Сначала последние</option>
+                    {%else%}
+                        <option value="first">Сначала новые</option>
+                        <option value="last" >Сначала последние</option>
+                    {%endif%}
                 </select>
-                </form>
+
             </div>
             </div>
         </div>
@@ -126,12 +132,12 @@
                 <ul class="pagination">
                     {% if news.has_previous%}
                         <li class="pagination-item">
-                                <a href="?page={{news.previous_page_number}}#dosca">&lt;</a>
+                                <!--<a href="?page={{news.previous_page_number}}#dosca">&lt;</a>--><input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page={{news.previous_page_number}}#dosca">
                         </li>
                         {%if news.number|add:-1 > news.paginator.page_range|first%}
 
                             <li class="pagination-item">
-                                <a href="?page={{news.paginator.page_range|first}}#dosca">{{news.paginator.page_range|first}}</a>
+                                <!--<a href="?page={{news.paginator.page_range|first}}#dosca"></a>--><input  type="submit" value="{{news.paginator.page_range|first}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|first}}#dosca">
                             </li>
                             <li class="paginpg-active">
                                         <p class="paginp">...</p>
@@ -151,7 +157,7 @@
                             </li>
                             {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
                             <li class="pagination-item">
-                                <a href="?page={{p}}#dosca">{{p}}</a>
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
                             </li>
 
                             {%endif%}
@@ -162,7 +168,7 @@
                             </li>
                             {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
                             <li class="pagination-item">
-                                <a href="?page={{p}}#dosca">{{p}}</a>
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
                             </li>
                             {%endif%}
                         {%endif%}
@@ -174,11 +180,11 @@
                                         <p class="paginp">...</p>
                             </li>
                             <li class="pagination-item">
-                                <a href="?page={{news.paginator.page_range|last}}#dosca">{{news.paginator.page_range|last}}</a>
+                                <!--<a href="?page={{news.paginator.page_range|last}}#dosca">{{news.paginator.page_range|last}}</a>--><input  type="submit" value="{{news.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last}}#dosca">
                             </li>
                             {%endif%}
                             <li class="pagination-item">
-                                <a href="?page={{news.next_page_number}}#dosca">&gt;</a>
+                                <!--<a href="?page={{news.next_page_number}}#dosca">&gt;</a>--><input  type="submit" value="&gt;" formaction="{{person.get_absolut_url}}?page={{news.next_page_number}}#dosca">
                             </li>
                       {%else%}
                             <li class="paginpg-active">
@@ -189,6 +195,7 @@
 	            </ul>
             </nav>
         </div>
+        </form>
         </section>
     </div>
         {%block body%}

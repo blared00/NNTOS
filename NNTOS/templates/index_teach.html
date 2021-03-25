@@ -30,7 +30,7 @@
              </div>-->
 
                 <div class="name_teacher1">
-                     <p  class="title_about">{{teacher.lastname}} {{teacher.firstname|first}}. {{teacher.patronymic|first}}.</p>
+                     <p  class="title_about">{{person.lastname}} {{person.firstname|first}}. {{person.patronymic|first}}.</p>
                 </div>
                 </div>
                 <div>
@@ -103,56 +103,74 @@
 
 <!-- Журнал-->
        <div id="journal" class="journal">
-
+<form method="post" action="{{person.get_absolut_url}}#journal">
+                            {% csrf_token %}
             <div id="submission"  class="sub_form">
   <p><a href="#journal"><img src='{% static "/img/close.png"%}' class="x" ></a></p>
     <p class="title_sub">Оставьте комментарий об успеваемости студента для родителя</p>
     <p class="heading"> Студент</p>
-    <p class="namingg"> Смирнов Д.С. </p>
-
+    {%if choose_student != 'не выбран'%}
+    <p class="namingg"> {{choose_student.lastname}} {{choose_student.firstname|first}}. {{choose_student.patronymic|first}}. </p>
+    {%else%}
+    <p class="namingg"> {{choose_student}}</p>
+    {%endif%}
       <p class="heading"> Преподаватель </p>
-    <p class="namingg"> Иванова Н.С. </p>
+    <p class="namingg"> {{person.lastname}} {{person.firstname|first}}. {{person.patronymic|first}}. </p>
 
      <p class="heading"> Предмет </p>
-    <p class="namingg"> Иностранный язык </p>
+    <p class="namingg"> {{choose_discipline}} </p>
 
       <p class="heading"> Комментарий </p>
 
     <textarea class="input_sub" >  </textarea>
 
-    <div class="bnt">
-        <button  style="margin-left: 35px; " class="button"> Отправить</button>
+    <div class="bnt_sub">
+        <button  style="margin-left: 35px; " class="button_sub" type="submit"> Отправить</button>
 </div>
 </div>
 
          <section class="marks_teacher">
              <div class="board_wrapper">
+
                  <div class="title_bord">
                     <div class="left_bord">
                         <p class="board_txt">Электронный журнал</p>
                     </div>
 
                     <div class="right_bord">
-                        <select name="sorting" id="sorting_week" class="sorting_week">
-                            {%for group in groups%}
-                            <option value={{group.pk}}>{{group.number}}</option>
-                            {%endfor%}
-                        </select>
+
+                            <select name="group_select" id="sorting_group" class="sorting_group" onchange="submit()">
+                                {%if choose_group == 99999 %}
+                                    <option value='99999' hidden selected disabled>Выберите группу</option>
+                                    {%endif%}
+                                    {% for group in groups%}
+                                        {% if choose_group.pk == group.pk%}
+                                            <option value={{group.pk}} selected>{{group.number|truncatechars:8}}</option>
+                                        {%else%}
+                                            <option value={{group.pk}}>{{group.number|truncatechars:8}}</option>
+                                        {%endif%}
+                                    {%endfor%}
+                            </select>
+
                     </div>
                  </div>
                 <table class = "table_marks">
                     <tr>
                         <th>
-                            <form method="post" action="/teach/{{teacher.slug}}#journal">
-                                {% csrf_token %}
-                            <select name="objects" id="sorting_notify" class="objects" onchange="submit()" >
-                                {% for discipline in disciplines%}
 
-                                  <option value={{discipline.pk}}>{{discipline.name|truncatechars:19}}</option>
-                                {%endfor%}
-                            </select>
+                                <select name="discipline" id="sorting_notify" class="objects" onchange="submit()" >
+                                    {%if choose_discipline == 99999 %}
+                                    <option value='default' hidden selected disabled>Выберите предмет</option>
+                                    {%endif%}
+                                    {% for discipline in disciplines%}
+                                        {% if choose_discipline.pk == discipline.pk%}
+                                            <option value={{discipline.pk}} selected>{{discipline.name|truncatechars:19}}</option>
+                                        {%else%}
+                                            <option value={{discipline.pk}}>{{discipline.name|truncatechars:19}}</option>
+                                        {%endif%}
+                                    {%endfor%}
+                                </select>
 
-                            </form>
                         </th>
                             <td class= "data_m"> 01.04 </td>
                             <td class= "data_m"> 03.04 </td>
@@ -164,7 +182,9 @@
                             <td class= "data_m"> 17.04 </td>
                             <td class= "data_m"> оценка </td>
                     </tr>
-                    <tr>  <th class="naming" > Александровская А.М. <a href= "#submission"> <img class="com" src="{%static '/img/ms.png'%}" > </a></th>
+                    {%if choose_group != 99999%}
+                    {%for stud in choose_group.student_set.all%}
+                    <tr>  <th class="naming" >{{stud.lastname}} {{stud.firstname|first}}. {{stud.patronymic|first}}. <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student={{stud.slug}}#submission"> </th>
                              <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
@@ -175,8 +195,9 @@
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="data_m">5.0 </td>
                     </tr>
-
-                    <tr>  <th class="naming" > Белов А.С. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
+                    {%endfor%}
+                    {%endif%}
+                    <!--<tr>  <th class="naming" > Белов А.С. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
                              <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
@@ -221,11 +242,11 @@
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="data_m">5.0 </td>
-                    </tr>
+                    </tr>-->
                 </table>
-                 <div class="btn">
+                 <!--<div class="btn">
                     <button class="look">Сохранить</button>
-                 </div>
+                 </div>-->
 
                   <nav>
                     <ul class="pagination">
@@ -249,8 +270,10 @@
                         </li>
                     </ul>
                 </nav>
+
              </div>
           </section>
+    </form>
        </div>
 
 {%endblock%}

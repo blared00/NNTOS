@@ -4,6 +4,9 @@
 margin-left: 300px;
 }
 
+.sub_form:target{
+display: block;
+}
 
 
 .sub_form{
@@ -49,11 +52,12 @@ line-height: 23px;
 color: #000000;
 }
 .input_sub{
+width: 338px;
+height: 210px;
+resize: none;
 margin-top: 24px;
 margin-bottom: 15px;
 padding: 15px;
-width: 338px;
-height: 210px;
 border: 2px solid #000000;
 box-sizing: border-box;
 border-radius: 10px;
@@ -67,6 +71,31 @@ outline:none;
 
 .input_sub:focus{
 border: 2px solid #CA0000;
+
+
+.bnt_sub{
+margin-left: 69px;
+margin-top: 30px;
+}
+
+.button_sub{
+cursor: pointer;
+width: 227px;
+height: 46px;
+background: #CA0000;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+
+.button_sub:active, .button_sub:hover{
+background: #E48080;
+}
 /* modal_window end*/
 
 

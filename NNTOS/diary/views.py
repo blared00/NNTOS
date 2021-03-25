@@ -11,7 +11,7 @@ from .models import *
 
 
 class ParentsView(View):
-    def get(self, request, student_name):
+    def dispatch(self, request, student_name):
         ''' Получение предметов студента и отображение расписания'''
         student = get_object_or_404(Student, slug=student_name)
         schedule = {}
@@ -30,21 +30,25 @@ class ParentsView(View):
             schedule[weekday] = a
 
         ''' Отображение новостей и пагинация'''
-        order_news = request.GET.get('sorting')
-        #if order_news == 'last':
-        #    news = News.objects.filter(published_for_parents=True).order_by('published_at')
-        #else:
+        news = News.objects.filter(published_for_parents=True)
+        order_news = request.POST.get('sorting_news', 'first')
+        if order_news == 'last':
+            news = News.objects.filter(published_for_parents=True).order_by('published_at')
+
+        print(order_news)
+
         menu = {'#glavnaya': 'Главная',
                 '#dosca': 'Доска объявлений',
                 '#dnevnik': 'Электронный дневник',
                 '#uved': 'Уведомления'
                 }
-        news = News.objects.filter(published_for_parents=True)
+
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
-        return render(request, 'index_perents.html', context={'student': student,
+        return render(request, 'index_perents.html', context={'person': student,
                                                               'menu': menu.items(),
+                                                              'order_news': order_news,
                                                               'schedule': schedule.items(),
                                                               'title': f'Дневник|{student}',
                                                               'chet': [2, 4, 6],
@@ -76,6 +80,16 @@ class TeacherView(View):
                         a[n]=l
             schedule[weekday] = a
 
+        choose_discipline = int(request.POST.get('discipline', '99999'))
+        if choose_discipline != 99999:
+            choose_discipline = Discipline.objects.get(pk=choose_discipline)
+        choose_group = int(request.POST.get('group_select', '99999'))
+        if choose_group != 99999:
+            choose_group = StudentGroup.objects.get(pk=choose_group)
+        choose_student = request.GET.get('student', 'не выбран')
+        if choose_student != 'не выбран':
+            choose_student = Student.objects.get(slug=choose_student)
+        print(request.POST)
         '''Представление расписания в постраничную форму
         if request.GET.get('wd'):
             weekday_get = request.GET.get('wd')
@@ -89,13 +103,16 @@ class TeacherView(View):
                 '#journal': 'Электронный журнал'
                 }
         news = News.objects.filter(published_for_teacher=True)
-        paginator_news = Paginator(news, 5)
+        paginator_news = Paginator(news, 1)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
 
-        return render(request, 'index_teach.html', context={'teacher': teacher,
+        return render(request, 'index_teach.html', context={'person': teacher,
                                                             'disciplines': disciplines,
                                                             'groups': groups,
+                                                            'choose_discipline': choose_discipline,
+                                                            'choose_group': choose_group,
+                                                            'choose_student': choose_student,
                                                             'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
                                                             'news': page_obj,
