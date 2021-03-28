@@ -55,78 +55,131 @@
 
     <div id="uved" class="notify_parents">
          <section class="notification_parents">
+             <form method="post" action={{person.get_absolut_url}}?page_sub=1#uved>
+                    {%csrf_token%}
             <div class="board_wrapper">
                 <div class="title_bord">
                     <div class="left_bord">
                     <p class="board_txt">Уведомления</p>
                     </div>
                     <div class="right_bord">
-                        <select name="sorting" id="sorting_notify" class="sorting_notify">
-                              <option value="All">Все</option>
-                                    <option value="first">Сначала первые</option>
-                                    <option value="last">Сначала последние</option>
-                                </select>
+                        <select name="sorting_notify" id="sorting_notify" class="sorting_notify" onchange="submit()">
+                             {%if order_sub == 'last'%}
+                                <option value="first">Сначала новые</option>
+                                <option value="last" selected>Сначала старые</option>
+                            {%else%}
+                                <option value="first">Сначала новые</option>
+                                <option value="last" >Сначала старые</option>
+                            {%endif%}
+                        </select>
                     </div>
                 </div>
             </div>
+                 {%for s in submission%}
              <div class="board_wrapper">
                 <div  class="block">
                     <p class="title_block_noty">Преподаватель:</p>
-                    <p class="title_block_notify">Иванов М.И.</p>
+                    <p class="title_block_notify">{{s.discipline.teacher}}</p>
                     <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
+                    <p style="margin-top:8px;" class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:8px;" class="title_block_notify">{{s.discipline.discipline}}</p>
+                    <!--<p style="margin-top:8px;" class="title_block_notify">{{s.comment}}</p>-->
+                    <p style="margin-top:8px;" class="">Отправленно {{s.date}}</p>
                 </div>
-                <div  class="block">
-                    <p class="title_block_noty">Преподаватель:</p>
-                    <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-                <div  class="block">
-                    <p class="title_block_noty">Преподаватель:</p>
-                    <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
-                <div  class="block">
-                    <p class="title_block_noty">Преподаватель:</p>
-                    <p class="title_block_notify">Иванов М.И.</p>
-                    <button class="look_noty">Посмотреть</button>
-                    <p style="margin-top:15px;"class="title_block_noty">Предмет:</p>
-                    <p style="margin-top:15px;"class="title_block_notify">Физическая культура</p>
-                    <p style="margin-top:8px;" class="data"> 20.12.2020</p>
-                </div>
+                 {%endfor%}
+
             </div>
             <div class="board_wrapper">
                <nav>
-                    <ul class="pagination">
-                        <li class="pagination-item">
-                            <a href="#!">←</a>
+                    {% if submission.has_other_pages%}
+                <ul class="pagination-sub">
+                    {% if submission.has_previous%}
+                        <li class="pagination-sub-item">
+                                <input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page_sub={{submission.previous_page_number}}#uved">
                         </li>
-                        <li class="pagination-item pg-active">
-                            <a href="#!">1</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">2</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">3</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">4</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">→</a>
-                        </li>
-                    </ul>
+                        {%if submission.number|add:-2 > submission.paginator.page_range|first and submission.number < 3%}
+
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{submission.paginator.page_range|first|add:-1}}" formaction="{{person.get_absolut_url}}?page_sub={{submission.paginator.page_range|first|add:-1}}#uved">
+                            </li>
+
+                        {%endif%}
+                        {%if submission.number|add:-1 > submission.paginator.page_range|first%}
+
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{submission.paginator.page_range|first}}" formaction="{{person.get_absolut_url}}?page={{submission.paginator.page_range|first}}#uved">
+                            </li>
+
+                        {%endif%}
+                        {% if submission.number > 3%}
+                            <li class="paginpg-active-sub">
+                                <p class="paginp">...</p>
+                            </li>
+                        {%endif%}
+                    {%else%}
+                    <li class="paginpg-active-sub">
+                        <p class="paginp-sub">&lt;</p>
+                    </li>
+                    {%endif%}
+                    {%for p in submission.paginator.page_range%}
+                        {% if submission.has_previous%}
+
+                            {%if submission.number == p %}
+                            <li class="paginpg-active-sub">
+                                <p class="paginp-sub">{{p}}</p>
+                            </li>
+                            {%elif p >= submission.number|add:-1 and p <= submission.number|add:1 %}
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page_sub={{p}}#uved">
+                            </li>
+
+                            {%endif%}
+                        {%else%}
+                            {%if submission.number == p %}
+                            <li class="paginpg-active-sub">
+                                <p class="paginp-sub">{{p}}</p>
+                            </li>
+                            {%elif p >= submission.number|add:-1 and p <= submission.number|add:1 %}
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page_sub={{p}}#uved">
+                            </li>
+                            {%endif%}
+                        {%endif%}
+                    {%endfor%}
+
+                      {% if submission.has_next%}
+                            {%if submission.number|add:3 < submission.paginator.page_range|last%}
+                            <li class="paginpg-active-sub">
+                                 <p class="paginp-sub">...</p>
+                            </li>
+                            {%elif submission.number|add:3 == submission.paginator.page_range|last%}
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{submission.paginator.page_range|last|add:-1}}" formaction="{{person.get_absolut_url}}?page_sub={{submission.paginator.page_range|last|add:-1}}#uved">
+                            </li>
+                            {%endif%}
+                            {%if submission.number|add:2 < submission.paginator.page_range|last%}
+
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{submission.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page_sub={{submission.paginator.page_range|last}}#uved">
+                            </li>
+                            {%elif submission.number|add:1 < submission.paginator.page_range|last%}
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="{{submission.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page_sub={{submission.paginator.page_range|last}}#uved">
+                            </li>
+                            {%endif%}
+                            <li class="pagination-sub-item">
+                                <input  type="submit" value="&gt;" formaction="{{person.get_absolut_url}}?page_sub={{submission.next_page_number}}#dosca">
+                            </li>
+                      {%else%}
+                            <li class="paginpg-active-sub">
+                                <p class="paginp-sub">&gt;</p>
+                            </li>
+                      {%endif%}
+                {%endif%}
+	            </ul>
                </nav>
             </div>
+                 </form>
          </section>
     </div>
 

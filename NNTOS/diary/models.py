@@ -154,10 +154,10 @@ class Mark(models.Model):
 
 
 class Comment(models.Model):
-    text = models.TextField(max_length=50, verbose_name='Комментарий')
+    comment = models.TextField(max_length=300, verbose_name='Комментарий')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
     discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
-    date = models.DateField()
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return f'{self.date} {self.student} {self.discipline}'
@@ -165,3 +165,4 @@ class Comment(models.Model):
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'Комментарии'
+        ordering = ('-date',)

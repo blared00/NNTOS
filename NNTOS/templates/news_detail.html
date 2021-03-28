@@ -17,7 +17,8 @@
 
         <div class="rectangle1">
             <p class="header_n">{{news.title|capfirst}}</p>
-            <p class="text_n"> {{news.description|capfirst|linebreaksbr}}</p>
+
+            <p class="text_n"> {{news.description|capfirst|linebreaksbr|safe}}</p>
             <div class="news_image">
                 {%if news.picture1 or news.picture2%}
                     {%if news.picture1 %}

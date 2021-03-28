@@ -17,7 +17,7 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
-from diary.views import ParentsView, TeacherView, NewsView, LoginUser, HomeView, SubmissionView, logout_view, redirect_page
+from diary.views import ParentsView, TeacherView, NewsView, LoginUser, HomeView, logout_view, redirect_page
 from NNTOS.settings import MEDIA_URL, MEDIA_ROOT
 
 urlpatterns = [
@@ -28,8 +28,9 @@ urlpatterns = [
     path('login/', LoginUser.as_view(), name='login'),
     path('logout/', logout_view, name='logout'),
     path('redirectpage/', redirect_page, name='redirect_page'),
-    path('submission/', SubmissionView.as_view(), name='submission'),
+    #path('submission/', submission, name='submission'),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('', HomeView.as_view(), name='home')
+
 ]
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

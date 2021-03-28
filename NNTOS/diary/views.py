@@ -1,7 +1,9 @@
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
-from django.http import HttpResponse
+from django.db.models import Q
+
+from .form import CommentForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -28,31 +30,36 @@ class ParentsView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
-
-        ''' Отображение новостей и пагинация'''
-        news = News.objects.filter(published_for_parents=True)
-        order_news = request.POST.get('sorting_news', 'first')
-        if order_news == 'last':
-            news = News.objects.filter(published_for_parents=True).order_by('published_at')
-
-        print(order_news)
-
         menu = {'#glavnaya': 'Главная',
                 '#dosca': 'Доска объявлений',
                 '#dnevnik': 'Электронный дневник',
                 '#uved': 'Уведомления'
                 }
-
+        ''' Отображение новостей и пагинация'''
+        news = News.objects.filter(published_for_parents=True)
+        order_news = request.POST.get('sorting_news', 'first')
+        if order_news == 'last':
+            news = news.order_by('published_at')
         paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
-        page_obj = paginator_news.get_page(page_number)
+        page_obj_news = paginator_news.get_page(page_number)
+        ''' Отображение комментариев от учителей и пагинация'''
+        submission = Comment.objects.filter(student=student)
+        order_sub = request.POST.get('sorting_notify', 'first')
+        if order_sub == 'last':
+            submission = submission.order_by('date')
+        paginator_news = Paginator(submission, 5)
+        page_number_sub = request.GET.get('page_sub')
+        page_obj_sub = paginator_news.get_page(page_number_sub)
         return render(request, 'index_perents.html', context={'person': student,
                                                               'menu': menu.items(),
                                                               'order_news': order_news,
+                                                              'order_sub': order_sub,
                                                               'schedule': schedule.items(),
                                                               'title': f'Дневник|{student}',
                                                               'chet': [2, 4, 6],
-                                                              'news': page_obj,
+                                                              'news': page_obj_news,
+                                                              'submission': page_obj_sub,
                                                               })
 
 
@@ -79,17 +86,49 @@ class TeacherView(View):
                     if l.lesson.pk == n+1:
                         a[n]=l
             schedule[weekday] = a
+        ''' Переменные для работы формы "Комментарий ученику" '''
+        if request.method == 'GET':     # Задаем переменные для первого запуска страницы
+            choose_teacherdiscipline = '' # (первый запуск происходит методом GET)
+            choose_student = ''
+            form_submission = CommentForm()
+            if request.GET.get('discipline_get'): # если переход на страницу был осуществлен после создания комментария
+                choose_discipline = request.GET.get('discipline_get')
+                choose_discipline = Discipline.objects.get(pk=choose_discipline)
+            else:
+                choose_discipline = '0'
+            if request.GET.get('group_get'): # аналогично с прим. выше
+                choose_group = request.GET.get('group_get')
+                choose_group = StudentGroup.objects.get(pk=choose_group)
+            else:
+                choose_group = '0'
 
-        choose_discipline = int(request.POST.get('discipline', '99999'))
-        if choose_discipline != 99999:
-            choose_discipline = Discipline.objects.get(pk=choose_discipline)
-        choose_group = int(request.POST.get('group_select', '99999'))
-        if choose_group != 99999:
-            choose_group = StudentGroup.objects.get(pk=choose_group)
-        choose_student = request.GET.get('student', 'не выбран')
-        if choose_student != 'не выбран':
-            choose_student = Student.objects.get(slug=choose_student)
-        print(request.POST)
+        if request.method == 'POST': # метод пост вызывается в том случае, если происходит выбор группы или дисциплины
+            choose_discipline = int(request.POST.get('discipline_select', '0')) # Получение значения из select
+            if choose_discipline != 0:
+                choose_discipline = Discipline.objects.get(pk=choose_discipline)
+            choose_group = int(request.POST.get('group_select', '0'))
+            if choose_group != 0:
+                choose_group = StudentGroup.objects.get(pk=choose_group)
+            choose_student = request.GET.get('student_select', 'не выбран')
+            if choose_student != 'не выбран':
+                choose_student = Student.objects.get(slug=choose_student)
+            if choose_group == 0 or choose_discipline == 0:
+                choose_teacherdiscipline = ''
+            else:
+                choose_teacherdiscipline = TeacherDiscipline.objects.get(Q(teacher=teacher), Q(discipline=choose_discipline))
+
+            form_submission = CommentForm(request.POST) # заполнение формы к комментарию
+
+            if form_submission.is_valid():
+                if request.POST['comment'] == '':
+                    form_submission = CommentForm() # Создание пустой формы для заполнения
+                else:
+                    form_submission.save() # если комментарий не пустой, преходит на страницу с открытым журналом и выбранными ранее "Группой" и "дисциплиной"
+                    return redirect(f'/teach/{teacher.slug}?discipline_get={choose_discipline.pk}&group_get={choose_group.pk}#journal')
+
+
+
+
         '''Представление расписания в постраничную форму
         if request.GET.get('wd'):
             weekday_get = request.GET.get('wd')
@@ -103,7 +142,10 @@ class TeacherView(View):
                 '#journal': 'Электронный журнал'
                 }
         news = News.objects.filter(published_for_teacher=True)
-        paginator_news = Paginator(news, 1)
+        order_news = request.POST.get('sorting_news', 'first')
+        if order_news == 'last':
+            news = news.order_by('published_at')
+        paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj = paginator_news.get_page(page_number)
 
@@ -111,11 +153,14 @@ class TeacherView(View):
                                                             'disciplines': disciplines,
                                                             'groups': groups,
                                                             'choose_discipline': choose_discipline,
+                                                            'choose_teacherdiscipline': choose_teacherdiscipline,
                                                             'choose_group': choose_group,
                                                             'choose_student': choose_student,
+                                                            'form_submission': form_submission,
                                                             'menu': menu.items(),
                                                             'title': f'Журнал|{teacher}',
                                                             'news': page_obj,
+                                                            'order_news': order_news,
                                                             'schedule': schedule.items(),
                                                             'weekdays': weekdays_list.items(),
                                                             'chet': [2, 4, 6], # для отображения расписания в таблицу
@@ -127,7 +172,7 @@ class TeacherView(View):
 
 
 class NewsView(View):
-    def get(self, request, news_slug):
+    def dispatch(self, request, news_slug):
         news_detail = get_object_or_404(News, slug=news_slug)
         return render(request, 'news_detail.html', context={'news': news_detail,
                                                             })
@@ -139,11 +184,6 @@ class LoginUser(LoginView):
 
     def get_success_url(self):
         return reverse_lazy('redirect_page')
-
-
-class SubmissionView(View):
-    def get(self, request):
-        return render(request, 'submission_form.html')
 
 
 def logout_view(request):
@@ -161,8 +201,18 @@ def redirect_page(request):
 
 
 
-
-
 class HomeView(View):
     def get(self, request):\
         return redirect('/login/')
+
+
+'''def submission(request):
+    form = CommentForm(request.POST)
+    if request.method == 'POST':
+        if form.is_valid():
+            print(request.POST.cleaned_data)
+        else:
+            print("vsevhuynya")
+
+    return render(request, 'submission_form.html', context={'form_submission': form})
+'''

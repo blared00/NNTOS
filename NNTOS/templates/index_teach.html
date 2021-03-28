@@ -114,18 +114,23 @@
     {%else%}
     <p class="namingg"> {{choose_student}}</p>
     {%endif%}
+                <input type="hidden" name="student" value={{choose_student.pk}} id="id_student">
+    <!--{{form_submission.student}}-->
+
       <p class="heading"> Преподаватель </p>
     <p class="namingg"> {{person.lastname}} {{person.firstname|first}}. {{person.patronymic|first}}. </p>
+    <!--{{form_submission.discipline}}--><input type="hidden" name="discipline" value={{choose_teacherdiscipline.pk}} id="id_discipline">
 
      <p class="heading"> Предмет </p>
     <p class="namingg"> {{choose_discipline}} </p>
-
+    <!--{{form_submission.discipline.errors}}-->
       <p class="heading"> Комментарий </p>
 
-    <textarea class="input_sub" >  </textarea>
-
+    <!--<textarea class="input_sub" >  </textarea>-->
+    {{form_submission.comment}}
+    {{form_submission.comment.errors}}
     <div class="bnt">
-        <button  style="margin-left: 35px; margin-top: -30px;" class="button" type="submit"> Отправить</button>
+        <button  style="margin-left: 35px; margin-top: -30px;" class="button" type="submit" formaction="{{person.get_absolut_url}}?student_select={{choose_student.slug}}#submission"> Отправить</button>
     </div>
 
 </div>
@@ -141,8 +146,8 @@
                     <div class="right_bord">
 
                             <select name="group_select" id="sorting_group" class="sorting_group" onchange="submit()">
-                                {%if choose_group == 99999 %}
-                                    <option value='99999' hidden selected disabled>Выберите группу</option>
+                                {%if choose_group == 0 %}
+                                    <option value='0' hidden selected disabled>Выберите группу</option>
                                     {%endif%}
                                     {% for group in groups%}
                                         {% if choose_group.pk == group.pk%}
@@ -159,9 +164,9 @@
                     <tr>
                         <th>
 
-                                <select name="discipline" id="sorting_notify" class="objects" onchange="submit()" >
-                                    {%if choose_discipline == 99999 %}
-                                    <option value='default' hidden selected disabled>Выберите предмет</option>
+                                <select name="discipline_select" id="sorting_notify" class="objects" onchange="submit()" >
+                                    {%if choose_discipline == 0 %}
+                                    <option value='0' hidden selected disabled>Выберите предмет</option>
                                     {%endif%}
                                     {% for discipline in disciplines%}
                                         {% if choose_discipline.pk == discipline.pk%}
@@ -183,9 +188,9 @@
                             <td class= "data_m"> 17.04 </td>
                             <td class= "data_m"> оценка </td>
                     </tr>
-                    {%if choose_group != 99999%}
+                    {%if choose_group != 0%}
                     {%for stud in choose_group.student_set.all%}
-                    <tr>  <th class="naming" >{{stud.lastname}} {{stud.firstname|first}}. {{stud.patronymic|first}}. <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student={{stud.slug}}#submission"> </th>
+                    <tr>  <th class="naming" >{{stud.lastname}} {{stud.firstname|first}}. {{stud.patronymic|first}}. <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student_select={{stud.slug}}#submission"> </th>
                              <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
