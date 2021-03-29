@@ -146,8 +146,8 @@
                     <div class="right_bord">
 
                             <select name="group_select" id="sorting_group" class="sorting_group" onchange="submit()">
-                                {%if choose_group == 0 %}
-                                    <option value='0' hidden selected disabled>Выберите группу</option>
+                                {%if choose_group == 99999 %}
+                                    <option value='99999' hidden selected disabled>Выберите группу</option>
                                     {%endif%}
                                     {% for group in groups%}
                                         {% if choose_group.pk == group.pk%}
@@ -165,8 +165,8 @@
                         <th>
 
                                 <select name="discipline_select" id="sorting_notify" class="objects" onchange="submit()" >
-                                    {%if choose_discipline == 0 %}
-                                    <option value='0' hidden selected disabled>Выберите предмет</option>
+                                    {%if choose_discipline == 99999 %}
+                                    <option value='99999' hidden selected disabled>Выберите предмет</option>
                                     {%endif%}
                                     {% for discipline in disciplines%}
                                         {% if choose_discipline.pk == discipline.pk%}
@@ -178,27 +178,31 @@
                                 </select>
 
                         </th>
-                            <td class= "data_m"> 01.04 </td>
-                            <td class= "data_m"> 03.04 </td>
-                            <td class= "data_m"> 05.04 </td>
-                            <td class= "data_m"> 07.04 </td>
-                            <td class= "data_m"> 09.04 </td>
-                            <td class= "data_m"> 13.04 </td>
-                            <td class= "data_m"> 15.04 </td>
-                            <td class= "data_m"> 17.04 </td>
+                        {%for mark in choose_teacherdiscipline.mark_set.all|dictsort:"date"%}
+                            {%if mark.discipline == choose_teacherdiscipline%}
+                                {%if mark.student == choose_group.student_set.all.first%}
+                                    <td class= "data_m"> {{mark.date|date:"d.m"}} </td>
+                                {%endif%}
+                            {%endif%}
+                        {%endfor%}
                             <td class= "data_m"> оценка </td>
                     </tr>
-                    {%if choose_group != 0%}
+                    {%if choose_group != 99999%}
+
                     {%for stud in choose_group.student_set.all%}
                     <tr>  <th class="naming" >{{stud.lastname}} {{stud.firstname|first}}. {{stud.patronymic|first}}. <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student_select={{stud.slug}}#submission"> </th>
-                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                            {%for mark in stud.mark_set.all%}
+                                {% if mark.discipline == choose_teacherdiscipline%}
+                                    <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
+                                <!--<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
+                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>-->
+                                {%endif%}
+                            {%endfor%}
                             <td class="data_m">5.0 </td>
                     </tr>
                     {%endfor%}

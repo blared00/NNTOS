@@ -140,7 +140,7 @@ class News(models.Model):
 
 
 class Mark(models.Model):
-    value = models.FloatField(verbose_name='Оценка')
+    value = models.FloatField(verbose_name='Оценка', blank=True, null=True)
     discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
     date = models.DateField()
@@ -151,6 +151,7 @@ class Mark(models.Model):
     class Meta:
         verbose_name = 'Оценка '
         verbose_name_plural = 'Оценки'
+        ordering = ('-date',)
 
 
 class Comment(models.Model):

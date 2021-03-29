@@ -87,37 +87,30 @@ class TeacherView(View):
                         a[n]=l
             schedule[weekday] = a
         ''' Переменные для работы формы "Комментарий ученику" '''
+
         if request.method == 'GET':     # Задаем переменные для первого запуска страницы
-            choose_teacherdiscipline = '' # (первый запуск происходит методом GET)
-            choose_student = ''
-            form_submission = CommentForm()
-            if request.GET.get('discipline_get'): # если переход на страницу был осуществлен после создания комментария
-                choose_discipline = request.GET.get('discipline_get')
-                choose_discipline = Discipline.objects.get(pk=choose_discipline)
-            else:
-                choose_discipline = '0'
-            if request.GET.get('group_get'): # аналогично с прим. выше
-                choose_group = request.GET.get('group_get')
-                choose_group = StudentGroup.objects.get(pk=choose_group)
-            else:
-                choose_group = '0'
+            choose_discipline = request.GET.get('discipline_get', 99999)
+            choose_group = request.GET.get('group_get', 99999)
 
-        if request.method == 'POST': # метод пост вызывается в том случае, если происходит выбор группы или дисциплины
-            choose_discipline = int(request.POST.get('discipline_select', '0')) # Получение значения из select
-            if choose_discipline != 0:
-                choose_discipline = Discipline.objects.get(pk=choose_discipline)
-            choose_group = int(request.POST.get('group_select', '0'))
-            if choose_group != 0:
-                choose_group = StudentGroup.objects.get(pk=choose_group)
-            choose_student = request.GET.get('student_select', 'не выбран')
-            if choose_student != 'не выбран':
-                choose_student = Student.objects.get(slug=choose_student)
-            if choose_group == 0 or choose_discipline == 0:
-                choose_teacherdiscipline = ''
-            else:
-                choose_teacherdiscipline = TeacherDiscipline.objects.get(Q(teacher=teacher), Q(discipline=choose_discipline))
+        else: # метод пост вызывается в том случае, если происходит выбор группы или дисциплины
+            choose_discipline = request.POST.get('discipline_select', 99999) # Получение значения из select
+            choose_group = request.POST.get('group_select', 99999)
+        if choose_discipline != 99999:
+            choose_discipline = Discipline.objects.get(pk=choose_discipline)
 
+        if choose_group != 99999:
+            choose_group = StudentGroup.objects.get(pk=choose_group)
+        choose_student = request.GET.get('student_select', 'не выбран')
+        if choose_student != 'не выбран':
+            choose_student = Student.objects.get(slug=choose_student)
+        if choose_group == 99999 or choose_discipline == 99999:
+            choose_teacherdiscipline = ''
+        else:
+            choose_teacherdiscipline = TeacherDiscipline.objects.get(Q(teacher=teacher), Q(discipline=choose_discipline))
+        form_submission =CommentForm()
+        if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
+
 
             if form_submission.is_valid():
                 if request.POST['comment'] == '':
