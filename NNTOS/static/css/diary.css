@@ -75,6 +75,7 @@ background: none;
 .dnevnik {
 border-spacing: 10px;
 border-collapse: separate;
+margin-left: -10px;
 width: 489px;
 height: 300px;
 }
@@ -88,36 +89,39 @@ width: 79px;
 text-align: center;
 padding-top: 5px;
 border-radius: 10px;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
+font-style: normal;
+
+font-size: 18px;
+
 }
 
 .dnevnik th{
 
 padding-left: 15px;
 text-align: left;
-margin-left: 15px;
+
 width: 300px;
 border-radius: 10px;
 background: #E3E6F6;
-
 font-style: normal;
 font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-
+font-size: 18px;
 }
 .atten {
 background: #F6E3E3;
 }
 
+
 .mark{
+font-weight: normal;
 background:#E3E6F6;;
 }
 .week{
 margin-left: 7px;
-font-size: 28px;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
 line-height: 42px;
+color:  #07254F;
 }
 /* diary parents END*/

@@ -47,6 +47,7 @@ height: 54px;
 }
 
 .dnevnik1 td{
+
 padding-top: 5px;
 border-radius: 10px;
 font-weight: normal;
@@ -83,7 +84,7 @@ width: 50px;
 margin-left: 7px;
 font-size: 20px;
 line-height: 42px;
-
+color:  #07254F;
 font-weight: bold;
 }
 /* schedule for teacher  END*/
