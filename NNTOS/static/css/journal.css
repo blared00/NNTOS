@@ -35,7 +35,7 @@ background-color:  #FFF;
 /* TABLE JOURNAL START*/
 .table_marks{
 margin-left: -10px;
-margin-top: 30px;
+margin-top: 20px;
 border-spacing: 10px;
  border-collapse: separate;
 }
@@ -116,6 +116,35 @@ background-color:  #E3E6F6;}
 	font-size: 20px;
 
 }
+.dontdoit{
+width: 467px;
+height: 85px;
+background: #F6F3E3;
+border-radius: 10px;
+margin-top: 20px;
+padding-top: 20px;
+}
 
+.dontdo{
 
+margin-left: 32px;
+width: 402px;
+height: 46px;
+font-size: 20px;
+line-height: 23px;
+color: #CA0000;
+}
+.prostavit {
+float: left;
+padding-right: 30px;
+}
+
+.izmenit {
+float: center;
+
+}
+
+.title_borddd{
+padding-bottom: 100px;
+}
 /* TABLE JOURNAL END*/

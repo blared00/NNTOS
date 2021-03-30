@@ -426,15 +426,13 @@ background: url(../img/board.jpg)
 max-width: 1140px;
 margin: 0 auto;
 }
-.title_bord{
-padding-bottom: 120px;
-}
+
 .left_bord{
 margin-top: 55px;
 float: left;
 }
-.board_txtt{
 
+.board_txtt{
 height: 37px;
 font-weight: bold;
 font-size: 36px;
