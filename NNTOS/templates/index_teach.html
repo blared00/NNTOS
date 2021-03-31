@@ -213,7 +213,7 @@
 
                     {%for stud in choose_group.student_set.all%}
                     <tr>  <th class="naming" >{{stud.lastname}} {{stud.firstname|first}}. {{stud.patronymic|first}}. <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student_select={{stud.slug}}#submission"> </th>
-                            {%for mark in stud.mark_set.all%}
+                            {%for mark in stud.mark_set.all|dictsort:"date"%}
                                 {% if mark.discipline == choose_teacherdiscipline%}
                                     <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
                                 <!--<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
