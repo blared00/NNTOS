@@ -1,9 +1,11 @@
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.core.paginator import Paginator
 from django.db.models import Q
+from django.forms import formset_factory
 
-from .form import CommentForm
+from .form import CommentForm, MarkForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views import View
@@ -199,13 +201,46 @@ class HomeView(View):
         return redirect('/login/')
 
 
-'''def submission(request):
-    form = CommentForm(request.POST)
-    if request.method == 'POST':
-        if form.is_valid():
-            print(request.POST.cleaned_data)
-        else:
-            print("vsevhuynya")
+class MarkView(View):
+    def dispatch(self, request, *args, **kwargs):
 
-    return render(request, 'submission_form.html', context={'form_submission': form})
-'''
+        choose_discipline = request.GET.get('dis','не выбран')
+        if choose_discipline != 'не выбран':
+            try:
+                choose_discipline = TeacherDiscipline.objects.get(pk=choose_discipline)
+            except TeacherDiscipline.DoesNotExist:
+                choose_discipline = 'не выбран'
+        choose_group = request.GET.get('group','не выбрана')
+        if choose_group != 'не выбрана':
+            try:
+                choose_group = StudentGroup.objects.get(pk=choose_group)
+                extra_form = len(choose_group.student_set.all())
+            except StudentGroup.DoesNotExist:
+                extra_form = 0
+                choose_group = 'не выбрана'
+        else:
+            extra_form = 0
+
+
+
+
+        data_mark = request.POST.get('datamark', 'не выбрана')
+        MarkFormFormSet = formset_factory(MarkForm, extra=extra_form)
+
+        formset = MarkFormFormSet(request.POST or None)
+
+        if formset.is_valid():
+            messages.success(request, "Оценки сохранены")
+            for form in formset:
+                form.save()
+
+            return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
+
+
+
+
+        return render(request, 'marks_form2.html', context={'c_discipline': choose_discipline,
+                                                            'c_group': choose_group,
+                                                            'formset': formset,
+                                                            'data_mark': data_mark,
+                                                            })

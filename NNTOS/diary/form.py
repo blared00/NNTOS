@@ -1,6 +1,6 @@
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
-from .models import Comment
+from .models import Comment, Mark
 from django.contrib.auth.models import User
 
 
@@ -22,3 +22,11 @@ class CommentForm(forms.ModelForm):
             'student': forms.TextInput(attrs={'type': 'text'}),
             'discipline': forms.TextInput(attrs={'type': 'text',}),
         }
+
+
+class MarkForm(forms.ModelForm):
+    class Meta:
+        model = Mark
+        fields = ['value', 'discipline', 'student', 'date']
+
+
