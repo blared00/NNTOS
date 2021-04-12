@@ -216,65 +216,14 @@
                             {%for mark in stud.mark_set.all|dictsort:"date"%}
                                 {% if mark.discipline == choose_teacherdiscipline%}
                                     <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
-                                <!--<td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                                <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>-->
+                                marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>-->
                                 {%endif%}
                             {%endfor%}
                             <td class="data_m">5.0 </td>
                     </tr>
                     {%endfor%}
                     {%endif%}
-                    <!--<tr>  <th class="naming" > Белов А.С. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
-                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="data_m">3.0 </td>
-                    </tr>
-
-                    <tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
-                             <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="data_m">3.0 </td>
-                    </tr>
-
-                    <tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission/"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="data_m">3.0 </td>
-                    </tr>
-                    <tr>  <th class="naming" > Александровская А.М. <a href= "submission_form.html#submission"> <img class="com" src="{%static '/img/ms.png'%}"  > </a></th>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>
-                            <td class="data_m">5.0 </td>
-                    </tr>-->
+                    
                 </table>
                  <!--<div class="btn">
                     <button class="look">Сохранить</button>
