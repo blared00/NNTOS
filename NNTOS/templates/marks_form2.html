@@ -14,7 +14,7 @@
  <section class="marks_form"> 
 <div class="board_wrapper">
 <p class="marks_txt">Форма для выставления оценок</p>
-    <form method="post" action="{%url 'markview'%}?dis={{c_discipline.pk}}&group={{c_group.pk}}">
+    <form method="post" action="{%url 'markview'%}">
     {%csrf_token%}
         {{ formset.management_form }}
 <div class="rectangle_marks"> 
@@ -39,7 +39,7 @@
 <p class="heading_marksform"> Группа </p>
 <p class="naming_marksform"> {{c_group}}</p>
 <p  class="heading_marksform" > Дата </p>
-<p class="naming_marksform"> <input value={{data_mark}} name="datamark" style= "margin-top: -5px;" class="example_date" type="date" onchange="submit()" required></p>
+<p class="naming_marksform"> <input value={{data_mark}} name="datamark" style= "margin-top: -5px;" class="example_date" type="date"  required></p>
 
 <table class="table_marksform">
 <tr> <td class="naming_mark_b"> ФИО студента </td>  <td class="ball_b"> Балл </td> </tr>
@@ -49,7 +49,7 @@
 <tr> <td class="naming_mark">{{student.lastname}} {{student.firstname|first}}. {{student.patronymic|first}}. </td>  <td class="ball" > <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" > </td> </tr>
     <input type="hidden" value="{{student.pk}}" name="form-{{forloop.counter0}}-student">
     <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">
-    <input type="hidden" value="{{data_mark}}" name="form-{{forloop.counter0}}-date">
+    <input type="text" value="{{data_mark}}" name="form-{{forloop.counter0}}-date">
     {%empty%}
     <tr>  <td class="naming_mark"> Не выбрана группа </td> </tr>
     {%endfor%}

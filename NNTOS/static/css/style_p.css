@@ -5,6 +5,7 @@
 
 
 /* diary parents START*/
+/*
 
 .diary_par{
 width: 1440px;
@@ -39,17 +40,11 @@ background: url(../img/sort3.jpg) no-repeat right;
 float: right;
 margin-top: 38px;
 }
+*/
 
 /* diary parents TABLE */
 
-.tablle{
 
- border-spacing: 90px 38px;
-  border-collapse: separate;
-  margin-left: -90px;
-
-	border: none;
-}
 
 /* tooltip */
 .tooltip {

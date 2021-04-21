@@ -1,6 +1,9 @@
+import datetime
+
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.forms import formset_factory
@@ -22,7 +25,10 @@ class ParentsView(DataMixin, View):
         user = request.user
         if self.user_valid_page(student_name, request):          #Проверка входа на личную страницу
             return self.user_valid_page(student_name, request)
-        schedule = self.schedule_for_person(student)['schedule'] #Получение предметов студента и отображение расписания
+        date_now = datetime.datetime.isocalendar(datetime.datetime.now())
+        date_selected = request.POST.get('sorting_week', f'{date_now[0]}-W{date_now[1]}')
+
+        schedule = self.schedule_for_person(student, date=date_selected)['schedule'] #Получение предметов студента и отображение расписания
 
         menu = {'#glavnaya': 'Главная',                          #Разделы навбара
                 '#dosca': 'Доска объявлений',
@@ -32,6 +38,8 @@ class ParentsView(DataMixin, View):
 
         news = News.objects.filter(published_for_parents=True)
         news = self.news_views(request, news)
+
+
 
         submission = Comment.objects.filter(student=student)
         order_sub = request.POST.get('sorting_notify', 'first')
@@ -50,6 +58,7 @@ class ParentsView(DataMixin, View):
                                                               'chet': [2, 4, 6],
                                                               'news': news['page_obj_news'],
                                                               'submission': page_obj_sub,
+                                                              'week_selected': date_selected,
                                                               })
 
 
@@ -90,7 +99,7 @@ class TeacherView(DataMixin, View):
             choose_teacherdiscipline = TeacherDiscipline.objects.get(Q(teacher=teacher), Q(discipline=choose_discipline))
         except TeacherDiscipline.DoesNotExist:
             pass
-        print(choose_student, choose_group, choose_teacherdiscipline, choose_discipline)
+
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
@@ -179,40 +188,50 @@ class HomeView(View):
 
 class MarkView(View):
     def dispatch(self, request, *args, **kwargs):
-
-        choose_discipline = request.GET.get('dis','не выбран')
+        data_mark = request.POST.get('datamark', 'не выбрана')
+        if request.POST.get('discipline', '') and request.POST['group_select']:
+            choose_group = request.POST.get('group_select', 'не выбрана')
+            choose_discipline = request.POST.get('discipline', 'не выбран')
+        else:
+            print("тут считаю")
+            choose_discipline = request.POST.get('form-0-discipline', 'не выбран')
+            try:
+                choose_group = Student.objects.get(pk=request.POST.get('form-0-student', 'не выбрана')).n_group.pk
+            except (Student.DoesNotExist, ValueError):
+                choose_group = 'не выбрана'
+        extra_form = 0
+        print(request.POST)
         if choose_discipline != 'не выбран':
             try:
                 choose_discipline = TeacherDiscipline.objects.get(pk=choose_discipline)
             except TeacherDiscipline.DoesNotExist:
                 choose_discipline = 'не выбран'
-        choose_group = request.GET.get('group','не выбрана')
+
         if choose_group != 'не выбрана':
             try:
                 choose_group = StudentGroup.objects.get(pk=choose_group)
                 extra_form = len(choose_group.student_set.all())
             except StudentGroup.DoesNotExist:
-                extra_form = 0
                 choose_group = 'не выбрана'
-        else:
-            extra_form = 0
-
-
-
-
-        data_mark = request.POST.get('datamark', 'не выбрана')
         MarkFormFormSet = formset_factory(MarkForm, extra=extra_form)
-
-        formset = MarkFormFormSet(request.POST or None)
-
-        if formset.is_valid():
-            messages.success(request, "Оценки сохранены")
-            for form in formset:
-                form.save()
-
-            return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
+        formset = MarkFormFormSet()
+        if data_mark != 'не выбрана':
 
 
+            print(choose_discipline,choose_group,extra_form,data_mark)
+
+            try:
+                formset = MarkFormFormSet(request.POST or None)
+                if formset.is_valid():
+                    messages.success(request, "Оценки сохранены")
+                    for form in formset:
+                        form.save()
+                    formset = MarkFormFormSet()
+                    return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
+                else:
+                    messages.success(request, "Оценки сохранены")
+            except ValidationError:
+               pass
 
         return render(request, 'marks_form2.html', context={'c_discipline': choose_discipline,
                                                             'c_group': choose_group,

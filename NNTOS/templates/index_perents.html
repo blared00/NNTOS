@@ -8,11 +8,15 @@
               <div class="board_wrapper">
                   <p class="title_about"> Электронный дневник</p>
                   <div class="week_days">
-                        <select name="sorting" id="sorting_week" class="sorting_week">
-                          <option value="1">08-13.02.2021</option>
+                      <form method="post" action={{person.get_absolut_url}}#dnevnik>
+                          {%csrf_token%}
+                        <!--<select name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" >
+                          <option value="1" selected>08-13.02.2021</option>
                                 <option value="2">15-20.02.2021</option>
                                 <option value="3">22-27.02.2021</option>
-                        </select>
+                        </select>-->
+                          <input type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}}>
+                      </form>
                   </div>
                   <div class="name_stud">
                        <p class="title_about" > {{student}}</p>
@@ -20,13 +24,18 @@
                   </div>
                 <table class = "tablle">
                 <tr>
+
                     {%for weekday,schedule_d in schedule%}
                         {%if forloop.counter in chet%}
                             <td> <p class="week"> {{weekday}} </p>
                             <table class="dnevnik">
 
                             {%for lesson in schedule_d%}
-                            <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst|truncatechars:23}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
+                            <tr>
+                                <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
+                                {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
+                                </th>
+                                <td class="mark">{{lesson.mark.value}} </td>  <td class="atten"> </td>
 
                             {%endfor%}
                         </table>
@@ -37,7 +46,10 @@
                             <table class="dnevnik">
 
                                 {%for lesson in schedule_d%}
-                                <tr> <th> {{forloop.counter}} {{lesson.discipline.discipline|capfirst}} </th>  <td class="mark"> 5 </td>  <td class="atten"> </td>
+                                <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
+                                    {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
+                                     </th>
+                                    <td class="mark">{{lesson.mark.value}}  <td class="atten"> </td>
 
                                 {%endfor%}
                             </table>
@@ -92,7 +104,7 @@
             <div class="board_wrapper">
                <nav>
                     {% if submission.has_other_pages%}
-                <ul class="pagination-sub">
+                <ul class="pagination">
                     {% if submission.has_previous%}
                         <li class="pagination-sub-item">
                                 <input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page_sub={{submission.previous_page_number}}#uved">

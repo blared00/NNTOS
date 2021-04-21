@@ -169,19 +169,21 @@
                     </div>
                  </div>
 
-                 <!--<div class="dontdoit">
-                     <p class="dontdo">Внимание! Перед проставлением оценок необходимо выбрать группу и предмет</p>
 
-                 </div>-->
-
-                   <div>
+                 {% if choose_group != 99999 and choose_discipline != 99999%}
+                 <div>
                     <div class="prostavit">
-                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}?dis={{choose_teacherdiscipline.pk}}&group={{choose_group.pk}}">
+                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}">
                      </div>
                     <div class="izmenit">
                      <input type = "submit" class = "look" style = " margin-top: 30px; " value="Изменить оценки">
                      </div>
                  </div>
+                 {%else%}
+                 <div class="dontdoit">
+                     <p class="dontdo">Внимание! Перед проставлением оценок необходимо выбрать группу и предмет</p>
+                 </div>
+                 {%endif%}
                 <table class = "table_marks">
                     <tr>
                         <th>
@@ -216,7 +218,6 @@
                             {%for mark in stud.mark_set.all|dictsort:"date"%}
                                 {% if mark.discipline == choose_teacherdiscipline%}
                                     <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
-                                marks_m"><input class="in_m" type="number" min="2" max="5" value="3"> </td>-->
                                 {%endif%}
                             {%endfor%}
                             <td class="data_m">5.0 </td>
