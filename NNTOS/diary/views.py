@@ -71,7 +71,10 @@ class TeacherView(DataMixin, View):
 
         disciplines = teacher.discipline.all()
         groups = self.schedule_for_person(teacher)['groups']
-        schedule = self.schedule_for_person(teacher)['schedule']
+        date_now = datetime.datetime.isocalendar(datetime.datetime.now())
+        date_selected = request.POST.get('sorting_week', f'{date_now[0]}-W{date_now[1]}')
+
+        schedule = self.schedule_for_person(teacher, date=date_selected)['schedule']
 
         '''Переменные для работы формы "Комментарий ученику" '''
 
@@ -144,6 +147,7 @@ class TeacherView(DataMixin, View):
                                                             'schedule': schedule.items(),
                                                             'weekdays': weekdays_list.items(),
                                                             'chet': [2, 4, 6], # для отображения расписания в таблицу
+                                                            'week_selected': date_selected,
                                                             #'weekday_get': weekday_get, Применяется в случае использования постраничного отображения расписанию
                                                             })
 
@@ -194,13 +198,13 @@ class MarkView(View):
             choose_discipline = request.POST.get('discipline', 'не выбран')
         else:
             print("тут считаю")
-            choose_discipline = request.POST.get('form-0-discipline', 'не выбран')
+            choose_discipline = request.GET.get('dis', 'не выбран')
             try:
-                choose_group = Student.objects.get(pk=request.POST.get('form-0-student', 'не выбрана')).n_group.pk
+                # choose_group = Student.objects.get(pk=request.POST.get('group', 'не выбрана')).n_group.pk
+                choose_group = request.GET.get('group', 'не выбрана')
             except (Student.DoesNotExist, ValueError):
                 choose_group = 'не выбрана'
         extra_form = 0
-        print(request.POST)
         if choose_discipline != 'не выбран':
             try:
                 choose_discipline = TeacherDiscipline.objects.get(pk=choose_discipline)
@@ -215,21 +219,59 @@ class MarkView(View):
                 choose_group = 'не выбрана'
         MarkFormFormSet = formset_factory(MarkForm, extra=extra_form)
         formset = MarkFormFormSet()
+
+        rangee = len(choose_group.student_set.all())
+        students = [choose_group.student_set.all()[n] for n in range(rangee)]
+        sdasd = {students[n]: '' for n in range(rangee)}
+
+
+        flag = request.POST.get('flags', False)
         if data_mark != 'не выбрана':
-
-
-            print(choose_discipline,choose_group,extra_form,data_mark)
-
             try:
                 formset = MarkFormFormSet(request.POST or None)
+
                 if formset.is_valid():
+                    flag = 0
                     messages.success(request, "Оценки сохранены")
-                    for form in formset:
-                        form.save()
+
+                    if not flag:
+                        for form in formset:
+                            form.save()
+
+
                     formset = MarkFormFormSet()
+                    print('Vse otpravil ocenki')
+                    print(choose_discipline, choose_group, extra_form, data_mark)
                     return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
                 else:
-                    messages.success(request, "Оценки сохранены")
+                    try:
+                        marks = [students[n].mark_set.filter(date=data_mark).first() for n in range(rangee)]
+                        sdasd = {students[n]: marks[n].value for n in range(rangee)}
+
+
+                        if flag == '1':
+                            print(flag)
+                            print('ТУТ ФЛАГ не равен 0, ща все испорчу тебе сука ')
+                            for n in range(rangee):
+                                if request.POST[f'form-{n}-value']:
+                                    try:
+                                        marks[n].value = float(request.POST[f'form-{n}-value'])
+                                    except ValueError:
+                                        pass
+                                    marks[n].save()
+                                else:
+                                    marks[n].value = None
+                                    marks[n].save()
+                            messages.success(request, "Оценки сохранены")
+                            flag = 0
+                            return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
+
+
+                        if flag=='False':
+                            flag = 1
+                            messages.error(request, "Оценки несохранены.\n На эту дату были оценки, они представлены в форме \n Если необходимо редактировать значения, измените нужные и нажмите 'Сохранить'")
+                    except AttributeError:
+                        pass
             except ValidationError:
                pass
 
@@ -237,4 +279,8 @@ class MarkView(View):
                                                             'c_group': choose_group,
                                                             'formset': formset,
                                                             'data_mark': data_mark,
+                                                            'students': sdasd.items(),
+                                                            'flag': flag,
                                                             })
+
+

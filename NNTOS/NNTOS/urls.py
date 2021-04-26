@@ -17,8 +17,10 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.shortcuts import redirect
 from django.urls import path, include
-from diary.views import ParentsView, TeacherView, NewsView, LoginUser, HomeView, logout_view, redirect_page, MarkView
+from diary.views import  ParentsView, TeacherView, NewsView, LoginUser, HomeView, logout_view, redirect_page, MarkView
 from NNTOS.settings import MEDIA_URL, MEDIA_ROOT
+
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,6 +31,7 @@ urlpatterns = [
     path('logout/', logout_view, name='logout'),
     path('redirectpage/', redirect_page, name='redirect_page'),
     path('formmark/', MarkView.as_view(), name='markview'),
+    # path('formmark/edit/', MarkEditView.as_view(), name='markeditview'),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('', HomeView.as_view(), name='home')
 

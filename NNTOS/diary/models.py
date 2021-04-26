@@ -19,6 +19,9 @@ class Student(models.Model):
     def get_absolute_url(self):
         return reverse('student', kwargs={'student_name': self.slug})
 
+    def get_abrivioture(self):
+        return f'{self.lastname} {self.firstname[0]}.{self.patronymic[0]}.'
+
     class Meta:
         verbose_name = 'Студент'
         verbose_name_plural = 'Студенты'
@@ -31,7 +34,7 @@ class StudentGroup(models.Model):
         return self.number
 
     class Meta:
-        verbose_name = 'Группа'
+        verbose_name = 'группу'
         verbose_name_plural = 'Группы'
 
 
@@ -86,16 +89,17 @@ class ScheduleGroup(models.Model):
     discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     lesson = models.ForeignKey('NumberLesson', on_delete=models.CASCADE, verbose_name='Номер пары')
     class_room = models.IntegerField(verbose_name='Номер аудитории')
-    weekday = models.ForeignKey('Weekday', on_delete=models.CASCADE, verbose_name='День недели')
+    # weekday = models.ForeignKey('Weekday', on_delete=models.CASCADE, verbose_name='День недели')
     n_group = models.ForeignKey('StudentGroup', on_delete=models.CASCADE, verbose_name='Номер группы')
+    date = models.DateField(verbose_name="Дата")
 
     def __str__(self):
         return f' {self.discipline}'
 
     class Meta:
-        verbose_name = 'Пара'
+        verbose_name = 'элемент расписания'
         verbose_name_plural = 'Пары'
-        unique_together = (('weekday', 'lesson', 'discipline'), ('weekday', 'lesson', 'n_group'))
+        unique_together = (('date', 'lesson', 'discipline'), ('date', 'lesson', 'n_group'))
 
 
 class NumberLesson(models.Model):

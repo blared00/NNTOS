@@ -10,6 +10,10 @@
                 <div class="left_block" style="margin-left: -0px;">
 
                 <p  class="title_about">Расписание</p>
+                    <form method="post" action={{person.get_absolut_url}}#schedule_teacher>
+                          {%csrf_token%}
+                          <input style='margin-top:20px;' type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}}>
+                      </form>
                 </div>
 
                 <!-- Разделение по дням недели-->
@@ -33,11 +37,13 @@
              </div>-->
 
                 <div class="name_teacher1">
-                     <p  class="title_about">{{person.lastname}} {{person.firstname|first}}. {{person.patronymic|first}}.</p>
+                     <p  class="title_about">{{person.get_abrivioture}}</p>
+
                 </div>
                  </div>
 
                 <div>
+
                 </div>
                 <div>
                     <table class = "tablle1">
@@ -173,10 +179,10 @@
                  {% if choose_group != 99999 and choose_discipline != 99999%}
                  <div>
                     <div class="prostavit">
-                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}">
+                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}?dis={{choose_discipline.pk}}&group={{choose_group.pk}}">
                      </div>
                     <div class="izmenit">
-                     <input type = "submit" class = "look" style = " margin-top: 30px; " value="Изменить оценки">
+                     <input type = "submit" class = "look" style = " margin-top: 30px; " value="Изменить оценки" >
                      </div>
                  </div>
                  {%else%}

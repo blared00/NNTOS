@@ -10,11 +10,6 @@
                   <div class="week_days">
                       <form method="post" action={{person.get_absolut_url}}#dnevnik>
                           {%csrf_token%}
-                        <!--<select name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" >
-                          <option value="1" selected>08-13.02.2021</option>
-                                <option value="2">15-20.02.2021</option>
-                                <option value="3">22-27.02.2021</option>
-                        </select>-->
                           <input type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}}>
                       </form>
                   </div>
@@ -87,8 +82,21 @@
                     </div>
                 </div>
             </div>
+                 <div class="board_wrapper">
+                 {%if not submisson%}
+
+                <div  class="block">
+                    <p class="title_block_noty">Нет уведомлений</p>
+                    <!--<p class="title_block_notify">{{s.discipline.teacher}}</p>
+                    <button class="look_noty">Посмотреть</button>
+                    <p style="margin-top:8px;" class="title_block_noty">Предмет:</p>
+                    <p style="margin-top:8px;" class="title_block_notify">{{s.discipline.discipline}}</p>
+                    &lt;!&ndash;<p style="margin-top:8px;" class="title_block_notify">{{s.comment}}</p>&ndash;&gt;
+                    <p style="margin-top:8px;" class="">Отправленно {{s.date}}</p>-->
+                </div>
+                 {%endif%}
                  {%for s in submission%}
-             <div class="board_wrapper">
+
                 <div  class="block">
                     <p class="title_block_noty">Преподаватель:</p>
                     <p class="title_block_notify">{{s.discipline.teacher}}</p>

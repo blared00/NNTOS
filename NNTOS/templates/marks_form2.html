@@ -8,7 +8,17 @@
 	<link rel = "stylesheet" href= "{%static '/css/marks_form.css' %}">
 
     <title>Выставление оценок|ННТОС</title>
-
+    <script>
+        function getDateForm(){
+        var elem = document.getElementsByClassName('form-date')
+        for( var i=0; i<elem.length; ++i ) {
+            var obj = elem[i];
+            obj.value = document.getElementById('datemark').value;
+        }
+        var el = document.getElementById('flag')
+        el.value = "False"
+        }
+    </script>
 </head>
 <body>
  <section class="marks_form"> 
@@ -39,17 +49,22 @@
 <p class="heading_marksform"> Группа </p>
 <p class="naming_marksform"> {{c_group}}</p>
 <p  class="heading_marksform" > Дата </p>
-<p class="naming_marksform"> <input value={{data_mark}} name="datamark" style= "margin-top: -5px;" class="example_date" type="date"  required></p>
+<p class="naming_marksform"> <input value={{data_mark}} name="datamark" id="datemark" style= "margin-top: -5px;" class="example_date" type="date" onchange="getDateForm()" required ></p>
 
 <table class="table_marksform">
 <tr> <td class="naming_mark_b"> ФИО студента </td>  <td class="ball_b"> Балл </td> </tr>
     
     {%if c_group != 'не выбрана' and c_discipline != 'не выбран'%}
-    {%for student in c_group.student_set.all%}
-<tr> <td class="naming_mark">{{student.lastname}} {{student.firstname|first}}. {{student.patronymic|first}}. </td>  <td class="ball" > <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" > </td> </tr>
+    {%for student,mark in students%}
+<tr> <td class="naming_mark">{{student.get_abrivioture}} </td>  <td class="ball" >
+    {%ifequal mark None%}
+    <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" > </td> </tr>
+    {%else%}
+    <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" value={{mark}} > </td> </tr>
+    {%endifequal%}
     <input type="hidden" value="{{student.pk}}" name="form-{{forloop.counter0}}-student">
     <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">
-    <input type="text" value="{{data_mark}}" name="form-{{forloop.counter0}}-date">
+    <input type="hidden" value="{{data_mark}}" name="form-{{forloop.counter0}}-date" id="form-{{forloop.counter0}}-date" class="form-date">
     {%empty%}
     <tr>  <td class="naming_mark"> Не выбрана группа </td> </tr>
     {%endfor%}
@@ -71,7 +86,9 @@
  </table>
 <div class= "btn_savemark">
 <input type="submit" class= " button_savemark" value="Сохранить">
-
+    <input type="hidden" value="{{c_discipline.pk}}" name="discipline">
+    <input type="hidden" value="{{c_group.pk}}" name="group_select">
+    <input type="text" value="{{flag}}" name="flags" id="flag">
 </div>
 
 </div>
