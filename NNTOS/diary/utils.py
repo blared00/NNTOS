@@ -67,7 +67,14 @@ class DataMixin:
                     if l.lesson.pk == n + 1:
                         try:
                             valid = person.n_group
-                            a[n] = {'discipline_schedule': l, 'date_schedule': date_for_schedule, 'mark': marks.filter(Q(discipline__pk=l.discipline.pk), Q(date=date_for_schedule)).first}
+                            mark = marks.filter(Q(discipline__pk=l.discipline.pk), Q(date=date_for_schedule)).first().value
+                            print( date_for_schedule, mark)
+                            if mark == None:
+                                mark = ''
+                            elif mark < 1:
+                                mark = 'Н'
+                            print(date_for_schedule, mark)
+                            a[n] = {'discipline_schedule': l, 'date_schedule': date_for_schedule, 'mark': mark}
                         except AttributeError:
                             a[n] = l
             schedule[f'{weekday}, {datetime.datetime.strptime(date_for_schedule,"%Y-%m-%d").strftime("%d.%m.%Y")}'] = a

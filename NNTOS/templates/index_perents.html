@@ -30,7 +30,9 @@
                                 <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
                                 {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
                                 </th>
-                                <td class="mark">{{lesson.mark.value}} </td>  <td class="atten"> </td>
+
+                                <td class="mark">{{lesson.mark}} </td>  <td class="atten"> </td>
+
 
                             {%endfor%}
                         </table>
@@ -44,7 +46,7 @@
                                 <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
                                     {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
                                      </th>
-                                    <td class="mark">{{lesson.mark.value}}  <td class="atten"> </td>
+                                    <td class="mark">{{lesson.mark}}  <td class="atten"> </td>
 
                                 {%endfor%}
                             </table>

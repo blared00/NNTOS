@@ -240,8 +240,7 @@ class MarkView(View):
 
 
                     formset = MarkFormFormSet()
-                    print('Vse otpravil ocenki')
-                    print(choose_discipline, choose_group, extra_form, data_mark)
+
                     return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
                 else:
                     try:
@@ -250,8 +249,7 @@ class MarkView(View):
 
 
                         if flag == '1':
-                            print(flag)
-                            print('ТУТ ФЛАГ не равен 0, ща все испорчу тебе сука ')
+
                             for n in range(rangee):
                                 if request.POST[f'form-{n}-value']:
                                     try:

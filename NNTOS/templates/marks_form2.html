@@ -85,10 +85,14 @@
 
  </table>
 <div class= "btn_savemark">
-<input type="submit" class= " button_savemark" value="Сохранить">
+    {%if flag == 1%}
+        <input type="submit" class= " button_savemark" value="Изменить">
+    {%els%}
+        <input type="submit" class= " button_savemark" value="Сохранить">
+    {%endif%}
     <input type="hidden" value="{{c_discipline.pk}}" name="discipline">
     <input type="hidden" value="{{c_group.pk}}" name="group_select">
-    <input type="text" value="{{flag}}" name="flags" id="flag">
+    <input type="hidden" value="{{flag}}" name="flags" id="flag">
 </div>
 
 </div>
