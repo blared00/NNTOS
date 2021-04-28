@@ -23,11 +23,15 @@
 <body>
  <section class="marks_form"> 
 <div class="board_wrapper">
+    <div class="btn_back">
+        <button class="button_back"> Назад </button>
+</div>
 <p class="marks_txt">Форма для выставления оценок</p>
     <form method="post" action="{%url 'markview'%}">
     {%csrf_token%}
         {{ formset.management_form }}
-<div class="rectangle_marks"> 
+<div class="rectangle_marks">
+    <div class="rectan_mark">
 {% if messages%}
     <ul class="messages">
         {%for message in messages%}
@@ -35,6 +39,7 @@
         {%endfor%}
     </ul>
 {%endif%}
+        </div>
 <p class="heading_marksform"> Преподаватель </p>
 
     {%if c_discipline == 'не выбран'%}
@@ -87,7 +92,7 @@
 <div class= "btn_savemark">
     {%if flag == 1%}
         <input type="submit" class= " button_savemark" value="Изменить">
-    {%els%}
+    {%else%}
         <input type="submit" class= " button_savemark" value="Сохранить">
     {%endif%}
     <input type="hidden" value="{{c_discipline.pk}}" name="discipline">

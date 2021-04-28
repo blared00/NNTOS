@@ -95,7 +95,28 @@ box-sizing: inherit;
   color: #000000;
 
  }
- 
+ .btn_back{
+padding-bottom: 20px;
+}
+
+
+.button_back{
+cursor: pointer;
+width: 139px;
+height: 46px;
+background: #07254F;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_back:active, .button_back:hover{
+background: #8392A7;
+}
  .marks_form {
 height: aouto;
 padding-top: 40px;
@@ -107,7 +128,7 @@ padding-bottom: 40px;
  margin: 0 auto;
 }
 .marks_txt{
-	
+	text-align: center;
 width: 1140px;
 height: 42px;
 font-weight: bold;
@@ -234,3 +255,19 @@ border: none;
 .button_savemark:active, .button_savemark:hover{
 background: #8392A7;
 }
+
+
+.rectan_mark {
+width: 420px;
+padding: 15px;
+
+background: #F6F3E3;
+border-radius: 10px;
+
+}
+
+li.error, li.success{
+
+font-size: 20px;
+line-height: 130%;
+color: #CA0000;}
