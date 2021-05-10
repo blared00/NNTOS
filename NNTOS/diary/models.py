@@ -77,7 +77,7 @@ class TeacherDiscipline(models.Model):
     discipline = models.ForeignKey('Discipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
 
     def __str__(self):
-        name = f'{self.discipline}/{self.teacher}'
+        name = f'{self.discipline}/{self.teacher.get_abrivioture()}'
         return name
 
     class Meta:
@@ -94,7 +94,7 @@ class ScheduleGroup(models.Model):
     date = models.DateField(verbose_name="Дата")
 
     def __str__(self):
-        return f' {self.discipline}'
+        return f'{self.date}/{self.discipline} '
 
     class Meta:
         verbose_name = 'элемент расписания'
@@ -148,32 +148,35 @@ class News(models.Model):
 
 
 class Mark(models.Model):
-    value = models.FloatField(verbose_name='Оценка', blank=True, null=True)
-    discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
+    value = models.IntegerField(verbose_name='Оценка', blank=True, null=True)
     student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
-    date = models.DateField()
+    schedule_lesson = models.ForeignKey('ScheduleGroup', on_delete=models.CASCADE, verbose_name='Пара')
+    mean_b = models.BooleanField()
 
     def __str__(self):
-        return f'{self.date} {self.discipline} {self.student}'
+        return f'{self.schedule_lesson} {self.student}'
 
     class Meta:
         verbose_name = 'Оценка '
         verbose_name_plural = 'Оценки'
-        ordering = ('-date',)
-        unique_together = ('student', 'discipline', 'date')
+        ordering = ('-schedule_lesson',)
+        unique_together = ('student', 'schedule_lesson')
+
 
 
 
 class Comment(models.Model):
     comment = models.TextField(max_length=300, verbose_name='Комментарий')
     student = models.ForeignKey('Student', on_delete=models.CASCADE, verbose_name='Студент')
-    discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
-    date = models.DateField(auto_now_add=True)
+    schedule_lesson = models.ForeignKey('ScheduleGroup', on_delete=models.CASCADE, verbose_name='Пара')
 
     def __str__(self):
-        return f'{self.date} {self.student} {self.discipline}'
+        return f'{self.schedule_lesson} {self.student}'
+
+    def get_absolute_url(self):
+        return reverse('comment', kwargs={'comment': self.pk})
 
     class Meta:
         verbose_name = 'комментарий'
         verbose_name_plural = 'Комментарии'
-        ordering = ('-date',)
+        ordering = ('-schedule_lesson',)

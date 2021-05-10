@@ -16,17 +16,17 @@ class CommentForm(forms.ModelForm):
 
     class Meta:
         model = Comment
-        fields = ['comment', 'student', 'discipline']
+        fields = ['comment', 'student', 'schedule_lesson']
         widgets = {
             'comment': forms.Textarea(attrs={"class": "input_sub"}),
             'student': forms.TextInput(attrs={'type': 'text'}),
-            'discipline': forms.TextInput(attrs={'type': 'text',}),
+            'schedule_lesson': forms.Select(),
         }
 
 
 class MarkForm(forms.ModelForm):
     class Meta:
         model = Mark
-        fields = ['value', 'discipline', 'student', 'date']
+        fields = ['value', 'student', 'schedule_lesson', 'mean_b']
 
 

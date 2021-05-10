@@ -130,11 +130,15 @@
     <!--{{form_submission.student}}-->
 
       <p class="heading"> Преподаватель </p>
-    <p class="namingg"> {{person.lastname}} {{person.firstname|first}}. {{person.patronymic|first}}. </p>
-    <!--{{form_submission.discipline}}--><input type="hidden" name="discipline" value={{choose_teacherdiscipline.pk}} id="id_discipline">
-
-     <p class="heading"> Предмет </p>
-    <p class="namingg"> {{choose_discipline}} </p>
+    <p class="namingg"> {{person.get_abrivioture}} </p>
+    <!--{{form_submission.schedule_lesson}}-->
+     <p class="heading"> Пара </p>
+                <select name="schedule_lesson" id="id_schedule_lesson" class="sorting_notify" required>
+                    <option selected hidden>Не выбрана</option>
+                    {%for lesson in list_date%}
+                        <option value={{lesson.pk}}>{{lesson}}</option>
+                    {%endfor%}
+                </select>
     <!--{{form_submission.discipline.errors}}-->
       <p class="heading"> Комментарий </p>
 
@@ -179,7 +183,7 @@
                  {% if choose_group != 99999 and choose_discipline != 99999%}
                  <div>
                     <div class="prostavit">
-                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}?dis={{choose_discipline.pk}}&group={{choose_group.pk}}">
+                     <input type = "submit" class = "look" style = " margin-top: 30px;" value="Проставить оценки" formaction="{%url 'markview'%}?dis={{choose_teacherdiscipline.pk}}&group={{choose_group.pk}}">
                      </div>
                     <div class="izmenit">
                      <input type = "submit" class = "look" style = " margin-top: 30px; " value="Изменить оценки" >
@@ -208,27 +212,29 @@
                                 </select>
 
                         </th>
-                        {%for mark in choose_teacherdiscipline.mark_set.all|dictsort:"date"%}
-                            {%if mark.discipline == choose_teacherdiscipline%}
-                                {%if mark.student == choose_group.student_set.all.first%}
-                                    <td class= "data_m"> {{mark.date|date:"d.m"}} </td>
-                                {%endif%}
-                            {%endif%}
+                        {%for date in list_date|dictsort:'date'%}
+                            <td class= "data_m"> {{date.date|date:"d.m"}} </td>
                         {%endfor%}
                             <td class= "data_m"> оценка </td>
                     </tr>
                     {%if choose_group != 99999%}
 
-                    {%for stud in choose_group.student_set.all%}
-                    <tr>  <th class="naming" >{{stud.get_abrivioture}} <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student_select={{stud.slug}}#submission"> </th>
-                            {%for mark in stud.mark_set.all|dictsort:"date"%}
-                                {% if mark.discipline == choose_teacherdiscipline%}
-                                    <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
+
+                        {%for student, marks in marks_student%}
+                            <tr>  <th class="naming" >{{student.get_abrivioture}} <input class="com" type="image" src="{%static '/img/ms.png'%}" formaction="{{person.get_absolut_url}}?student_select={{student.slug}}#submission"> </th>
+                            {%for mark in marks%}
+                                {%if not mark.avg%}
+                                    {%if mark.mean_b%}
+                                        <td class="marks_m">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
+                                    {%else%}
+                                        <td class="marks_m" style="opacity: .5">{%if mark.value%}{{mark.value}}{%else%} {%endif%}</td>
+                                    {%endif%}
+                                {%else%}
+                                    <td class="data_m">{{mark.value}}</td>
                                 {%endif%}
                             {%endfor%}
-                            <td class="data_m">5.0 </td>
-                    </tr>
-                    {%endfor%}
+                            </tr>
+                        {%endfor%}
                     {%endif%}
                     
                 </table>

@@ -2,6 +2,7 @@
 
 
 {%block body%}
+{%load static%}
 <!--Дневник - расписание с оценками на неделю -->
     <div id="dnevnik" >
          <section class="diary_par">
@@ -31,7 +32,7 @@
                                 {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
                                 </th>
 
-                                <td class="mark">{{lesson.mark}} </td>  <td class="atten"> </td>
+                                <td class="mark">{{lesson.mark}} </td>  <td class="atten">{%if lesson.notify%}<img src="{%static '/img/att.png' %}">{%endif%} </td>
 
 
                             {%endfor%}
@@ -46,7 +47,7 @@
                                 <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
                                     {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
                                      </th>
-                                    <td class="mark">{{lesson.mark}}  <td class="atten"> </td>
+                                    <td class="mark">{{lesson.mark}}  <td class="atten">{%if lesson.notify%}<img src="{%static '/img/att.png' %}">{%endif%} </td>
 
                                 {%endfor%}
                             </table>
@@ -85,7 +86,7 @@
                 </div>
             </div>
                  <div class="board_wrapper">
-                 {%if not submisson%}
+                 {%if not submission%}
 
                 <div  class="block">
                     <p class="title_block_noty">Нет уведомлений</p>
@@ -101,12 +102,12 @@
 
                 <div  class="block">
                     <p class="title_block_noty">Преподаватель:</p>
-                    <p class="title_block_notify">{{s.discipline.teacher}}</p>
-                    <button class="look_noty">Посмотреть</button>
+                    <p class="title_block_notify">{{s.schedule_lesson.discipline.teacher}}</p>
+                    <input type="submit" class="look_noty" value="Посмотреть" formaction="{{s.get_absolute_url}}" formmethod="post">
                     <p style="margin-top:8px;" class="title_block_noty">Предмет:</p>
-                    <p style="margin-top:8px;" class="title_block_notify">{{s.discipline.discipline}}</p>
+                    <p style="margin-top:8px;" class="title_block_notify">{{s.schedule_lesson.discipline.discipline}}</p>
                     <!--<p style="margin-top:8px;" class="title_block_notify">{{s.comment}}</p>-->
-                    <p style="margin-top:8px;" class="">Отправленно {{s.date}}</p>
+                    <p style="margin-top:8px;" class="">Отправленно {{s.schedule_lesson.date}}</p>
                 </div>
                  {%endfor%}
 
@@ -117,7 +118,7 @@
                 <ul class="pagination">
                     {% if submission.has_previous%}
                         <li class="pagination-sub-item">
-                                <input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page_sub={{submission.previous_page_number}}#uved">
+                                <input  type="submit" value="&lt;" formaction="{{person.get_absolute_url}}?page_sub={{submission.previous_page_number}}#uved">
                         </li>
                         {%if submission.number|add:-2 > submission.paginator.page_range|first and submission.number < 3%}
 

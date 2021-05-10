@@ -10,7 +10,7 @@
     <title>Выставление оценок|ННТОС</title>
     <script>
         function getDateForm(){
-        var elem = document.getElementsByClassName('form-date')
+        var elem = document.getElementsByClassName('form-schedule_lesson')
         for( var i=0; i<elem.length; ++i ) {
             var obj = elem[i];
             obj.value = document.getElementById('datemark').value;
@@ -18,28 +18,32 @@
         var el = document.getElementById('flag')
         el.value = "False"
         }
+
     </script>
 </head>
 <body>
  <section class="marks_form"> 
 <div class="board_wrapper">
+    <form method="post">
     <div class="btn_back">
-        <button class="button_back"> Назад </button>
-</div>
+        <input type="button" class="button_back" onclick="history.back()" value="Назад">
+    </div>
+    </form>
 <p class="marks_txt">Форма для выставления оценок</p>
     <form method="post" action="{%url 'markview'%}">
     {%csrf_token%}
         {{ formset.management_form }}
 <div class="rectangle_marks">
-    <div class="rectan_mark">
+
 {% if messages%}
+        <div class="rectan_mark">
     <ul class="messages">
         {%for message in messages%}
         <li {% if message.tags %} class="{{message.tags}}"{%endif%}>{{message}}</li>
         {%endfor%}
-    </ul>
+    </ul></div>
 {%endif%}
-        </div>
+
 <p class="heading_marksform"> Преподаватель </p>
 
     {%if c_discipline == 'не выбран'%}
@@ -47,14 +51,26 @@
 <p class="heading_marksform"> Предмет </p>
 <p class="naming_marksform"> {{c_discipline}}</p>
     {%else %}
-<p class="naming_marksform"> {{c_discipline.teacher.lastname}} {{c_discipline.teacher.firstname|first}}. {{c_discipline.teacher.patronymic|first}}. </p>
+<p class="naming_marksform"> {{c_discipline.teacher.get_abrivioture}} </p>
 <p class="heading_marksform"> Предмет </p>
 <p class="naming_marksform"> {{c_discipline.discipline}}</p>
     {%endif%}
 <p class="heading_marksform"> Группа </p>
 <p class="naming_marksform"> {{c_group}}</p>
 <p  class="heading_marksform" > Дата </p>
-<p class="naming_marksform"> <input value={{data_mark}} name="datamark" id="datemark" style= "margin-top: -5px;" class="example_date" type="date" onchange="getDateForm()" required ></p>
+<p class="naming_marksform">
+<!--    <input value={{data_mark}} name="datamark" id="datemark" style= "margin-top: -5px;" class="example_date" type="date" onchange="getDateForm()" required >-->
+<select id="datemark" name="datamark" class="sorting_lesson" onchange=getDateForm() >
+    {%if data_mark and flag%}
+    <option value={{data_mark}} selected disabled hidden>{{data_mark}}</option>
+    {%else%}
+    <option value="не выбрана" selected disabled hidden>Выберите дату</option>
+    {%endif%}
+    {%for lesson in schedule%}
+       <option value={{lesson.pk}}>{{lesson.date}}</option>
+    {%endfor%}
+</select>
+</p>
 
 <table class="table_marksform">
 <tr> <td class="naming_mark_b"> ФИО студента </td>  <td class="ball_b"> Балл </td> </tr>
@@ -68,8 +84,9 @@
     <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" value={{mark}} > </td> </tr>
     {%endifequal%}
     <input type="hidden" value="{{student.pk}}" name="form-{{forloop.counter0}}-student">
-    <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">
-    <input type="hidden" value="{{data_mark}}" name="form-{{forloop.counter0}}-date" id="form-{{forloop.counter0}}-date" class="form-date">
+<!--    <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">-->
+    <input type="hidden"  name="form-{{forloop.counter0}}-schedule_lesson"  class="form-schedule_lesson"{%if data_mark%} value={{data_mark.pk}} {%endif%}>
+    <input type="hidden"  name="form-{{forloop.counter0}}-mean_b" id="form-{{forloop.counter0}}-mean_b" class="form-check">
     {%empty%}
     <tr>  <td class="naming_mark"> Не выбрана группа </td> </tr>
     {%endfor%}
@@ -90,6 +107,8 @@
 
  </table>
 <div class= "btn_savemark">
+    <label for="id_include_avg" class="naming_markform">Учитывать для расчета среднего значения?</label>
+    <input type="checkbox" name="include_avg" id="include_avg">
     {%if flag == 1%}
         <input type="submit" class= " button_savemark" value="Изменить">
     {%else%}
@@ -104,9 +123,19 @@
 
     </form>
 </div>
- 
+
  </section>
 
+<script>
+    var main = document.getElementById('include_avg'),
+            all = document.getElementsByClassName('form-check');
 
+
+        main.onclick = function() {  // 3
+            for(var i=0; i<all.length; i++) {
+                all[i].value = main.checked;
+            }
+        }
+</script>
 </body>
 </html>
