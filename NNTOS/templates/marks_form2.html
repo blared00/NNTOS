@@ -106,9 +106,10 @@
 
 
  </table>
+    <label for="id_include_avg" class="avg_mark">Учесть  для расчета итоговой оценки</label>
+    <input type="checkbox" name="include_avg" id="include_avg" class="avg_check">
 <div class= "btn_savemark">
-    <label for="id_include_avg" class="naming_markform">Учитывать для расчета среднего значения?</label>
-    <input type="checkbox" name="include_avg" id="include_avg">
+
     {%if flag == 1%}
         <input type="submit" class= " button_savemark" value="Изменить">
     {%else%}

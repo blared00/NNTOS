@@ -103,22 +103,24 @@ class TeacherView(DataMixin, View):
             pass
         list_date = ScheduleGroup.objects.filter(Q(discipline__teacher=teacher), Q(discipline__discipline=choose_discipline), Q(n_group=choose_group))
         marks_student = {}
-        for student in choose_group.student_set.all():
-            marks_student[student] = [marks.mark_set.all().filter(student=student).first() for marks in list_date.filter(n_group=choose_group).order_by('date')]
-            average_mark = 0
-            num_mark = 0
-            for mark in marks_student[student]:
-                try:
-                    if mark.value and mark.mean_b:
-                        average_mark += mark.value
-                        num_mark += 1
-                except AttributeError:
-                    pass
-            if num_mark:
-                average_mark /= num_mark
+        try:
+            for student in choose_group.student_set.all():
+                marks_student[student] = [marks.mark_set.all().filter(student=student).first() for marks in list_date.filter(n_group=choose_group).order_by('date')]
+                average_mark = 0
+                num_mark = 0
+                for mark in marks_student[student]:
+                    try:
+                        if mark.value and mark.mean_b:
+                            average_mark += mark.value
+                            num_mark += 1
+                    except AttributeError:
+                        pass
+                if num_mark:
+                    average_mark /= num_mark
 
-            marks_student[student].append({'value':average_mark, 'avg': True})
-
+                marks_student[student].append({'value':average_mark, 'avg': True})
+        except:
+            pass
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию

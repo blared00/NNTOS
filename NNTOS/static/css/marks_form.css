@@ -12,10 +12,10 @@ figure, figcaption, footer, header, hgroup,
 menu, nav, output, ruby, section, summary,
 time, mark, audio, video {
 	margin: 0;
-	padding: 0;зщ
+	padding: 0;
 	border: 0;
 	font-size: 100%;
-	font: inherit;
+
 
 }
 article, aside, details, figcaption, figure,
@@ -273,30 +273,37 @@ line-height: 130%;
 color: #CA0000;}
 
 .sorting_lesson{
- cursor: pointer;
-display: block;
-font-weight: normal;
-font-size: 18px;
-color: #000;
-line-height: 23px;
-width: 323px;
-height: 50px;
-padding-left: 15px;
-padding-right: 5px;
-box-sizing: border-box;
-margin: 0;
+    margin-top: -12px;
+    width: 220px;
+    height: 47px;
+    border: none;
+    outline: none;
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
 
-border: 2px solid #000;
-border-radius: 25px;
-background: url(../img/sort1.jpg) no-repeat right;
+    background: url(../img/sort3.jpg) no-repeat right;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    }
 
-outline:none;
+    .avg_mark{
+     padding-right: 10px;
+    color: #07254F;
+    margin-top: 10px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    float: left;
+    }
 
- -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; }
 
-option:not(:checked) {
-    background-color: white;
-    color:#000;
-}
+    .avg_check{
+    height: 20px;
+    width: 20px;
+    margin-top: 15px;
+    }

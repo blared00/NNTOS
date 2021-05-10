@@ -8,28 +8,22 @@ background: url(../img/notify.jpg)
 }
 
 .sorting_notify{
- cursor: pointer;
-display: block;
-font-weight: normal;
-font-size: 18px;
-color: #000;
-line-height: 23px;
-width: 323px;
-height: 50px;
-padding-left: 15px;
-padding-right: 5px;
-box-sizing: border-box;
-margin: 0;
+    margin-top: 15px;
+    width: 220px;
+    height: 47px;
+    border: none;
+    outline: none;
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
 
-border: 2px solid #000;
-border-radius: 25px;
-background: url(../img/sort1.jpg) no-repeat right;
-
-outline:none;
-
- -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none; }
+    background: url(../img/sort3.jpg) no-repeat right;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none; }
 
 option:not(:checked) {
     background-color: white;
