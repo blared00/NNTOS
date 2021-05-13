@@ -46,33 +46,7 @@ margin-top: 38px;
 
 
 
-/* tooltip */
-.tooltip {
-position: relative;
-}
 
-.tooltip:hover::after {
-content: attr(aria-label);
-bottom: 100%;
-left: 0;
-position: absolute;
-border: 1px solid #BB8F8F;
-background:  #F6E3E3;
-color: black;
-border-radius: 10px;
-padding: 3px 14px;
-font-size: 14px;
-cursor: default;
-width: 395px;
-height: 40px;
-text-align: left;
-}
-.like-button {
-	border: none;
-	outline: none;
-	background: none;
-}
-/* tooltip */
 
 
 

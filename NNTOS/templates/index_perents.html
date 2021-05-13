@@ -47,7 +47,7 @@
                                 <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
                                     {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
                                      </th>
-                                    <td class="mark">{{lesson.mark}}  <td class="atten">{%if lesson.notify%}<img src="{%static '/img/att.png' %}">{%endif%} </td>
+                                    <td class="mark">{{lesson.mark}}  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Уведомление о распиздяе"><img src="{%static '/img/att.png' %}" ></button>{%endif%} </td>
 
                                 {%endfor%}
                             </table>

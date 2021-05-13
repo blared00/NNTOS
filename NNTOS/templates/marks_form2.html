@@ -59,15 +59,17 @@
 <p class="naming_marksform"> {{c_group}}</p>
 <p  class="heading_marksform" > Дата </p>
 <p class="naming_marksform">
+
 <!--    <input value={{data_mark}} name="datamark" id="datemark" style= "margin-top: -5px;" class="example_date" type="date" onchange="getDateForm()" required >-->
-<select id="datemark" name="datamark" class="sorting_lesson" onchange=getDateForm() >
-    {%if data_mark and flag%}
-    <option value={{data_mark}} selected disabled hidden>{{data_mark}}</option>
-    {%else%}
-    <option value="не выбрана" selected disabled hidden>Выберите дату</option>
-    {%endif%}
+<select id="datemark" name="datamark" class="sorting_lesson" onchange=getDateForm() required >
+    {%ifequal data_mark 'не выбрана'%}
+
+    <option selected disabled hidden value>Выберите дату</option>
+    {%endifequal%}
+
     {%for lesson in schedule%}
-       <option value={{lesson.pk}}>{{lesson.date}}</option>
+
+       <option {%ifequal data_mark.pk lesson.pk%} selected {%endifequal%} value={{lesson.pk}}> {{lesson.date}}</option>
     {%endfor%}
 </select>
 </p>
@@ -85,8 +87,8 @@
     {%endifequal%}
     <input type="hidden" value="{{student.pk}}" name="form-{{forloop.counter0}}-student">
 <!--    <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">-->
-    <input type="hidden"  name="form-{{forloop.counter0}}-schedule_lesson"  class="form-schedule_lesson"{%if data_mark%} value={{data_mark.pk}} {%endif%}>
-    <input type="hidden"  name="form-{{forloop.counter0}}-mean_b" id="form-{{forloop.counter0}}-mean_b" class="form-check">
+    <input type="hidden"  name="form-{{forloop.counter0}}-schedule_lesson"  class="form-schedule_lesson" value={{data_mark.pk}} >
+    <input type="hidden"  name="form-{{forloop.counter0}}-mean_b" id="form-{{forloop.counter0}}-mean_b" class="form-check" value='false'>
     {%empty%}
     <tr>  <td class="naming_mark"> Не выбрана группа </td> </tr>
     {%endfor%}
@@ -117,7 +119,7 @@
     {%endif%}
     <input type="hidden" value="{{c_discipline.pk}}" name="discipline">
     <input type="hidden" value="{{c_group.pk}}" name="group_select">
-    <input type="hidden" value="{{flag}}" name="flags" id="flag">
+    <input type="hidden" value="{{flag}}" name="flags" id="flags">
 </div>
 
 </div>

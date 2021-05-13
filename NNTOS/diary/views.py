@@ -272,23 +272,26 @@ class MarkView(View):
                 else:
                     print('non valid')
                     try:
-                        print(flag)
+                        print(3, flag)
                         marks = [students[n].mark_set.filter(schedule_lesson=data_mark).first() for n in range(rangee)]
                         sdasd = {students[n]: marks[n].value for n in range(rangee)}
 
 
                         if flag == '1':
-                            print(flag)
+                            print(4, flag)
                             for n in range(rangee):
                                 if request.POST[f'form-{n}-value']:
                                     try:
                                         marks[n].value = int(request.POST[f'form-{n}-value'])
                                     except ValueError:
                                         print('тут чтото не получилось')
-                                    marks[n].save()
                                 else:
                                     marks[n].value = None
-                                    marks[n].save()
+                                if request.POST[f'form-{n}-mean_b'] == 'true':
+                                    marks[n].mean_b = True
+                                else:
+                                    marks[n].mean_b = False
+                                marks[n].save()
                             messages.success(request, "Оценки сохранены")
                             flag = 0
                             return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
@@ -296,12 +299,15 @@ class MarkView(View):
 
                         if flag=='False':
                             flag = 1
-                            print('pomenyal flag')
+                            print('pomenyal flag',flag)
                             messages.error(request, "Оценки не сохранены.\n На эту дату есть оценки, они представлены ниже      \n — Чтобы редактировать значения, измените их и нажмите 'Сохранить'    ‌‌‍‍ \n — Чтобы отменить операцию, нажмите 'Назад'")
+                        else:
+                            print('ghbdtn')
                     except AttributeError as e:
                         print(e)
             except ValidationError:
                print('vsemu pizda')
+
 
         return render(request, 'marks_form2.html', context={'c_discipline': choose_discipline,
                                                             'c_group': choose_group,
