@@ -105,7 +105,10 @@ class TeacherView(DataMixin, View):
         marks_student = {}
         try:
             for student in choose_group.student_set.all():
-                marks_student[student] = [marks.mark_set.all().filter(student=student).first() for marks in list_date.filter(n_group=choose_group).order_by('date')]
+                marks_student[student] = [{'value': 'Н', 'mean_b':marks.mark_set.all().filter(student=student).first().mean_b }
+                                          if marks.mark_set.all().filter(student=student).first().value == 1
+                                          else marks.mark_set.all().filter(student=student).first()
+                                          for marks in list_date.filter(n_group=choose_group).order_by('date')]
                 average_mark = 0
                 num_mark = 0
                 for mark in marks_student[student]:
@@ -118,7 +121,7 @@ class TeacherView(DataMixin, View):
                 if num_mark:
                     average_mark /= num_mark
 
-                marks_student[student].append({'value':average_mark, 'avg': True})
+                marks_student[student].append({'value':round(average_mark,1), 'avg': True})
         except:
             pass
         form_submission = CommentForm()
@@ -256,11 +259,9 @@ class MarkView(View):
         if data_mark != 'не выбрана':
             try:
                 formset = MarkFormFormSet(request.POST or None)
-                print('начало')
                 if formset.is_valid():
                     flag = 0
                     messages.success(request, "Оценки сохранены")
-                    print(2)
                     if not flag:
                         for form in formset:
                             form.save()
@@ -270,21 +271,18 @@ class MarkView(View):
 
                     return redirect(f'/formmark/?dis={choose_discipline.pk}&group={choose_group.pk}')
                 else:
-                    print('non valid')
                     try:
-                        print(3, flag)
                         marks = [students[n].mark_set.filter(schedule_lesson=data_mark).first() for n in range(rangee)]
                         sdasd = {students[n]: marks[n].value for n in range(rangee)}
 
 
                         if flag == '1':
-                            print(4, flag)
                             for n in range(rangee):
                                 if request.POST[f'form-{n}-value']:
                                     try:
                                         marks[n].value = int(request.POST[f'form-{n}-value'])
                                     except ValueError:
-                                        print('тут чтото не получилось')
+                                        marks[n].value = 1
                                 else:
                                     marks[n].value = None
                                 if request.POST[f'form-{n}-mean_b'] == 'true':
@@ -299,14 +297,13 @@ class MarkView(View):
 
                         if flag=='False':
                             flag = 1
-                            print('pomenyal flag',flag)
                             messages.error(request, "Оценки не сохранены.\n На эту дату есть оценки, они представлены ниже      \n — Чтобы редактировать значения, измените их и нажмите 'Сохранить'    ‌‌‍‍ \n — Чтобы отменить операцию, нажмите 'Назад'")
                         else:
                             print('ghbdtn')
                     except AttributeError as e:
                         print(e)
             except ValidationError:
-               print('vsemu pizda')
+               print(ValidationError)
 
 
         return render(request, 'marks_form2.html', context={'c_discipline': choose_discipline,

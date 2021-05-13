@@ -83,7 +83,7 @@
     {%ifequal mark None%}
     <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" > </td> </tr>
     {%else%}
-    <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" value={{mark}} > </td> </tr>
+    <input name='form-{{forloop.counter0}}-value' type="text" class="marks_num" pattern="[1-5Нн]" value="{%ifequal mark 1%}Н{%else%}{{mark}}{%endifequal%}" > </td> </tr>
     {%endifequal%}
     <input type="hidden" value="{{student.pk}}" name="form-{{forloop.counter0}}-student">
 <!--    <input type="hidden" value="{{c_discipline.pk}}" name="form-{{forloop.counter0}}-discipline">-->

@@ -76,17 +76,15 @@ class DataMixin:
                             mark = marks.filter(Q(schedule_lesson__discipline__pk=l.discipline.pk), Q(schedule_lesson__date=date_for_schedule)).first()
                             if not mark:
                                 mark = ''
-                            print( date_for_schedule, mark)
                             try:
                                 mark = mark.value
                                 if mark == None:
                                     mark = ''
-                                elif mark < 1:
+                                elif mark == 1:
                                     mark = 'Н'
                             except:
                                 pass
                             notify = Comment.objects.filter(Q(student=person), Q(schedule_lesson=l.pk)).first()
-                            print(l, date_for_schedule, mark, notify)
                             a[n] = {'discipline_schedule': l, 'date_schedule': date_for_schedule, 'mark': mark, 'notify': notify}
                         except AttributeError:
                             a[n] = l
