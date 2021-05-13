@@ -120,6 +120,7 @@ box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.3);
 
 
 .header_rect{
+z-index: 1;
 position:fixed;
 width: 1440px;
 height: 156px;
@@ -127,6 +128,7 @@ background: rgba(0, 0, 0, 0.5);
 }
 
 .header{
+z-index: 1;
 position: fixed;
 margin-left: 150px;
 
@@ -194,6 +196,15 @@ margin-left: 60px;}
 margin-left: 0;
 }
 
+.stud_name {
+float: right;
+z-index: 1;
+color: #FFFFFF;
+font-weight: 500;
+font-size: 16px;
+text-transform: uppercase;
+margin-right: 0;
+}
 
 .NNTOS{
 

@@ -53,6 +53,7 @@ border: none;
 position: relative;
 }
 
+
 .tooltip:hover::after {
 content: attr(aria-label);
 bottom: 100%;
@@ -69,11 +70,16 @@ width: 395px;
 height: 40px;
 text-align: left;
 }
+
 .like-button {
-border: none;
+ z-index: 0;
+ border: none;
 outline: none;
 background: none;
 }
+
+
+
 /* tooltip */
 
 .dnevnik {
