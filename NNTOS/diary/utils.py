@@ -4,11 +4,20 @@ import time
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import redirect
+from django.utils.datastructures import MultiValueDictKeyError
 
 from .models import Teacher, Weekday, Mark, ScheduleGroup, weekdays, Comment
 
 
 class DataMixin:
+    def change_email_user(self, request):
+        if not request.user.email:
+            try:
+                request.user.email = request.POST['change_email']
+                request.user.save()
+            except MultiValueDictKeyError:
+                pass
+
     def user_valid_page(self, person, request):
         if request.user.username != person and request.user.username != 'admin':
             return redirect('/redirectpage')

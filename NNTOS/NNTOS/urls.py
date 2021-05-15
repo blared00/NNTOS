@@ -15,6 +15,8 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
+from django.contrib.auth import views as auth_views
+
 from django.shortcuts import redirect
 from django.urls import path, include
 from diary.views import  ParentsView, TeacherView,CommentView, NewsView, LoginUser, HomeView, logout_view, redirect_page, MarkView
@@ -34,7 +36,12 @@ urlpatterns = [
     path('formmark/', MarkView.as_view(), name='markview'),
     # path('formmark/edit/', MarkEditView.as_view(), name='markeditview'),
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
-    path('', HomeView.as_view(), name='home')
+    path('', HomeView.as_view(), name='home'),
+    # Восстановление пароля
+    path('change-password/', auth_views.PasswordResetView.as_view(), name='reset_password'),
+    path('change-password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
+    path('change/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('change-password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
 
 ]
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

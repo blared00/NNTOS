@@ -2,12 +2,12 @@ import datetime
 
 from django.contrib import messages
 from django.contrib.auth import logout
+from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.views import LoginView
 from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.forms import formset_factory
-
 from .form import CommentForm, MarkForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -18,7 +18,10 @@ from .models import *
 from .utils import DataMixin
 
 
+
+
 class ParentsView(DataMixin, View):
+
     def dispatch(self, request, student_name):
         ''' Получение предметов студента и отображение расписания'''
         student = get_object_or_404(Student, slug=student_name)
@@ -66,6 +69,8 @@ class TeacherView(DataMixin, View):
     def dispatch(self, request, teacher_name):
         teacher = get_object_or_404(Teacher, slug=teacher_name)
         user = request.user
+        self.change_email_user(request)
+
         if self.user_valid_page(teacher_name, request):
             return self.user_valid_page(teacher_name, request)
         disciplines = teacher.discipline.all()
@@ -102,8 +107,18 @@ class TeacherView(DataMixin, View):
         except TeacherDiscipline.DoesNotExist:
             pass
         list_date = ScheduleGroup.objects.filter(Q(discipline__teacher=teacher), Q(discipline__discipline=choose_discipline), Q(n_group=choose_group))
+        list_dat =[n for n in list_date.order_by('date')]
+        list_dat.append(' ')
+        paginator_list_date = Paginator(list_dat, 9)
+        page_number = request.GET.get('page_marks')
+        page_obj_list_date = paginator_list_date.get_page(page_number)
+
         marks_student = {}
+        paginator_marks = {}
+        page_obj_marks = {'':''}
+        last_student = ''
         try:
+            page_obj_marks.pop('')
             for student in choose_group.student_set.all():
                 marks_student[student] = [{'value': 'Н', 'mean_b':marks.mark_set.all().filter(student=student).first().mean_b }
                                           if marks.mark_set.all().filter(student=student).first().value == 1
@@ -122,8 +137,16 @@ class TeacherView(DataMixin, View):
                     average_mark /= num_mark
 
                 marks_student[student].append({'value':round(average_mark,1), 'avg': True})
+
+            for student, marks in marks_student.items():
+                paginator_marks[student] = Paginator(marks, 9)
+                page_number = request.GET.get('page_marks')
+                page_obj_marks[student] = paginator_marks[student].get_page(page_number)
+                last_student = student
         except:
             pass
+
+
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
@@ -152,6 +175,8 @@ class TeacherView(DataMixin, View):
         news = News.objects.filter(published_for_teacher=True)
         news = self.news_views(request, news)
 
+
+
         return render(request, 'index_teach.html', context={'person': teacher,
                                                             'disciplines': disciplines,
                                                             'groups': groups,
@@ -169,8 +194,10 @@ class TeacherView(DataMixin, View):
                                                             'weekdays': weekdays_list.items(),
                                                             'chet': [2, 4, 6], # для отображения расписания в таблицу
                                                             'week_selected': date_selected,
-                                                            'list_date': list_date,
-                                                            'marks_student': marks_student.items(),
+                                                            'list_date': page_obj_list_date,
+                                                            'marks_student': page_obj_marks.items(),
+                                                            'marks_paginator': page_obj_marks[last_student]
+
                                                             #'weekday_get': weekday_get, Применяется в случае использования постраничного отображения расписанию
                                                             })
 
@@ -180,12 +207,16 @@ class TeacherView(DataMixin, View):
 
 class NewsView(View):
     def dispatch(self, request, news_slug):
+        if not request.user.is_authenticated:
+            return redirect('/login/')
         news_detail = get_object_or_404(News, slug=news_slug)
         return render(request, 'news_detail.html', context={'news': news_detail,
                                                             })
 
 class CommentView(View):
     def dispatch(self, request, comment):
+        if not request.user.is_authenticated:
+            return redirect('/login/')
         comment_detail = get_object_or_404(Comment, pk=comment)
         return render(request, 'read_notify.html', context={'comment': comment_detail,
                                                             })
@@ -193,6 +224,8 @@ class CommentView(View):
 class LoginUser(LoginView):
     form_class = LoginForm
     template_name = 'login.html'
+    redirect_authenticated_user = True
+
 
     def get_success_url(self):
         return reverse_lazy('redirect_page')
@@ -220,7 +253,9 @@ class HomeView(View):
 
 class MarkView(View):
     def dispatch(self, request, *args, **kwargs):
-        #
+        if not request.user.is_authenticated:
+            return redirect('/login/')
+
         if request.POST.get('discipline', '') and request.POST['group_select']:
             choose_group = request.POST.get('group_select', 'не выбрана')
             choose_discipline = request.POST.get('discipline', 'не выбран')
