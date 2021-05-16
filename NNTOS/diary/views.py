@@ -26,6 +26,8 @@ class ParentsView(DataMixin, View):
         ''' Получение предметов студента и отображение расписания'''
         student = get_object_or_404(Student, slug=student_name)
         user = request.user
+        if not request.user.is_authenticated:
+            return redirect('/login/')
         if self.user_valid_page(student_name, request):          #Проверка входа на личную страницу
             return self.user_valid_page(student_name, request)
         date_now = datetime.datetime.isocalendar(datetime.datetime.now())
@@ -69,6 +71,8 @@ class TeacherView(DataMixin, View):
     def dispatch(self, request, teacher_name):
         teacher = get_object_or_404(Teacher, slug=teacher_name)
         user = request.user
+        if not request.user.is_authenticated:
+            return redirect('/login/')
         self.change_email_user(request)
 
         if self.user_valid_page(teacher_name, request):
@@ -145,8 +149,8 @@ class TeacherView(DataMixin, View):
                 last_student = student
         except:
             pass
-        if choose_discipline != 99999 and choose_group != 99999:
-          page_obj_marks.pop('')
+        # if choose_discipline != 99999 and choose_group != 99999:
+        page_obj_marks.pop('')
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
@@ -196,7 +200,7 @@ class TeacherView(DataMixin, View):
                                                             'week_selected': date_selected,
                                                             'list_date': page_obj_list_date,
                                                             'marks_student': page_obj_marks.items(),
-                                                            'marks_paginator': page_obj_marks[last_student]
+                                                            'marks_paginator': page_obj_marks[last_student] if last_student in page_obj_marks else ''
 
                                                             #'weekday_get': weekday_get, Применяется в случае использования постраничного отображения расписанию
                                                             })
@@ -238,9 +242,9 @@ def logout_view(request):
 
 def redirect_page(request):
     if request.user.groups.filter(name="Учителя"):
-        return redirect(f'/teach/{request.user.username}')
+        return redirect(f'/teach/{request.user.username}'if request.user.email else f'/teach/{request.user.username}#email_form')
     elif request.user.groups.filter(name="Студенты"):
-        return redirect(f'/student/{request.user.username}')
+        return redirect(f'/student/{request.user.username}'if request.user.email else f'/student/{request.user.username}#email_form')
     else:
         return redirect(f'/login/')
 

@@ -65,18 +65,23 @@
     </div>
     </header>
     <!-- ФОРМА EMAIL!!!!!!!!!!!!!!! -->
+    {%if not user.email%}
+    <form action="{{person.get_absolute_url}}" method="post">
+        {%csrf_token%}
         <div  style ="margin-top: 150px;"id="email_form" class=" rectng">
         <p> <a href = #glavnaya><img src="{%static '/img/close.png'%}" class="x"></a></p>
         <p class="vvod"> Пожалуйста, оставьте <font color="#CA0000;"><br class="red_br">адрес электронной почты </br></font> для привязки личного профиля.
         <br> В случае утери пароля, на адрес придет новый пароль </br> </p>
 
         <p class="email">E-mail</p>
-        <input type="text" class="input_email" placeholder="&nbsp;Введите e-mail">
+        <input type="text" class="input_email" placeholder="&nbsp;Введите e-mail" name="change_email">
         <div class="bnt_set">
-                            <button class="button_set"> Отправить</button>
+                            <input type="submit" class="button_set" value="Отправить">
                     </div>
 
         </div>
+    </form>
+    {%endif%}
     <!-- Представление учебного учереждения-->
     <main class="main">
         <section class="mainimg">
@@ -96,15 +101,8 @@
             <p class="title_about"> Почему выбирают нас?</p>
                 <img src="{%static '/img/students.jpg'%}" alt="st" class="students">
         </div>
-        {{user.email}}
-        {%if not user.email%}
-        <form action="{{person.get_absolute_url}}" method="post">
-            {%csrf_token%}
-            <p class="abz">Введите email для возможности восстановления пароля</p>
-            <input type="text" class="" name="change_email" >
-            <input type="submit" class="button">
-        </form>
-        {%endif%}
+
+
         <div  id="dosca"  class="right_block">
             <p class="abz">
             <p class="abz1"> ГБПОУ «Нижегородский техникум транспортного обслуживания и сервиса» —  был основан 23 июля 1941 года.</p>
