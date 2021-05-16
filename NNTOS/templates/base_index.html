@@ -37,7 +37,9 @@
          <li class="header-item">
              <img src="{%static '/img/svg/profil.svg'%}" alt="profil" class="profil" style="margin-right: 15px;" >
              <a href="{%url 'logout'%}" class="header-link">Выйти</a>
-             <p class="header-link">{{user}}</p>
+             {%if perms.user.add_user%}
+                <p class="header-link">{{user}}</p>
+             {%endif%}
          </li>
         </ul>
         </nav>
@@ -57,10 +59,8 @@
                 </ul>
 
             </nav>
-            <div style="float:right;">
-             <p  class="stud_name"> Петров Н.В. <p>
-            </div>
-
+<div style="float: right;  ">
+<p  class="stud_name"> {{person.get_abrivioture}} <p></div>
         </div>
     </div>
     </header>
@@ -77,6 +77,15 @@
             <p class="title_about"> Почему выбирают нас?</p>
                 <img src="{%static '/img/students.jpg'%}" alt="st" class="students">
         </div>
+        {{user.email}}
+        {%if not user.email%}
+        <form action="{{person.get_absolute_url}}" method="post">
+            {%csrf_token%}
+            <p class="abz">Введите email для возможности восстановления пароля</p>
+            <input type="text" class="" name="change_email" >
+            <input type="submit" class="button">
+        </form>
+        {%endif%}
         <div  id="dosca"  class="right_block">
             <p class="abz">
             <p class="abz1"> ГБПОУ «Нижегородский техникум транспортного обслуживания и сервиса» —  был основан 23 июля 1941 года.</p>
@@ -91,7 +100,7 @@
         <!--таблица новостей-->
     <div class="b_parent">
         <section class="board_parents">
-        <form method="post" action={{person.get_absolut_url}}#dosca>
+        <form method="post" action={{person.get_absolute_url}}#dosca>
                     {%csrf_token%}
         <div class="board_wrapper">
             <div class="title_bord">

@@ -212,10 +212,16 @@
                                 </select>
 
                         </th>
-                        {%for date in list_date|dictsort:'date'%}
+                        {%for date in list_date%}
+                            {%if date.date%}
                             <td class= "data_m"> {{date.date|date:"d.m"}} </td>
+                            {%endif%}
                         {%endfor%}
-                            <td class= "data_m"> оценка </td>
+
+                            {%if not list_date.has_next%}
+                                <td class= "data_m">Ср.знач.</td>
+                            {%endif%}
+
                     </tr>
                     {%if choose_group != 99999%}
 
@@ -238,37 +244,95 @@
                     {%endif%}
                     
                 </table>
-                 <!--<div class="btn">
-                    <button class="look">Сохранить</button>
-                 </div>-->
 
-                  <!--<nav>
-                    <ul class="pagination">
+                 <!--пагинация-->
+                <nav>
+                {% if marks_paginator.has_other_pages%}
+                <ul class="pagination">
+                    {% if marks_paginator.has_previous%}
                         <li class="pagination-item">
-                            <a href="#!">←</a>
+                                <input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.previous_page_number}}#journal">
                         </li>
-                        <li class="pagination-item pg-active">
-                            <a href="#!">1</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">2</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">3</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">4</a>
-                        </li>
-                        <li class="pagination-item">
-                            <a href="#!">→</a>
-                        </li>
-                    </ul>
-                </nav>-->
+                        {%if marks_paginator.number|add:-2 > marks_paginator.paginator.page_range|first and marks_paginator.number < 3%}
 
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{marks_paginator.paginator.page_range|first|add:-1}}" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.paginator.page_range|first|add:-1}}#journal">
+                            </li>
 
-             </div>
-          </section>
-    </form>
-       </div>
+                        {%endif%}
+                        {%if marks_paginator.number|add:-1 > marks_paginator.paginator.page_range|first%}
+
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{marks_paginator.paginator.page_range|first}}" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.paginator.page_range|first}}#journal">
+                            </li>
+
+                        {%endif%}
+                        {% if marks_paginator.number > 3%}
+                            <li class="paginpg-active">
+                                <p class="paginp">...</p>
+                            </li>
+                        {%endif%}
+                    {%else%}
+                    <li class="paginpg-active">
+                        <p class="paginp">&lt;</p>
+                    </li>
+                    {%endif%}
+                    {%for p in marks_paginator.paginator.page_range%}
+                        {% if marks_paginator.has_previous%}
+
+                            {%if marks_paginator.number == p %}
+                            <li class="paginpg-active">
+                                <p class="paginp">{{p}}</p>
+                            </li>
+                            {%elif p >= marks_paginator.number|add:-1 and p <= marks_paginator.number|add:1 %}
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page_marks={{p}}#journal">
+                            </li>
+
+                            {%endif%}
+                        {%else%}
+                            {%if marks_paginator.number == p %}
+                            <li class="paginpg-active">
+                                <p class="paginp">{{p}}</p>
+                            </li>
+                            {%elif p >= marks_paginator.number|add:-1 and p <= marks_paginator.number|add:1 %}
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page_marks={{p}}#journal">
+                            </li>
+                            {%endif%}
+                        {%endif%}
+                    {%endfor%}
+
+                      {% if marks_paginator.has_next%}
+                            {%if marks_paginator.number|add:3 < marks_paginator.paginator.page_range|last%}
+                            <li class="paginpg-active">
+                                 <p class="paginp">...</p>
+                            </li>
+                            {%elif marks_paginator.number|add:3 == marks_paginator.paginator.page_range|last%}
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{marks_paginator.paginator.page_range|last|add:-1}}" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.paginator.page_range|last|add:-1}}#journal">
+                            </li>
+                            {%endif%}
+                            {%if marks_paginator.number|add:2 < marks_paginator.paginator.page_range|last%}
+
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{marks_paginator.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.paginator.page_range|last}}#journal">
+                            </li>
+                            {%elif marks_paginator.number|add:1 < marks_paginator.paginator.page_range|last%}
+                            <li class="pagination-item">
+                                <input  type="submit" value="{{marks_paginator.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.paginator.page_range|last}}#journal">
+                            </li>
+                            {%endif%}
+                            <li class="pagination-item">
+                                <input  type="submit" value="&gt;" formaction="{{person.get_absolut_url}}?page_marks={{marks_paginator.next_page_number}}#journal">
+                            </li>
+                      {%else%}
+                            <li class="paginpg-active">
+                                <p class="paginp">&gt;</p>
+                            </li>
+                      {%endif%}
+                {%endif%}
+	            </ul>
+            </nav>
 
 {%endblock%}
