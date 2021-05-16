@@ -38,10 +38,10 @@ urlpatterns = [
     path('grappelli/', include('grappelli.urls')), # grappelli URLS
     path('', HomeView.as_view(), name='home'),
     # Восстановление пароля
-    path('change-password/', auth_views.PasswordResetView.as_view(), name='reset_password'),
-    path('change-password_sent/', auth_views.PasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('change/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('change-password_complete/', auth_views.PasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('change-password/', auth_views.PasswordResetView.as_view(template_name='step1.html'), name='reset_password'),
+    path('change-password_sent/', auth_views.PasswordResetDoneView.as_view(template_name='step2.html'), name='password_reset_done'),
+    path('change/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(template_name='step3.html'), name='password_reset_confirm'),
+    path('change-password_complete/', auth_views.PasswordResetCompleteView.as_view(template_name='step4.html'), name='password_reset_complete'),
 
 ]
 urlpatterns += static(MEDIA_URL, document_root=MEDIA_ROOT)

@@ -1,14 +1,15 @@
 <!doctype html>
 <html lang="ru">
+{%load static%}
 <head>
     <meta charset="UTF-8">
    
          <link rel = "stylesheet" href= "{%static '/css/email_steps.css' %}">
-    <title>ННТОС|Авторизация</title>
+    <title>ННТОС|Письмо отправленно</title>
 </head>
 <body>
 <div id="step2"class=" rect_par"> 
-<p> <img src="close.png" class="x"></p>
+<p><a  onclick="history.back()"><img src="{%static 'img/close.png'%}" class="x"></a></p>
 
 <p class="zaglavie"> ПИСЬМО ОТПРАВЛЕНО</p>
 <p class="forgotten"> Если вы не получили письмо, пожалуйста, убедитесь, что ввели тот адрес,

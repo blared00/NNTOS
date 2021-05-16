@@ -2,6 +2,7 @@
 
 
 .rect_par{
+margin-top: 20%;
 overflow: hidden;
 margin-left: 35%;
 box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.11);	
@@ -16,6 +17,8 @@ border-radius: 15px;
 }
 
 .zaglavie{
+    font-family: 'Roboto';
+    font-style: normal;
 	marfin-top: 30px;
 	margin-left: 31px;
 	font-weight: bold;
@@ -25,9 +28,11 @@ border-radius: 15px;
 	color: #CA0000;
 }
 .forgotten{
+
 margin-top: 10px;
 width: 310px;
-
+font-family: 'Roboto';
+font-style: normal;
 margin-left: 31px;
 font-family: Roboto;
 font-style: normal;
@@ -37,7 +42,7 @@ line-height: 130%;
 }
 
 .s_email{
-	
+
 width: 150px;
 height: 16px;
 margin-left: 31px;
