@@ -1,0 +1,92 @@
+
+
+
+.rect_par{
+overflow: hidden;
+margin-left: 35%;
+box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.11);	
+width: 370px;
+padding-bottom: 30px;
+background: #FFFFFF;
+border-radius: 15px;
+}
+.x{
+	margin-top: 30px;
+	margin-left: 300px;
+}
+
+.zaglavie{
+	marfin-top: 30px;
+	margin-left: 31px;
+	font-weight: bold;
+	font-size: 20px;
+	line-height: 130%;
+	text-transform: uppercase;
+	color: #CA0000;
+}
+.forgotten{
+margin-top: 10px;
+width: 310px;
+
+margin-left: 31px;
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 130%;
+}
+
+.s_email{
+	
+width: 150px;
+height: 16px;
+margin-left: 31px;
+margin-top: 10px;
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+color: #000000;
+}
+.input_email{
+	
+margin-left: 31px;
+width: 314px;
+height: 46px;
+border: 1px solid #D5D1D1;
+box-sizing: border-box;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+padding: 10px;
+color: #07254F;
+outline:none;
+}
+.input_email:focus{
+border:1px solid #07254F;
+}
+
+.bnt_step{
+margin-top: 30px;
+margin-left: 148px;
+
+
+}
+.button_step{
+cursor: pointer;
+width: 190px;
+height: 46px;
+background: #CA0000;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_step:active, .button:hover{
+background: #E48080;
+}
