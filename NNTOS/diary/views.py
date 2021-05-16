@@ -118,7 +118,7 @@ class TeacherView(DataMixin, View):
         page_obj_marks = {'':''}
         last_student = ''
         try:
-            page_obj_marks.pop('')
+
             for student in choose_group.student_set.all():
                 marks_student[student] = [{'value': 'Н', 'mean_b':marks.mark_set.all().filter(student=student).first().mean_b }
                                           if marks.mark_set.all().filter(student=student).first().value == 1
@@ -145,8 +145,8 @@ class TeacherView(DataMixin, View):
                 last_student = student
         except:
             pass
-
-
+        if choose_discipline != 99999 and choose_group != 99999:
+          page_obj_marks.pop('')
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
@@ -202,7 +202,7 @@ class TeacherView(DataMixin, View):
                                                             })
 
 
-s
+
 
 
 class NewsView(View):
