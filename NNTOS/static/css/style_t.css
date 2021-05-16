@@ -225,6 +225,98 @@ margin-left: 200px;
 
 /* MAINIMG START */
 
+/* EMAIL_FORMS START */
+
+.rectng:target {
+display:block}
+
+
+.rectng{
+display:none;
+margin-left: 25%;
+position: absolute;
+z-index: 100;
+width: 370px;
+height: 408px;
+background: #FFFFFF;
+border-radius: 15px;
+}
+
+
+.x{
+margin-top: 30px;
+	margin-left: 300px;
+}
+
+.vvod{
+
+width: 338px;
+height: 130px;
+margin-left: 31px;
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 130%;
+}
+
+.email{
+
+width: 40px;
+height: 16px;
+margin-left: 31px;
+margin-top: 20px;
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+color: #000000;
+}
+.input_email{
+
+margin-left: 31px;
+margin-top: 10px;
+width: 314px;
+height: 46px;
+border: 1px solid #D5D1D1;
+box-sizing: border-box;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+padding: 10px;
+color: #07254F;
+outline:none;
+}
+.input_email:focus{
+border:1px solid #07254F;
+}
+
+.bnt_set{
+margin-top: 30px;
+margin-left: 148px;
+
+
+}
+.button_set{
+cursor: pointer;
+width: 190px;
+height: 46px;
+background: #CA0000;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_set:active, .button:hover{
+background: #E48080;
+}
+/* EMAIL_FORMS END */
+
 .wrapper{
     max-width: 1440px;
     margin: 0 auto;
