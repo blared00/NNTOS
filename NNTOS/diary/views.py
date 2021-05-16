@@ -202,7 +202,7 @@ class TeacherView(DataMixin, View):
                                                             })
 
 
-
+s
 
 
 class NewsView(View):
