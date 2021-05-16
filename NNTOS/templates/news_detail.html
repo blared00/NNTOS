@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
      <link rel = "stylesheet" href= "{%static '/css/news_detail.css' %}">
+    <link rel = "stylesheet" href= "{%static '/dist/css/lightbox.css' %}">
     <title>Новости|{{news.title|capfirst}}</title>
 </head>
 <body>
@@ -15,21 +16,22 @@
             <input type="button" class="button_back" onclick="history.back()" value="Назад">
         </div>
 
-        <div class="rectangle1">
+        <section class="rectangle1">
             <p class="header_n">{{news.title|capfirst}}</p>
 
             <p class="text_n"> {{news.description|capfirst|linebreaksbr|safe}}</p>
-            <div class="news_image">
+            <div class="container">
                 {%if news.picture1 or news.picture2%}
                     {%if news.picture1 %}
-                        <div class="left_image"><img src="{{news.picture1.url}}"></div>
-                        <div class="right_image"><img src="{{news.picture2.url}}"></div>
+                      <a href="{{news.picture1.url}}" data-lightbox="test"> <img  class="left_image"src="{{news.picture1.url}}"></a>
+                <a href="{{news.picture2.url}}" data-lightbox="test"><img class="right_image" src="{{news.picture2.url}}"></a>
                     {%else%}
-                        <div class="left_image"><img src="{{news.picture2.url}}"></div>
+                <a href="{{news.picture2.url}}" data-lightbox="test"> <img class="left_image" src="{{news.picture2.url}}"></a>
                     {%endif%}
                 {%endif%}
             </div>
-        </div>
+            <script src ="{%static '/dist/js/lightbox-plus-jquery.js' %}"></script>
+        </section>
     </div>
 </body>
 </html>

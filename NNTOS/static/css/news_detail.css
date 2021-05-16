@@ -131,7 +131,8 @@ background: #8392A7;
 .rectangle1{
 padding-top: 46px;
 width: 1140px;
-height: 793px;
+ overflow:hidden;
+padding-bottom: 30px;
 margin-left: 150px;
 margin-top: 40px;
 background: #FFFFFF;
@@ -160,23 +161,27 @@ font-weight: normal;
 font-size: 18px;
 }
 
-.news_image{
-	margin-top: 55px;
-}
-.left_image{
+.container {
+margin-top: 40px;}
 
-width: 461px;
-height: 261px;
-background: url(image.png);
+.container img:hover {
+transform: scale(1.1);
+}
+
+.left_image{
+object-fit: cover;
+width: 450px;
+height: 300px;
 border-radius: 20px;
 float: left; 
 margin-left: 100px;
 }
 
 .right_image{
-width: 461px;
-height: 261px;
-background: url(image.png);
+object-fit: cover;
+width: 450px;
+height: 300px;
+
 border-radius: 20px;
 float: right; 
 margin-right: 100px;
