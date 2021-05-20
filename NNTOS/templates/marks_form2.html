@@ -67,7 +67,7 @@
     <option selected disabled hidden value>Выберите дату</option>
     {%endifequal%}
 
-    {%for lesson in schedule%}
+    {%for lesson in schedule|dictsort:'date'%}
 
        <option {%ifequal data_mark.pk lesson.pk%} selected {%endifequal%} value={{lesson.pk}}> {{lesson.date}}</option>
     {%endfor%}

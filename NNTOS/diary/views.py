@@ -124,10 +124,21 @@ class TeacherView(DataMixin, View):
         try:
 
             for student in choose_group.student_set.all():
-                marks_student[student] = [{'value': 'Н', 'mean_b':marks.mark_set.all().filter(student=student).first().mean_b }
-                                          if marks.mark_set.all().filter(student=student).first().value == 1
-                                          else marks.mark_set.all().filter(student=student).first()
-                                          for marks in list_date.filter(n_group=choose_group).order_by('date')]
+                marks_student[student] = []
+                for marks in list_date.filter(n_group=choose_group).order_by('date'):
+                    try:
+                        if marks.mark_set.all().filter(student=student).first().value == 1:
+                            marks_student[student].append({'value': 'Н',
+                                                      'mean_b': marks.mark_set.all().filter(student=student).first().mean_b})
+                        else:
+                            marks_student[student].append(marks.mark_set.all().filter(student=student).first())
+                    except AttributeError:
+                        marks_student[student].append( {'value': '',
+                                                  'mean_b': False})
+                # marks_student[student] = [{'value': 'Н', 'mean_b':marks.mark_set.all().filter(student=student).first().mean_b }
+                #                           if marks.mark_set.all().filter(student=student).first().value == 1
+                #                           else marks.mark_set.all().filter(student=student).first()
+                #                           for marks in list_date.filter(n_group=choose_group).order_by('date')]
                 average_mark = 0
                 num_mark = 0
                 for mark in marks_student[student]:
@@ -147,8 +158,8 @@ class TeacherView(DataMixin, View):
                 page_number = request.GET.get('page_marks')
                 page_obj_marks[student] = paginator_marks[student].get_page(page_number)
                 last_student = student
-        except:
-            pass
+        except AttributeError as e:
+            print(e)
         # if choose_discipline != 99999 and choose_group != 99999:
         page_obj_marks.pop('')
         form_submission = CommentForm()
