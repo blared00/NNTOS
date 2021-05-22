@@ -13,8 +13,10 @@ class StudentAdmin(admin.ModelAdmin):
     list_filter = ('n_group', )
     prepopulated_fields = {'slug': ('lastname', 'firstname', 'patronymic')}
 
+
 class Disciplineship(admin.TabularInline):
     model = Teacher.discipline.through
+
 
 class TeacherAdmin(admin.ModelAdmin):
     list_display = ('lastname', 'firstname', 'patronymic', )
@@ -25,40 +27,34 @@ class TeacherAdmin(admin.ModelAdmin):
     inlines = [Disciplineship, ]
     exclude = ('discipline',)
 
+
 class DisciplineAdmin(admin.ModelAdmin):
     inlines = [Disciplineship, ]
-
 
 
 class ScheduleGroupInTabular(admin.TabularInline):
     model = ScheduleGroup
     extra = 6
 
-class ScheduleGroupResource(resources.ModelResource):
-    discipline = fields.Field()
-    # teacher = fields.Field(column_name='Учитель', attribute='discipline.teacher', widget=ForeignKeyWidget(Teacher, 'lastname'))
 
+class ScheduleGroupResource(resources.ModelResource):
+    discipline = fields.Field(column_name='Дисциплина/Преподаватель', attribute='discipline', widget=ForeignKeyWidget(TeacherDiscipline, 'name'))
     n_group = fields.Field(column_name='Номер группы', attribute='n_group', widget=ForeignKeyWidget(StudentGroup, 'number'))
     class_room = fields.Field(column_name='Номер ауд.', attribute='class_room',)
     lesson = fields.Field(column_name='Номер урока', attribute='lesson',widget=ForeignKeyWidget(NumberLesson, 'pk'))
     date = fields.Field(column_name='Дата', attribute='date',)
     class Meta:
         model = ScheduleGroup
-        #exclude = ('id', )
-        # fields = ('date', 'discipline__discipline__name', 'n_group__number', 'class_room')
-    def dehydrate_discipline(self,schedule):
-        return f'{schedule.discipline.name}'
-
 
 
 class ScheduleGroupAdmin(ImportExportActionModelAdmin):
     resource_class = ScheduleGroupResource
-    list_display = ['date','discipline','n_group','lesson','class_room']
+    list_display = ['date', 'discipline', 'n_group', 'lesson', 'class_room']
 
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('title', 'published_at', 'published_for_parents', 'published_for_teacher' )
-    list_display_links = ('title',  )
+    list_display_links = ('title', )
     search_fields = ('title', )
     list_editable = ('published_for_parents', 'published_for_teacher')
     list_filter = ('published_at', 'published_for_parents', 'published_for_teacher' )

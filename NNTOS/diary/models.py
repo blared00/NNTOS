@@ -73,8 +73,9 @@ class Teacher(models.Model):
 
 
 class TeacherDiscipline(models.Model):
-    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Учитель')
+    teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Преподаватель')
     discipline = models.ForeignKey('Discipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
+    name = models.CharField(max_length=200, verbose_name="Дисциплина/Преподаватель", )
 
     def __str__(self):
         name = f'{self.discipline}/{self.teacher.get_abrivioture()}'
@@ -83,13 +84,13 @@ class TeacherDiscipline(models.Model):
     class Meta:
         verbose_name = 'предмет'
         verbose_name_plural = 'Дисциплины учителя'
+        unique_together = ('discipline', 'teacher')
 
 
 class ScheduleGroup(models.Model):
     discipline = models.ForeignKey('TeacherDiscipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     lesson = models.ForeignKey('NumberLesson', on_delete=models.CASCADE, verbose_name='Номер пары')
     class_room = models.IntegerField(verbose_name='Номер аудитории')
-    # weekday = models.ForeignKey('Weekday', on_delete=models.CASCADE, verbose_name='День недели')
     n_group = models.ForeignKey('StudentGroup', on_delete=models.CASCADE, verbose_name='Номер группы')
     date = models.DateField(verbose_name="Дата")
 
@@ -161,8 +162,6 @@ class Mark(models.Model):
         verbose_name_plural = 'Оценки'
         ordering = ('-schedule_lesson',)
         unique_together = ('student', 'schedule_lesson')
-
-
 
 
 class Comment(models.Model):
