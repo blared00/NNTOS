@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'diary'
+    'diary',
+    'import_export'
 ]
 
 MIDDLEWARE = [
@@ -115,13 +116,14 @@ USE_L10N = True
 
 USE_TZ = True
 
-
+IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    #BASE_DIR / "static",
+    os.path.join(BASE_DIR, "static")
 ]
 STATIC_ROOT = f'{os.path.dirname(os.path.abspath("staticfiles"))}/staticfiles'
 LOGIN_URL = '/login/'

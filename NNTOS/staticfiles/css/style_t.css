@@ -16,7 +16,7 @@ time, mark, audio, video {
 	border: 0;
 	font-size: 100%;
 	font: inherit;
-	vertical-align: baseline;
+
 }
 article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
@@ -120,6 +120,7 @@ box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.3);
 
 
 .header_rect{
+z-index: 1;
 position:fixed;
 width: 1440px;
 height: 156px;
@@ -127,6 +128,7 @@ background: rgba(0, 0, 0, 0.5);
 }
 
 .header{
+z-index: 1;
 position: fixed;
 margin-left: 150px;
 
@@ -194,6 +196,15 @@ margin-left: 60px;}
 margin-left: 0;
 }
 
+.stud_name {
+
+z-index: 1;
+color: #FFFFFF;
+font-weight: 500;
+font-size: 16px;
+text-transform: uppercase;
+margin-right: 0;
+}
 
 .NNTOS{
 
@@ -213,6 +224,98 @@ margin-left: 200px;
 /* HEADER END */
 
 /* MAINIMG START */
+
+/* EMAIL_FORMS START */
+
+.rectng:target {
+display:block}
+
+
+.rectng{
+display:none;
+margin-left: 25%;
+position: absolute;
+z-index: 100;
+width: 370px;
+height: 408px;
+background: #FFFFFF;
+border-radius: 15px;
+}
+
+
+.x{
+margin-top: 30px;
+	margin-left: 300px;
+}
+
+.vvod{
+
+width: 338px;
+height: 130px;
+margin-left: 31px;
+font-family: Roboto;
+font-style: normal;
+font-weight: normal;
+font-size: 20px;
+line-height: 130%;
+}
+
+.email{
+
+width: 40px;
+height: 16px;
+margin-left: 31px;
+margin-top: 20px;
+font-family: Roboto;
+font-style: normal;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+color: #000000;
+}
+.input_email{
+
+margin-left: 31px;
+margin-top: 10px;
+width: 314px;
+height: 46px;
+border: 1px solid #D5D1D1;
+box-sizing: border-box;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+padding: 10px;
+color: #07254F;
+outline:none;
+}
+.input_email:focus{
+border:1px solid #07254F;
+}
+
+.bnt_set{
+margin-top: 30px;
+margin-left: 148px;
+
+
+}
+.button_set{
+cursor: pointer;
+width: 190px;
+height: 46px;
+background: #CA0000;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_set:active, .button:hover{
+background: #E48080;
+}
+/* EMAIL_FORMS END */
 
 .wrapper{
     max-width: 1440px;
@@ -292,7 +395,6 @@ position: absolute;
 width: 65px;
 height: 28px;
 margin-left: 146px;
-
 font-weight: 900;
 font-size: 24px;
 line-height: 28px;
@@ -313,8 +415,8 @@ text-align: center;
 text-transform: uppercase;
 color: #000000;
 }
-.logpas{
 
+.logpas{
 width: 50px;
 height: 16px;
 font-weight: 500;
@@ -323,13 +425,24 @@ line-height: 16px;
 color: #000000;
 }
 .log{
+margin-top: 130px;
+}
+.form-error-field{
 margin-left: 68px;
-margin-top: 145px;
+margin-right: 50px;
+margin-top: 10px;
+font-size: 14px;
+color: #CA0000;
+}
+.form-auth{
+margin-top: 10px;
+}
+.form-login{
+margin-left: 68px;
 }
 .input{
 margin-left: 68px;
 margin-top: 10px;
-position: absolute;
 width: 228px;
 height: 46px;
 border: 1px solid #D5D1D1;
@@ -344,18 +457,13 @@ outline:none;
 
 .input:focus{
 border:1px solid #07254F;
-
 }
 
-.pas{
-margin-left: 68px;
-margin-top: 77px;
-}
 
 .bnt{
-position: absolute;
-margin-left: 69px;
 
+margin-left: 69px;
+margin-top: 30px;
 
 }
 .button{
@@ -376,9 +484,13 @@ border: none;
 background: #E48080;
 }
 
+
+.teh{
+margin-top: 10px;
+}
+
 .tehh{
-position: absolute;
-margin-left: 130px;
+margin-left: 81px;
 margin-top: 150px;
 width: 105px;
 height: 16px;
@@ -417,20 +529,18 @@ background: url(../img/board.jpg)
 max-width: 1140px;
 margin: 0 auto;
 }
-.title_bord{
-padding-bottom: 212px;
-}
+
 .left_bord{
 margin-top: 55px;
 float: left;
 }
-.board_txt{
-width: 340px;
+
+.board_txtt{
 height: 37px;
 font-weight: bold;
 font-size: 36px;
 line-height: 126%;
-color: #FFFFFF;
+color: #000;
 }
 
 .right_bord{
@@ -441,11 +551,11 @@ float: right;
 
 
 .sorting{
- cursor: pointer;
+cursor: pointer;
 display: block;
 font-weight: normal;
 font-size: 18px;
-color: #FFFFFF;
+color: #000;
 line-height: 23px;
 width: 323px;
 height: 50px;
@@ -453,22 +563,30 @@ padding-left: 15px;
 padding-right: 5px;
 box-sizing: border-box;
 margin: 0;
-border: 2px solid #FFFFFF;
-border-radius: 10px;
-background-color: #07254F;
+border: 2px solid #000;
+border-radius: 25px;
 outline:none;
+background: url(../img/sort.jpg) no-repeat right;
+
 
  -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
 
 }
+option:not(:checked) {
+    background-color: white;
+    color:#000;
+}
+
+
+
 .block{
 padding-top: 20px;
 padding-left: 37px;
 margin-top: 30px;
 width: 1140px;
-height: 150px;
+height: 130px;
 background: #FFFFFF;
 border-radius: 20px;
 }
@@ -482,7 +600,6 @@ line-height: 126%;
 color: #000000;
 }
 .data{
-margin-top: 52px;
 width: 91px;
 height: 23px;
 font-size: 18px;
@@ -499,7 +616,7 @@ margin-right: 35px;
 }
 
 .look{
-margin-top: 30px;
+margin-top: 10px;
 width: 205px;
 height: 46px;
 background: #07254F;
@@ -518,192 +635,9 @@ color: #FFFFFF;
 background: #8392A7;
 }
 
-li {
-  list-style-type: none;
-}
-.pagination {
-margin-top: 52px;
-display: flex;
-}
-.pagination a{
-padding: 11px 16px 11px 16px;
 
-                display: flex;
-text-decoration: none;
-border: none;
-font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-background: #566681;
-color: #FFFFFF;
-width: 48px;
-height: 49px;
-border-radius: 50%;
-}
-.pagination-item {
-	margin-right: 18px;
-	border-radius: 50%;
-  	border: none;
-}
-
-.pagination a:hover{
-background-color:  #FFFFFF;
-color: #000000;
-border: none;
-}
 
 /* board for teacher  END*/
-
-
-
-/* schedule for teacher  START*/
-
-.schedule_teach{
-width: 1440px;
-height:990px;
-background: url(../img/schedule.jpg)
-
-}
-
-.wrapper_schedule{
-max-width: 740px;
-margin: 0 auto;
-}
-
-.days{
-float: left;
-
-}
-
-
-.days_of_week {
-margin-top: 148px;
-display: flex;
-}
-
-.days_of_week a{
-padding: 11px 15px 11px 15px;
-display: flex;
-text-decoration: none;
-border: none;
-
-font-weight: bold;
-font-size: 28px;
-line-height: 126%;
-display: flex;
-align-items: center;
-color: #959595;
-}
-
-.days_of_week a:hover{
-text-decoration-line: underline;
-color: #07254F;
-}
-
-.name_teacher{
-margin-top: 148px;
-float: right;
-}
-
-.block_sched{
-width: 740px;
-height: 79px;
-background: #E3E6F7;
-border-radius: 10px;
-margin-top: 20px;
-}
-
-.num{
-float: left;
-margin-left: 24px;
-margin-top: 20px;
-}
-.number{
-font-weight: bold;
-font-size: 36px;
-line-height: 42px;
-color: #000000;
-}
-.subject{
-padding-top: 15px;
-margin-left: 115px;
-}
-.sub{
-
-font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-color: #000000;}
-
-.name_gr{
-margin-top: 8px;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
-
-
-/* submission form  START*/
-.sub_form{
-padding-top: 36px;
-padding-left: 30px;
-width: 400px;
-height: 720px;
-margin: 0 auto;
-background: #FFFFFF;
-box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
-border-radius: 10px;
-}
-.title_sub{
-width: 314px;
-height: 99px;
-font-weight: bold;
-font-size: 28px;
-line-height: 33px;
-color: #000000;}
-
-.heading{
-padding-right: 30px;
-margin-top: 24px;
-float: left;
-font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
-.naming{
-margin-top: 24px;
-
-float: center;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
-color: #000000;
-}
-.input_sub{
-margin-top: 24px;
-margin-bottom: 36px;
-padding: 15px;
-width: 338px;
-height: 210px;
-border: 2px solid #000000;
-box-sizing: border-box;
-border-radius: 10px;
-font-family: Roboto;
-font-weight: normal;
-font-size: 20px;
-line-height: 120%;
-color: #000000;
-outline:none;
-}
-
-.input_sub:focus{
-border: 2px solid #CA0000;
-}
-/* submission form  END*/
-
-
 
 
 /* footer form  START*/
@@ -756,7 +690,6 @@ color: #FFFFFF;
 font-weight: normal;
 line-height: 145%;
 }
-
 
 .icon :hover  {
 color: #CA0000;

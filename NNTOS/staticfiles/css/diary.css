@@ -2,7 +2,7 @@
 
 .diary_par{
 width: 1440px;
-height: 1434px;
+height: 1710px;
 background: #FDFDFD;
 padding-top: 47px;
 }
@@ -13,21 +13,25 @@ float: left;
 }
 
 .sorting_week{
-width: 200px;
+width: 210px;
 height: 47px;
 border: none;
 outline:none;
 cursor: pointer;
 display: block;
 font-style: normal;
-font-weight: normal;
-font-size: 24px;
+font-weight: bold;
+font-size: 20px;
 line-height: 42px;
 color: #000000;
-background: url(../img/sort3.jpg) no-repeat right;
+/*background: url(../img/sort3.jpg) no-repeat right;*/
 -webkit-appearance: none;
 -moz-appearance: none;
-appearance: none; }
+appearance: none;
+font-family: Roboto;
+
+}
+
 .name_stud{
 float: right;
 margin-top: 38px;
@@ -49,6 +53,7 @@ border: none;
 position: relative;
 }
 
+
 .tooltip:hover::after {
 content: attr(aria-label);
 bottom: 100%;
@@ -65,59 +70,73 @@ width: 395px;
 height: 40px;
 text-align: left;
 }
+
 .like-button {
-border: none;
+ z-index: 0;
+ border: none;
 outline: none;
 background: none;
 }
+
+
+
 /* tooltip */
 
 .dnevnik {
 border-spacing: 10px;
 border-collapse: separate;
+margin-left: -10px;
 width: 489px;
 height: 300px;
 }
 .dnevnik tr {
 
 width: 495px;
-height: 40px;
+height: 54px;
 }
 .dnevnik td{
-width: 79px;
+width: 60px;
 text-align: center;
 padding-top: 5px;
 border-radius: 10px;
-font-weight: normal;
-font-size: 20px;
-line-height: 23px;
+font-style: normal;
+
+font-size: 18px;
+
 }
 
+.teacher-lesson {
+    font-size: 15px;
+    width: 282px;
+    font-weight: normal;
+}
 .dnevnik th{
 
 padding-left: 15px;
 text-align: left;
-margin-left: 15px;
-width: 300px;
+line-height: 23px;
+width: 310px;
 border-radius: 10px;
 background: #E3E6F6;
-
 font-style: normal;
 font-weight: bold;
-font-size: 20px;
-line-height: 23px;
-
+font-size: 18px;
 }
 .atten {
 background: #F6E3E3;
 }
 
+
 .mark{
+font-weight: normal;
 background:#E3E6F6;;
 }
 .week{
 margin-left: 7px;
-font-size: 28px;
+font-style: normal;
+font-weight: bold;
+font-size: 18px;
 line-height: 42px;
+color:  #07254F;
 }
 /* diary parents END*/

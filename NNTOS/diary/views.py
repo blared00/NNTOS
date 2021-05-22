@@ -8,6 +8,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.forms import formset_factory
+from django.template import RequestContext
+
 from .form import CommentForm, MarkForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -253,6 +255,8 @@ def logout_view(request):
 
 
 def redirect_page(request):
+    if request.user.is_superuser:
+        return redirect(f'/admin/')
     if request.user.groups.filter(name="Учителя"):
         return redirect(f'/teach/{request.user.username}'if request.user.email else f'/teach/{request.user.username}#email_form')
     elif request.user.groups.filter(name="Студенты"):

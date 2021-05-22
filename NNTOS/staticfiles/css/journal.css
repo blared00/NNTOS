@@ -1,0 +1,146 @@
+
+/* journal start*/
+
+.sorting_group{
+width: 220px;
+height: 47px;
+border: none;
+outline:none;
+color: #000;
+cursor: pointer;
+display: block;
+font-style: normal;
+font-weight: normal;
+font-size: 24px;
+line-height: 42px;
+
+background: url(../img/sort3.jpg) no-repeat right;
+ -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none; }
+.name_stud{
+float: right;
+margin-top: 38px;
+}
+
+.marks_teacher{
+position: relative;
+width: 1440px;
+padding-bottom: 40px;
+background-color:  #FFF;
+}
+
+/* journal end*/
+
+/* TABLE JOURNAL START*/
+.table_marks{
+margin-left: -10px;
+margin-top: 20px;
+border-spacing: 10px;
+ border-collapse: separate;
+}
+
+.table_marks tr{
+	width: 995px;
+	height: 40px;
+}
+
+.objects{
+width: 271px;
+cursor: pointer;
+display: block;
+font-weight: bold;
+font-size: 20px;
+color: #000;
+border: none;
+background: #E3E6F6;
+outline:none;
+text-align: center;
+
+
+-webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: url(../img/sort3.jpg) no-repeat right;
+}
+.com{
+float: right;
+outline: none;
+border: none;
+margin-right: 15px;
+}
+
+
+.table_marks td{
+padding-top: 7px;
+text-align: center;
+border-radius: 10px;
+width: 79px;
+}
+
+.data_m {
+	text-align: center;
+	font-weight: bold;
+	font-size: 20px;
+background-color: #F6E3E3;
+}
+
+.marks_m {
+	text-align: center;
+	font-weight: normal;
+	font-size: 20px;
+background-color:  #E3E6F6;
+}
+
+.naming{
+
+font-weight: bold;
+font-size: 20px;
+background-color:  #E3E6F6;
+}
+
+.table_marks th{
+
+	text-align: left;
+	padding-left: 15px;
+	border-radius: 10px;
+	width: 300px;
+background-color:  #E3E6F6;}
+
+
+.in_m{
+	text-align: center;
+	border: none;
+	outline:none;
+	background-color: #E3E6F6;
+	font-size: 20px;
+
+}
+.dontdoit{
+width: 467px;
+height: 85px;
+background: #F6F3E3;
+border-radius: 10px;
+margin-top: 20px;
+padding-top: 20px;
+}
+
+.dontdo{
+
+margin-left: 32px;
+width: 402px;
+height: 46px;
+font-size: 20px;
+line-height: 23px;
+color: #CA0000;
+}
+.prostavit {
+padding-right: 30px;
+}
+
+
+
+.title_borddd{
+padding-bottom: 100px;
+}
+/* TABLE JOURNAL END*/
