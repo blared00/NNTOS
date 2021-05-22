@@ -26,6 +26,7 @@ class ParentsView(DataMixin, View):
         ''' Получение предметов студента и отображение расписания'''
         student = get_object_or_404(Student, slug=student_name)
         user = request.user
+        self.change_email_user(request)
         if not request.user.is_authenticated:
             return redirect('/login/')
         if self.user_valid_page(student_name, request):          #Проверка входа на личную страницу
