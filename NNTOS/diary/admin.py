@@ -1,5 +1,9 @@
 from django.contrib import admin
 from .models import *
+from import_export.admin import ImportExportActionModelAdmin
+from import_export import resources
+from import_export import  fields
+from import_export.widgets import ForeignKeyWidget, ManyToManyWidget
 
 
 class StudentAdmin(admin.ModelAdmin):
@@ -30,9 +34,27 @@ class ScheduleGroupInTabular(admin.TabularInline):
     model = ScheduleGroup
     extra = 6
 
+class ScheduleGroupResource(resources.ModelResource):
+    discipline = fields.Field()
+    # teacher = fields.Field(column_name='Учитель', attribute='discipline.teacher', widget=ForeignKeyWidget(Teacher, 'lastname'))
 
-class StudentGroupAdmin(admin.ModelAdmin):
-    inlines = [ScheduleGroupInTabular, ]
+    n_group = fields.Field(column_name='Номер группы', attribute='n_group', widget=ForeignKeyWidget(StudentGroup, 'number'))
+    class_room = fields.Field(column_name='Номер ауд.', attribute='class_room',)
+    lesson = fields.Field(column_name='Номер урока', attribute='lesson',widget=ForeignKeyWidget(NumberLesson, 'pk'))
+    date = fields.Field(column_name='Дата', attribute='date',)
+    class Meta:
+        model = ScheduleGroup
+        #exclude = ('id', )
+        # fields = ('date', 'discipline__discipline__name', 'n_group__number', 'class_room')
+    def dehydrate_discipline(self,schedule):
+        return f'{schedule.discipline.name}'
+
+
+
+class ScheduleGroupAdmin(ImportExportActionModelAdmin):
+    resource_class = ScheduleGroupResource
+    list_display = ['date','discipline','n_group','lesson','class_room']
+
 
 class NewsAdmin(admin.ModelAdmin):
     list_display = ('title', 'published_at', 'published_for_parents', 'published_for_teacher' )
@@ -44,13 +66,14 @@ class NewsAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Student, StudentAdmin)
-admin.site.register(StudentGroup, StudentGroupAdmin)
+admin.site.register(StudentGroup,)
+admin.site.register(ScheduleGroup,ScheduleGroupAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 #admin.site.register(NumberLesson)
 #admin.site.register(Weekday)
 admin.site.register(Discipline, DisciplineAdmin)
 admin.site.register(News, NewsAdmin)
-admin.site.register(Mark)
+#admin.site.register(Mark)
 
 
 

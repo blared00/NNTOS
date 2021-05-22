@@ -1,0 +1,309 @@
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+
+
+}
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+html {
+	height: 100%;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+/* roboto-regular - cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  src: local(''),
+       url('../fonts/roboto-v20-cyrillic-regular.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/roboto-v20-cyrillic-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-500 - cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  src: local(''),
+       url('../fonts/roboto-v20-cyrillic-500.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/roboto-v20-cyrillic-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-700 - cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 700;
+  src: local(''),
+       url('../fonts/roboto-v20-cyrillic-700.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/roboto-v20-cyrillic-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* roboto-900 - cyrillic */
+@font-face {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 900;
+  src: local(''),
+       url('../fonts/roboto-v20-cyrillic-900.woff2') format('woff2'), /* Chrome 26+, Opera 23+, Firefox 39+ */
+       url('../fonts/roboto-v20-cyrillic-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+html {
+box-sizing: border-box;
+}
+*, *::before, *::after {
+box-sizing: inherit;
+}
+
+ body{
+  font-family: 'Roboto';
+  font-style: normal;
+  font-size: 18px;
+  line-height: 1.25;
+  font-weight: normal;
+  color: #000000;
+
+ }
+ .btn_back{
+padding-bottom: 20px;
+}
+
+
+.button_back{
+cursor: pointer;
+width: 139px;
+height: 46px;
+background: #07254F;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+line-height: 16px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_back:active, .button_back:hover{
+background: #8392A7;
+}
+ .marks_form {
+height: aouto;
+padding-top: 40px;
+padding-bottom: 40px;
+ }
+ 
+.board_wrapper{
+ max-width: 1140px;
+ margin: 0 auto;
+}
+.marks_txt{
+	text-align: center;
+width: 1140px;
+height: 42px;
+font-weight: bold;
+font-size: 36px;
+line-height: 126%;
+color: #000;
+}
+
+.rectangle_marks{
+width: 600px;
+height: auto;
+margin-top: 30px;
+margin-left: 270px;
+margin-bottom: 50px;
+padding-top: 15px;
+padding-bottom: 80px;
+padding-left: 105px;
+background: #FFFFFF;
+box-shadow: 0px 0px 40px rgba(0, 0, 0, 0.1);
+border-radius: 10px;
+}
+
+.heading_marksform{
+padding-right: 20px;
+margin-top: 15px;
+float: left;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+color: #000000;
+}
+
+.naming_marksform{
+margin-top: 15px;
+float: center;
+font-weight: normal;
+font-size: 20px;
+line-height: 23px;
+color: #000000;
+}
+
+.example_date{
+border: none;
+outline: none;
+font-family: Roboto;
+font-weight: normal;
+font-size: 20px;
+color: #000000;
+}
+
+.table_marksform{
+	margin-left: -10px;
+margin-top: 20px;
+border-spacing: 10px;
+
+ border-collapse: separate;
+}
+
+.table_marksform tr {
+
+	border-radius: 10px;
+}
+
+
+
+.table_marksform td {
+	border-radius: 10px;
+	background: #E3E6F6;
+	height: 40px;
+	font-size: 20px;
+}
+
+.naming_mark{
+width: 300px;
+padding-left: 20px;
+}
+.ball{
+width: 80px;
+text-align: center;
+}
+
+
+.naming_mark_b{
+width: 300px;
+padding-left: 20px;
+font-weight: bold;
+}
+.ball_b{
+width: 80px;
+text-align: center;
+font-weight: bold;
+}
+
+.marks_num{
+width: 42px;
+height: 23px;
+border: none;
+background-color: #E3E6F6;
+outline: none; 
+font-family: Roboto;
+font-weight: normal;
+font-size: 20px;
+}
+
+.btn_savemark{
+margin-top: 20px;
+margin-left: 220px;
+
+
+}
+.button_savemark{
+cursor: pointer;
+width: 170px;
+height: 46px;
+background: #07254F;
+border-radius: 25px;
+font-weight: 500;
+font-size: 14px;
+font-weight: bold;
+color: #FFFFFF;
+outline:none;
+border: none;
+}
+.button_savemark:active, .button_savemark:hover{
+background: #8392A7;
+}
+
+
+.rectan_mark {
+width: 420px;
+padding: 15px;
+
+background: #F6F3E3;
+border-radius: 10px;
+
+}
+
+li.error, li.success{
+
+font-size: 20px;
+line-height: 130%;
+color: #CA0000;}
+
+.sorting_lesson{
+    margin-top: -12px;
+    width: 220px;
+    height: 47px;
+    border: none;
+    outline: none;
+    color: #000;
+    cursor: pointer;
+    display: block;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+
+    background: url(../img/sort3.jpg) no-repeat right;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    }
+
+    .avg_mark{
+     padding-right: 10px;
+    color: #07254F;
+    margin-top: 10px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 20px;
+    float: left;
+    }
+
+
+    .avg_check{
+    height: 20px;
+    width: 20px;
+    margin-top: 15px;
+    }
