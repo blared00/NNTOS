@@ -6,6 +6,7 @@ weekdays = ['Понедельник', 'Вторник', 'Среда', 'Четв�
 
 
 class Student(models.Model):
+    """Модель студента"""
     lastname = models.CharField(max_length=20, verbose_name='Фамилия')
     firstname = models.CharField(max_length=20, verbose_name='Имя')
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
@@ -13,24 +14,29 @@ class Student(models.Model):
     n_group = models.ForeignKey('StudentGroup', on_delete=models.CASCADE, verbose_name='Номер группы')
 
     def __str__(self):
+        """Отображение объектов с именем"""
         name = f'{self.lastname} {self.firstname} {self.patronymic}'
         return name
 
     def get_absolute_url(self):
+        """Ссылка на страницу студента"""
         return reverse('student', kwargs={'student_name': self.slug})
 
     def get_abrivioture(self):
+        """Абривиотура студента"""
         return f'{self.lastname} {self.firstname[0]}.{self.patronymic[0]}.'
 
     class Meta:
-        verbose_name = 'Студент'
+        verbose_name = 'студента'
         verbose_name_plural = 'Студенты'
 
 
 class StudentGroup(models.Model):
+    """Модель группы"""
     number = models.CharField(max_length=20, verbose_name='Номер группы')
 
     def __str__(self):
+        """Отображение объектов с именем"""
         return self.number
 
     class Meta:
@@ -39,9 +45,11 @@ class StudentGroup(models.Model):
 
 
 class Discipline(models.Model):
+    """Модель дисциплины"""
     name = models.CharField(max_length=50, verbose_name='Название дисциплины')
 
     def __str__(self):
+        """Отображение объектов с именем"""
         return self.name
 
     class Meta:
@@ -50,6 +58,7 @@ class Discipline(models.Model):
 
 
 class Teacher(models.Model):
+    """Модель преподавателя"""
     lastname = models.CharField(max_length=20, verbose_name='Фамилия')
     firstname = models.CharField(max_length=20, verbose_name='Имя')
     patronymic = models.CharField(max_length=20, verbose_name='Отчество')
@@ -58,26 +67,31 @@ class Teacher(models.Model):
                                         through='TeacherDiscipline',)
 
     def __str__(self):
+        """Отображение объектов с именем"""
         name = f'{self.lastname} {self.firstname} {self.patronymic}'
         return name
 
     def get_absolute_url(self):
+        """Ссылка на журнал преподавателя"""
         return reverse('teacher', kwargs={'teacher_name': self.slug})
 
     def get_abrivioture(self):
+        """Абривиотура преподавателя"""
         return f'{self.lastname} {self.firstname[0]}.{self.patronymic[0]}.'
 
     class Meta:
-        verbose_name = 'Учитель'
-        verbose_name_plural = 'Учителя'
+        verbose_name = 'преподавателя'
+        verbose_name_plural = 'Преподаватели'
 
 
 class TeacherDiscipline(models.Model):
+    """Модель взаимосвязи преподавателя и дисциплины"""
     teacher = models.ForeignKey('Teacher', on_delete=models.CASCADE, verbose_name='Преподаватель')
     discipline = models.ForeignKey('Discipline', on_delete=models.CASCADE, verbose_name='Дисциплина')
     name = models.CharField(max_length=200, verbose_name="Дисциплина/Преподаватель", )
 
     def __str__(self):
+        """Отображение объектов с именем"""
         name = f'{self.discipline}/{self.teacher.get_abrivioture()}'
         return name
 
