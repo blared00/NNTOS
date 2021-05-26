@@ -23,9 +23,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 't^z@u%c%ee0qet3o1+1f2m+%+huqiq=rm2@x30_he#!vb@xb*a'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-ALLOWED_HOSTS = ['*']
+# DEBUG = True
+#
+# ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -44,6 +44,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware', #выключить на локальном хосте
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -119,23 +120,10 @@ USE_TZ = True
 IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
-PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    #BASE_DIR / "static",
-    os.path.join(BASE_DIR, "static")
-]
-STATIC_ROOT = f'{os.path.dirname(os.path.abspath("staticfiles"))}/staticfiles'
-LOGIN_URL = '/login/'
-#LOGIN_REDIRECT_URL = '/redirectpage'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/media/'
 
-#SMTP Configuration
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = '587'
-EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'help.nntos@gmail.com'
-EMAIL_HOST_PASSWORD = 'Bestcollegofussr00'
+
+try:
+    from .local_settings import *
+except ImportError:
+    from .product_settings import *
