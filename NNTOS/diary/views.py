@@ -18,6 +18,7 @@ from .utils import DataMixin
 class ParentsView(DataMixin, View):
     def dispatch(self, request, student_name):
         ''' Получение предметов студента и отображение расписания'''
+        url_manual = "https://drive.google.com/file/d/1pytzCJUMqKadX77EhI38dc3tFAetlXsc/view?usp=sharing"
         student = get_object_or_404(Student, slug=student_name)                             #Передача объекта "Студент"
         user = request.user
         if not request.user.is_authenticated:                                               #Проверка аутентификации пользователя
@@ -56,11 +57,13 @@ class ParentsView(DataMixin, View):
                                                               'news': news['page_obj_news'],
                                                               'submission': page_obj_sub,
                                                               'week_selected': date_selected,
+                                                              'url_manual': url_manual,
                                                               })
 
 
 class TeacherView(DataMixin, View):
     def dispatch(self, request, teacher_name):
+        url_manual = "https://drive.google.com/file/d/1S0avgG6t5VuC7IGNR8i8dUv3FGXwrd7O/view?usp=sharing"
         teacher = get_object_or_404(Teacher, slug=teacher_name)                     #Получение объекта "Преподаватель"
         user = request.user
         if not request.user.is_authenticated:                                       #Проверка аутентификаии
@@ -186,6 +189,7 @@ class TeacherView(DataMixin, View):
                                                             'week_selected': date_selected,
                                                             'list_date': page_obj_list_date,
                                                             'marks_student': page_obj_marks.items(),
+                                                            'url_manual': url_manual,
                                                             'marks_paginator': page_obj_marks[last_student] if last_student in page_obj_marks else ''
                                                             })
 
