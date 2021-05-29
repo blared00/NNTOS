@@ -1,14 +1,13 @@
 from django.contrib import admin
 from .models import *
 from import_export.admin import ImportExportActionModelAdmin
-from import_export import resources
-from import_export import  fields
-from import_export.widgets import ForeignKeyWidget
+from .resources import ScheduleGroupResource, StudentResource, TeachertResource
 """Визуализация БД  для админ.панели (создание/редактирование объектов БД)"""
 
 
-class StudentAdmin(admin.ModelAdmin):
+class StudentAdmin(ImportExportActionModelAdmin):
     """Таблица студентов"""
+    resource_class = StudentResource
     list_display = ('lastname', 'firstname', 'patronymic', 'n_group', )
     list_display_links = ('lastname', )
     search_fields = ('lastname', 'firstname', 'patronymic', )
@@ -21,8 +20,9 @@ class Disciplineship(admin.TabularInline):
     model = Teacher.discipline.through
 
 
-class TeacherAdmin(admin.ModelAdmin):
+class TeacherAdmin(ImportExportActionModelAdmin):
     """Таблица преподавателей"""
+    resource_class = TeachertResource
     list_display = ('lastname', 'firstname', 'patronymic', )
     list_display_links = ('lastname',  )
     search_fields = ('lastname', 'firstname', 'patronymic', )
@@ -43,22 +43,16 @@ class ScheduleGroupInTabular(admin.TabularInline):
     extra = 6
 
 
-class ScheduleGroupResource(resources.ModelResource):
-    """Форма для создания таблиц импорта/экспорта расписания"""
-    discipline = fields.Field(column_name='Дисциплина/Преподаватель', attribute='discipline', widget=ForeignKeyWidget(TeacherDiscipline, 'name'))
-    n_group = fields.Field(column_name='Номер группы', attribute='n_group', widget=ForeignKeyWidget(StudentGroup, 'number'))
-    class_room = fields.Field(column_name='Номер ауд.', attribute='class_room',)
-    lesson = fields.Field(column_name='Номер урока', attribute='lesson',widget=ForeignKeyWidget(NumberLesson, 'pk'))
-    date = fields.Field(column_name='Дата', attribute='date',)
-
-    class Meta:
-        model = ScheduleGroup
+class StudentGroupAdmin(admin.ModelAdmin):
+    """Таблица групп"""
+    inlines = [ScheduleGroupInTabular, ]
 
 
 class ScheduleGroupAdmin(ImportExportActionModelAdmin):
     """Таблица расписания"""
     resource_class = ScheduleGroupResource
     list_display = ['date', 'discipline', 'n_group', 'lesson', 'class_room']
+    list_filter = ('discipline','n_group', 'date',)
 
 
 class NewsAdmin(admin.ModelAdmin):
@@ -73,14 +67,14 @@ class NewsAdmin(admin.ModelAdmin):
 
 """Список отображаемых таблиц в админ.панели"""
 admin.site.register(Student, StudentAdmin)
-admin.site.register(StudentGroup,)
+admin.site.register(StudentGroup,StudentGroupAdmin)
 admin.site.register(ScheduleGroup,ScheduleGroupAdmin)
 admin.site.register(Teacher, TeacherAdmin)
 #admin.site.register(NumberLesson)
 #admin.site.register(Weekday)
 admin.site.register(Discipline, DisciplineAdmin)
 admin.site.register(News, NewsAdmin)
-#admin.site.register(Mark)
+admin.site.register(Mark)
 
 
 

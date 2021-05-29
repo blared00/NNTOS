@@ -227,7 +227,7 @@ def logout_view(request):                                                       
 def redirect_page(request):                                                             #Страница перехода
     if request.user.is_superuser:
         return redirect(f'/admin/')
-    if request.user.groups.filter(name="Учителя"):
+    if request.user.groups.filter(name="Преподаватели"):
         return redirect(f'/teach/{request.user.username}'if request.user.email else f'/teach/{request.user.username}#email_form')
     elif request.user.groups.filter(name="Студенты"):
         return redirect(f'/student/{request.user.username}'if request.user.email else f'/student/{request.user.username}#email_form')

@@ -85,7 +85,14 @@ class DataMixin:
                             except:
                                 pass
                             notify = Comment.objects.filter(Q(student=person), Q(schedule_lesson=l.pk)).first()
-                            a[n] = {'discipline_schedule': l, 'date_schedule': date_for_schedule, 'mark': mark, 'notify': notify}
+                            try:
+                                if a[n]['discipline_schedule']:
+                                    pars = a[n]['discipline_schedule']
+                                    pars['second'] = l
+                            except:
+                                pars = {'first': l}
+                            a[n] = {'discipline_schedule': pars, 'date_schedule': date_for_schedule, 'mark': mark, 'notify': notify}
+                            print(a[n])
                         except AttributeError:
                             a[n] = l
             schedule[f'{weekday}, {datetime.datetime.strptime(date_for_schedule,"%Y-%m-%d").strftime("%d.%m.%Y")}'] = a

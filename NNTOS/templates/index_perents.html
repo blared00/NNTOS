@@ -28,8 +28,8 @@
 
                             {%for lesson in schedule_d%}
                             <tr>
-                                <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
-                                {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
+                                <th> {{forloop.counter}} {{lesson.discipline_schedule.first.discipline.discipline|capfirst|truncatechars:25}}
+                                {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.first.discipline.teacher.get_abrivioture}}, {{lesson.discipline_schedule.second.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.first.class_room}} {{lesson.discipline_schedule.second.class_room}}</p>{%endif%}
                                 </th>
 
                                 <td class="mark">{{lesson.mark}} </td>  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}"></button>{%endif%} </td>
@@ -44,8 +44,8 @@
                             <table class="dnevnik">
 
                                 {%for lesson in schedule_d%}
-                                <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.discipline.discipline|capfirst|truncatechars:25}}
-                                    {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.class_room}}</p>{%endif%}
+                                <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.first.discipline.discipline|capfirst|truncatechars:25}}
+                                    {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.first.discipline.teacher.get_abrivioture}}, {{lesson.discipline_schedule.second.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.first.class_room}} {{lesson.discipline_schedule.second.class_room}}</p>{%endif%}
                                      </th>
                                     <td class="mark">{{lesson.mark}}  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}" ></button>{%endif%} </td>
 

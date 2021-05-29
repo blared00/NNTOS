@@ -114,7 +114,7 @@ class ScheduleGroup(models.Model):
     class Meta:
         verbose_name = 'элемент расписания'
         verbose_name_plural = 'Пары'
-        unique_together = (('date', 'lesson', 'discipline'), ('date', 'lesson', 'n_group'))
+        unique_together = (('date', 'lesson', 'discipline'), )
 
 
 class NumberLesson(models.Model):
