@@ -32,8 +32,10 @@ class DataMixin:
         weekdays_t = weekdays
         weekdays_n = [0, 3, 1, 4, 2, 5]
         dates_n = [n for n in range(6)]
+        if not date:
+            date = f'{datetime.datetime.isocalendar(datetime.datetime.now())[0]}-W{datetime.datetime.isocalendar(datetime.datetime.now())[1]}'
         YEAR = date[:4]
-        WEEK = int(date[-2:])-1  # as it starts with 0 and you want week to start from sunday
+        WEEK = int(date[-2:]) - 1  # as it starts with 0 and you want week to start from sunday
         startdate = time.asctime(time.strptime(f'{YEAR} {WEEK} 0', '%Y %W %w'))
         startdate = datetime.datetime.strptime(startdate, '%a %b %d %H:%M:%S %Y')
         dates = [startdate.strftime('%Y-%m-%d')]

@@ -42,7 +42,7 @@ class ParentsView(DataMixin, View):
         submission = Comment.objects.filter(student=student)
         order_sub = request.POST.get('sorting_notify', 'first')
         if order_sub == 'last':                                                             #Получение комментариев
-            submission = submission.order_by('date')
+            submission = submission.order_by('schedule_lesson__date')
         paginator_news = Paginator(submission, 5)
         page_number_sub = request.GET.get('page_sub')
         page_obj_sub = paginator_news.get_page(page_number_sub)

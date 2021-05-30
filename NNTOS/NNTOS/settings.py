@@ -127,3 +127,6 @@ try:
     from .local_settings import *
 except ImportError:
     from .product_settings import *
+
+if not DEBUG:
+    from .product_settings import STATIC_ROOT

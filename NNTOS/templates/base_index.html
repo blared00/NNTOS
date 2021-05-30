@@ -173,19 +173,19 @@
                 <ul class="pagination">
                     {% if news.has_previous%}
                         <li class="pagination-item">
-                                <input  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page={{news.previous_page_number}}#dosca">
+                                <input class="paginpp"  type="submit" value="&lt;" formaction="{{person.get_absolut_url}}?page={{news.previous_page_number}}#dosca">
                         </li>
                         {%if news.number|add:-2 > news.paginator.page_range|first and news.number < 3%}
 
                             <li class="pagination-item">
-                                <input  type="submit" value="{{news.paginator.page_range|first|add:-1}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|first|add:-1}}#dosca">
+                                <input  class="paginpp" type="submit" value="{{news.paginator.page_range|first|add:-1}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|first|add:-1}}#dosca">
                             </li>
 
                         {%endif%}
                         {%if news.number|add:-1 > news.paginator.page_range|first%}
 
                             <li class="pagination-item">
-                                <input  type="submit" value="{{news.paginator.page_range|first}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|first}}#dosca">
+                                <input class="paginpp"  type="submit" value="{{news.paginator.page_range|first}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|first}}#dosca">
                             </li>
 
                         {%endif%}
@@ -208,7 +208,7 @@
                             </li>
                             {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
                             <li class="pagination-item">
-                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
+                                <input class="paginpp" type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
                             </li>
 
                             {%endif%}
@@ -219,7 +219,7 @@
                             </li>
                             {%elif p >= news.number|add:-1 and p <= news.number|add:1 %}
                             <li class="pagination-item">
-                                <input  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
+                                <input class="paginpp"  type="submit" value="{{p}}" formaction="{{person.get_absolut_url}}?page={{p}}#dosca">
                             </li>
                             {%endif%}
                         {%endif%}
@@ -232,21 +232,21 @@
                             </li>
                             {%elif news.number|add:3 == news.paginator.page_range|last%}
                             <li class="pagination-item">
-                                <input  type="submit" value="{{news.paginator.page_range|last|add:-1}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last|add:-1}}#dosca">
+                                <input class="paginpp"  type="submit" value="{{news.paginator.page_range|last|add:-1}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last|add:-1}}#dosca">
                             </li>
                             {%endif%}
                             {%if news.number|add:2 < news.paginator.page_range|last%}
 
                             <li class="pagination-item">
-                                <input  type="submit" value="{{news.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last}}#dosca">
+                                <input  class="paginpp" type="submit" value="{{news.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last}}#dosca">
                             </li>
                             {%elif news.number|add:1 < news.paginator.page_range|last%}
                             <li class="pagination-item">
-                                <input  type="submit" value="{{news.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last}}#dosca">
+                                <input class="paginpp"  type="submit" value="{{news.paginator.page_range|last}}" formaction="{{person.get_absolut_url}}?page={{news.paginator.page_range|last}}#dosca">
                             </li>
                             {%endif%}
                             <li class="pagination-item">
-                                <input  type="submit" value="&gt;" formaction="{{person.get_absolut_url}}?page={{news.next_page_number}}#dosca">
+                                <input class="paginpp"  type="submit" value="&gt;" formaction="{{person.get_absolut_url}}?page={{news.next_page_number}}#dosca">
                             </li>
                       {%else%}
                             <li class="paginpg-active">

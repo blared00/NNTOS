@@ -2,7 +2,7 @@
 
 .diary_par{
 width: 1440px;
-height: 1710px;
+/*height: 1710px;*/
 background: #FDFDFD;
 padding-top: 47px;
 }
@@ -86,13 +86,13 @@ background: none;
 border-spacing: 10px;
 border-collapse: separate;
 margin-left: -10px;
-width: 489px;
+width: 589px;
 height: 300px;
 }
 .dnevnik tr {
 
-width: 495px;
-height: 54px;
+width: 595px;
+height: 70px;
 }
 .dnevnik td{
 width: 60px;
@@ -107,7 +107,7 @@ font-size: 18px;
 
 .teacher-lesson {
     font-size: 15px;
-    width: 282px;
+    width: 382px;
     font-weight: normal;
 }
 .dnevnik th{
@@ -115,7 +115,7 @@ font-size: 18px;
 padding-left: 15px;
 text-align: left;
 line-height: 23px;
-width: 310px;
+width: 410px;
 border-radius: 10px;
 background: #E3E6F6;
 font-style: normal;

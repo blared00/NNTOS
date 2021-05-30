@@ -165,14 +165,30 @@ border-radius: 50%;
 margin-right: 18px;
 box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
+
 .paginp {
-margin-left: 18px;
+/*margin-left: 18px;*/
 margin-top: 13px;
+text-align: center;
 color: #000000;
 font-weight: bold;
 font-size: 20px;
 line-height: 23px;
-box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+.paginpp {
+/*margin-left: 18px;*/
+width: 48px;
+height: 49px;
+text-align: center;
+color: #939393;
+background-color: #FFFFFF;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+
+border-radius: 50%;
+border: none;
 }
 
 .pagination a:focus{
