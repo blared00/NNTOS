@@ -25,8 +25,11 @@
  <section class="marks_form"> 
 <div class="board_wrapper">
     <form method="post">
+        {%csrf_token%}
     <div class="btn_back">
-        <input type="button" class="button_back" onclick="history.back()" value="Назад">
+        <input type="submit" class="button_back" formaction="{%url 'teacher' c_discipline.teacher.slug%}#journal" value="Назад">
+        <input type="hidden" name="group_select" value={{c_group.pk}}>
+        <input type="hidden" name="discipline_select" value={{c_discipline.discipline.pk}}>
     </div>
     </form>
 <p class="marks_txt">Форма для выставления оценок</p>

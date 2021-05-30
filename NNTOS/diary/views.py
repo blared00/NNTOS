@@ -170,6 +170,7 @@ class TeacherView(DataMixin, View):
                 }
         news = News.objects.filter(published_for_teacher=True)                          #Отображение новостей
         news = self.news_views(request, news)
+        print(request.META['HTTP_USER_AGENT'])
         return render(request, 'index_teach.html', context={'person': teacher,
                                                             'disciplines': disciplines,
                                                             'groups': groups,
@@ -283,7 +284,14 @@ class MarkView(View):                                                           
         """Прочитать введенную информацию об оценках"""
         if data_mark != 'не выбрана':
             try:
-                formset = MarkFormFormSet(request.POST or None) #Сохраняет введенные оценки, если проходит валидность
+                dict_post = {}
+                for key in request.POST.keys():
+                    dict_post[key] = request.POST[key]
+                for n in range(rangee):
+                    if dict_post[f'form-{n}-value']:
+                        if dict_post[f'form-{n}-value'] == 'н':
+                            dict_post[f'form-{n}-value'] = '1'
+                formset = MarkFormFormSet(dict_post or None) #Сохраняет введенные оценки, если проходит валидность
                 if formset.is_valid():
                     flag = 0
                     messages.success(request, "Оценки сохранены")
@@ -322,8 +330,11 @@ class MarkView(View):                                                           
                             print('ghbdtn')
                     except AttributeError as e:
                         print(e)
+                        messages.error(request, "Оценки не сохранены.\n Для выставления оценок новым студентам обратитесь к администратору")
             except ValidationError:
                print(ValidationError)
+               messages.error(request,
+                              "Оценки не сохранены.\n Обратитесь к администратору")
         return render(request, 'marks_form2.html', context={'c_discipline': choose_discipline,
                                                             'c_group': choose_group,
                                                             'formset': formset,

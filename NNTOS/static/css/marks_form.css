@@ -257,20 +257,34 @@ background: #8392A7;
 }
 
 
-.rectan_mark {
+/*.rectan_mark {
 width: 420px;
 padding: 15px;
 
 background: #F6F3E3;
 border-radius: 10px;
 
-}
+}*/
 
-li.error, li.success{
+li.error{
+width: 420px;
+padding: 15px;
 
+background: #F6F3E3;
+border-radius: 10px;
 font-size: 20px;
 line-height: 130%;
 color: #CA0000;}
+
+li.success{
+width: 420px;
+padding: 15px;
+
+background: #C0FBCD;
+border-radius: 10px;
+font-size: 20px;
+line-height: 130%;
+color: #000000;}
 
 .sorting_lesson{
     margin-top: -12px;
