@@ -11,7 +11,7 @@
                   <div class="week_days">
                       <form method="post" action={{person.get_absolut_url}}#dnevnik>
                           {%csrf_token%}
-                          <input type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}}>
+                          <input type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}} label="Введите в формате гггг-Wнн, где г - год, н - неделя" min="2000">
                       </form>
                   </div>
                   <div class="name_stud">
@@ -32,7 +32,7 @@
                                 {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.first.discipline.teacher.get_abrivioture}}, {{lesson.discipline_schedule.second.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.first.class_room}} {{lesson.discipline_schedule.second.class_room}}</p>{%endif%}
                                 </th>
 
-                                <td class="mark">{{lesson.mark}} </td>  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}"></button>{%endif%} </td>
+                                <td class="mark">{{lesson.mark}}</td>  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}"></button>{%endif%} </td>
 
 
                             {%endfor%}
@@ -47,7 +47,7 @@
                                 <tr> <th> {{forloop.counter}} {{lesson.discipline_schedule.first.discipline.discipline|capfirst|truncatechars:25}}
                                     {%if lesson%}<p class="teacher-lesson">Пр. {{lesson.discipline_schedule.first.discipline.teacher.get_abrivioture}}, {{lesson.discipline_schedule.second.discipline.teacher.get_abrivioture}} ауд.{{lesson.discipline_schedule.first.class_room}} {{lesson.discipline_schedule.second.class_room}}</p>{%endif%}
                                      </th>
-                                    <td class="mark">{{lesson.mark}}  <td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}" ></button>{%endif%} </td>
+                                    <td class="mark">{{lesson.mark}}<td class="atten">{%if lesson.notify%}<button class="like-button tooltip" aria-label="Преподаватель оставил комментарий. Чтобы прочесть его, перейдите в раздел Уведомления"><img src="{%static '/img/att.png' %}" ></button>{%endif%} </td>
 
                                 {%endfor%}
                             </table>

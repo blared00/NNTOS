@@ -34,6 +34,9 @@ class DataMixin:
         dates_n = [n for n in range(6)]
         if not date:
             date = f'{datetime.datetime.isocalendar(datetime.datetime.now())[0]}-W{datetime.datetime.isocalendar(datetime.datetime.now())[1]}'
+        if int(date[:4])<2000:
+            date = f'{datetime.datetime.isocalendar(datetime.datetime.now())[0]}-W{datetime.datetime.isocalendar(datetime.datetime.now())[1]}'
+
         YEAR = date[:4]
         WEEK = int(date[-2:]) - 1  # as it starts with 0 and you want week to start from sunday
         startdate = time.asctime(time.strptime(f'{YEAR} {WEEK} 0', '%Y %W %w'))
@@ -84,17 +87,23 @@ class DataMixin:
                                     mark = ''
                                 elif mark == 1:
                                     mark = 'Н'
+                                print(mark)
                             except:
                                 pass
                             notify = Comment.objects.filter(Q(student=person), Q(schedule_lesson=l.pk)).first()
+                            marks_list = ''
                             try:
                                 if a[n]['discipline_schedule']:
                                     pars = a[n]['discipline_schedule']
                                     pars['second'] = l
+                                    marks_list = a[n]['mark']
+                                    marks_list += mark
                             except:
                                 pars = {'first': l}
-                            a[n] = {'discipline_schedule': pars, 'date_schedule': date_for_schedule, 'mark': mark, 'notify': notify}
-                            print(a[n])
+                                marks_list = mark
+
+                            a[n] = {'discipline_schedule': pars, 'date_schedule': date_for_schedule, 'mark': marks_list, 'notify': notify}
+
                         except AttributeError:
                             a[n] = l
             schedule[f'{weekday}, {datetime.datetime.strptime(date_for_schedule,"%Y-%m-%d").strftime("%d.%m.%Y")}'] = a
