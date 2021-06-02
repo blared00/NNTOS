@@ -118,4 +118,31 @@ box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   	border: none;
 
 }
+.paginpp-sub {
+/*margin-left: 18px;*/
+width: 48px;
+height:49px;
+text-align: center;
+color: #939393;
+background-color: #FFFFFF;
+font-weight: bold;
+font-size: 20px;
+line-height: 23px;
+
+border-radius: 50%;
+border: none;
+}
+.paginpp-sub:hover{
+background-color:  #FFFFFF;
+color: #000001;
+border: none;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+.paginpp-sub:active{
+background-color:  #FFFFFF;
+color: #000001;
+border: none;
+box-shadow: none;
+}
+
 /* notify form  END*/

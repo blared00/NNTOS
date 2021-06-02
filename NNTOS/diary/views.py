@@ -18,7 +18,7 @@ from .utils import DataMixin
 class ParentsView(DataMixin, View):
     def dispatch(self, request, student_name):
         ''' Получение предметов студента и отображение расписания'''
-        url_manual = "https://drive.google.com/file/d/1pytzCJUMqKadX77EhI38dc3tFAetlXsc/view?usp=sharing"
+        url_manual = "https://drive.google.com/file/d/1h0CAKSasSlDaO0K7AYxuGYFgOBNBGRzg/view"
         student = get_object_or_404(Student, slug=student_name)                             #Передача объекта "Студент"
         user = request.user
         if not request.user.is_authenticated:                                               #Проверка аутентификации пользователя
@@ -46,6 +46,7 @@ class ParentsView(DataMixin, View):
         paginator_news = Paginator(submission, 5)
         page_number_sub = request.GET.get('page_sub')
         page_obj_sub = paginator_news.get_page(page_number_sub)
+        detect_ie = True if 'Chrome' not in request.META['HTTP_USER_AGENT'] else False
         return render(request, 'index_perents.html', context={'person': student,
                                                               'user': user,
                                                               'menu': menu.items(),
@@ -58,12 +59,13 @@ class ParentsView(DataMixin, View):
                                                               'submission': page_obj_sub,
                                                               'week_selected': date_selected,
                                                               'url_manual': url_manual,
+                                                              'detect_ie': detect_ie,
                                                               })
 
 
 class TeacherView(DataMixin, View):
     def dispatch(self, request, teacher_name):
-        url_manual = "https://drive.google.com/file/d/1S0avgG6t5VuC7IGNR8i8dUv3FGXwrd7O/view?usp=sharing"
+        url_manual = "https://drive.google.com/file/d/1qDlWD_-Xy5GacUgYiGP5TjzUj-rOfryQ/view"
         teacher = get_object_or_404(Teacher, slug=teacher_name)                     #Получение объекта "Преподаватель"
         user = request.user
         if not request.user.is_authenticated:                                       #Проверка аутентификаии
@@ -153,6 +155,8 @@ class TeacherView(DataMixin, View):
         except AttributeError as e:
             print(e)
         page_obj_marks.pop('')
+        list_dat.pop(-1)
+
         form_submission = CommentForm()
         if request.method == "POST":
             form_submission = CommentForm(request.POST) # заполнение формы к комментарию
@@ -170,7 +174,8 @@ class TeacherView(DataMixin, View):
                 }
         news = News.objects.filter(published_for_teacher=True)                          #Отображение новостей
         news = self.news_views(request, news)
-        print(request.META['HTTP_USER_AGENT'])
+        detect_ie= True if 'Chrome' not in request.META['HTTP_USER_AGENT'] else False
+
         return render(request, 'index_teach.html', context={'person': teacher,
                                                             'disciplines': disciplines,
                                                             'groups': groups,
@@ -190,7 +195,9 @@ class TeacherView(DataMixin, View):
                                                             'week_selected': date_selected,
                                                             'list_date': page_obj_list_date,
                                                             'marks_student': page_obj_marks.items(),
+                                                            'dates' : list_dat,
                                                             'url_manual': url_manual,
+                                                            'detect_ie': detect_ie,
                                                             'marks_paginator': page_obj_marks[last_student] if last_student in page_obj_marks else ''
                                                             })
 

@@ -12,7 +12,7 @@
                 <p  class="title_about">Расписание</p>
                     <form method="post" action={{person.get_absolut_url}}#schedule_teacher>
                           {%csrf_token%}
-                          <input style='margin-top:20px;' type="week" name="sorting_week" id="sorting_week" class="sorting_week" onchange="submit()" value={{week_selected}}>
+                          <input style='margin-top:20px;' type="week" name="sorting_week" id="sorting_week" class="sorting_week" pattern="20[0-9]{2}-W[0-5][0-9]" onchange="submit()" value={{week_selected}} {%if detect_ie%} title="    гггг-Wнн, где г - год, н - номер недели"{%endif%}>
                       </form>
                 </div>
 
@@ -120,23 +120,25 @@
             <div id="submission"  class="sub_form">
   <p><a href="#journal"><img src='{% static "/img/close.png"%}' class="x" ></a></p>
     <p class="title_sub">Оставьте комментарий об успеваемости студента для родителя</p>
-    <p class="heading"> Студент</p>
+    <p class="heading">Студент</p>
     {%if choose_student != 'не выбран'%}
-    <p class="namingg"> {{choose_student.lastname}} {{choose_student.firstname|first}}. {{choose_student.patronymic|first}}. </p>
+    <p class="namingg">{{choose_student.get_abrivioture}}</p>
     {%else%}
-    <p class="namingg"> {{choose_student}}</p>
+    <p class="namingg">{{choose_student}}</p>
     {%endif%}
                 <input type="hidden" name="student" value={{choose_student.pk}} id="id_student">
     <!--{{form_submission.student}}-->
 
-      <p class="heading"> Преподаватель </p>
-    <p class="namingg"> {{person.get_abrivioture}} </p>
+    <p class="heading">Преподаватель </p>
+    <p class="namingg">{{person.get_abrivioture}} </p>
+    <p class="heading">Дисциплина </p>
+    <p class="namingg">{{choose_discipline.name}} </p>
     <!--{{form_submission.schedule_lesson}}-->
      <p class="heading"> Пара </p>
                 <select name="schedule_lesson" id="id_schedule_lesson" class="sorting_notify" required>
                     <option selected hidden>Не выбрана</option>
-                    {%for lesson in list_date%}
-                        <option value={{lesson.pk}}>{{lesson}}</option>
+                    {%for lesson in dates%}
+                        <option value={{lesson.pk}}>{{lesson.date}}</option>
                     {%endfor%}
                 </select>
     <!--{{form_submission.discipline.errors}}-->
