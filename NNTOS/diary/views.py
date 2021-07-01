@@ -6,6 +6,8 @@ from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Q
 from django.forms import formset_factory
+from django.template import RequestContext
+
 from .form import CommentForm, MarkForm
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
@@ -94,15 +96,19 @@ class TeacherView(DataMixin, View):
         choose_teacherdiscipline = ''
         try:
             choose_discipline = Discipline.objects.get(pk=choose_discipline)
-            choose_group = StudentGroup.objects.get(pk=choose_group)
-            choose_student = Student.objects.get(slug=choose_student)
-
         except Discipline.DoesNotExist:
             pass
-        except Student.DoesNotExist:
-            pass
+        try:
+            choose_group = StudentGroup.objects.get(pk=choose_group)
         except StudentGroup.DoesNotExist:
             pass
+        try:
+            choose_student = Student.objects.get(slug=choose_student)
+        except Student.DoesNotExist:
+            pass
+
+
+
         try:
             choose_teacherdiscipline = TeacherDiscipline.objects.get(Q(teacher=teacher), Q(discipline=choose_discipline))
         except TeacherDiscipline.DoesNotExist:
@@ -120,8 +126,7 @@ class TeacherView(DataMixin, View):
         page_obj_marks = {'':''}
         last_student = ''
         try:
-
-            for student in choose_group.student_set.all():
+            for student in choose_group.student_set.all().order_by('lastname'):
                 marks_student[student] = []
                 for marks in list_date.filter(n_group=choose_group).order_by('date'):
                     try:
@@ -279,7 +284,7 @@ class MarkView(View):                                                           
         formset = MarkFormFormSet()
 
         rangee = len(choose_group.student_set.all())
-        students = [choose_group.student_set.all()[n] for n in range(rangee)]
+        students = [choose_group.student_set.all().order_by('lastname')[n] for n in range(rangee)]
         sdasd = {students[n]: '' for n in range(rangee)}
 
         data_mark = request.POST.get('datamark', 'не выбрана')
@@ -352,3 +357,8 @@ class MarkView(View):                                                           
                                                             })
 
 
+def csrf_failure(request, reason=""):
+    context = RequestContext(request)
+    response = render('error403.html', context)
+    response.status_code = 403
+    return response

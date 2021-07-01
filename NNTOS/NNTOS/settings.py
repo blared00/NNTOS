@@ -121,7 +121,7 @@ IMPORT_EXPORT_USE_TRANSACTIONS = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-
+CSRF_FAILURE_VIEW = 'home.views.csrf_failure'
 
 try:
     from .local_settings import *

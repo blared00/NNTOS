@@ -100,19 +100,12 @@
     </div>
     </section>
 
-
-
-
-
-
     <div class="about_us">
     <section class="about">
         <div class="left_block">
             <p class="title_about"> Почему выбирают нас?</p>
                 <img src="{%static '/img/students.jpg'%}" alt="st" class="students">
         </div>
-
-
         <div  id="dosca"  class="right_block">
             <p class="abz">
             <p class="abz1"> ГБПОУ «Нижегородский техникум транспортного обслуживания и сервиса» —  был основан 23 июля 1941 года.</p>
@@ -134,9 +127,7 @@
             <div class="left_bord">
             <p class="board_txt">Доска объявлений</p>
             </div>
-
             <div class="right_bord">
-
                 <select name="sorting_news" id="sorting" class="sorting" onchange="submit()">
                     {%if order_news == 'last'%}
                         <option value="first">Сначала новые</option>
@@ -146,7 +137,6 @@
                         <option value="last" >Сначала старые</option>
                     {%endif%}
                 </select>
-
             </div>
             </div>
         </div>
@@ -164,8 +154,6 @@
             </div>
         </div>
          {%endfor%}
-
-
 <!--пагинация новостей-->
  <div class="board_wrapper">
             <nav>
@@ -256,18 +244,13 @@
                 {%endif%}
 	            </ul>
             </nav>
-
-
         </div>
-
         </form>
         </section>
     </div>
         {%block body%}
         {%endblock%}
         </main>
-
-
 <footer>
 <section class="footer">
 

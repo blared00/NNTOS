@@ -113,7 +113,7 @@ class DataMixin:
         order_news = request.POST.get('sorting_news', 'first')
         if order_news == 'last':
             news = news.order_by('published_at')
-        paginator_news = Paginator(news, 3)
+        paginator_news = Paginator(news, 5)
         page_number = request.GET.get('page')
         page_obj_news = paginator_news.get_page(page_number)
         return {'page_obj_news': page_obj_news, 'order_news': order_news}
